@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "182928543947",
+    "firebase_url": "https://studentnote-b7b90.firebaseio.com",
+    "project_id": "studentnote-b7b90",
+    "storage_bucket": "studentnote-b7b90.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182928543947:android:666ce22df99efdf7198b4e",
+        "android_client_info": {
+          "package_name": "com.memoire.studentnote"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "182928543947-fpfhuovpela33vllaf3s5ql1ii2b6h8g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsK6y7DgUlblCTgrGoV-X_8KXvlKeQ8aY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "182928543947-fpfhuovpela33vllaf3s5ql1ii2b6h8g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

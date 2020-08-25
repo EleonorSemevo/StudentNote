@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">StudentNote</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_inscription">Inscription</string>
+    <string name="mail">Mail(*)</string>
+    <string name="mot_de_passe">Mot de passe</string>
+    <string name="mdp_oublie">Mot de passe oublié?</string>
+    <string name="title_activity_connection">Connection</string>
+    <string name="view_nom">Nom(*)</string>
+    <string name="view_prenom">Prenom(*)</string>
+    <string name="view_confirm">Confirmez votre mot de pass</string>
+    <string name="view_mdp">Votre mot de passe(*)</string>
+    <string name="view_inscription">INSCRIPTION</string>
+    <string name="view_terme_condition">J\'ai lu et accepté les termes et conditions d\'utilisation</string>
+    <string name="view_telephone">Telephone</string>
+    <string name="title_activity_tabbed">Tabbed</string>
+    <string name="menu_messages">Messages</string>
+    <string name="menu_notes">Notes</string>
+    <string name="menu_informations">Informations</string>
+    <string name="menu_administrer">Administrer</string>
+    <string name="menu_profil">Profil</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
