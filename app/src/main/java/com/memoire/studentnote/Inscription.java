@@ -55,7 +55,7 @@ public class Inscription extends AppCompatActivity {
         mError = findViewById(R.id.error);
         mInscription = findViewById(R.id.inscription);
         ///
-        if(mDataWorker==null)
+        if(!mdb.isOpen())
         {
             mDatabaseOpenHelper = new DatabaseOpenHelper(this);
             mdb= mDatabaseOpenHelper.getReadableDatabase();

@@ -1,6 +1,7 @@
 package com.memoire.studentnote;
 
 
+import android.content.ContentValues;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,11 +18,14 @@ import android.widget.ListView;
 
 import com.memoire.studentnote.classes.Ecole;
 import com.memoire.studentnote.database.DataManager;
+import com.memoire.studentnote.database.DatabaseContract;
 import com.memoire.studentnote.database.DatabaseDataWorker;
 import com.memoire.studentnote.database.DatabaseUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.memoire.studentnote.database.DatabaseUtil.mdb;
 
 
 /**
@@ -54,12 +58,18 @@ public class NoteFragment extends Fragment {
         //
         if(dataManager.sizeEcole()==0)
         {
-            DatabaseUtil.mDataWorker.insEc();
+            DatabaseUtil.mDataWorker.insEc1();
+            DatabaseUtil.mDataWorker.insEc2();
+
+
+
         }
 
         //
 
         ecoles =dataManager.getEcoles() ;
+//        ecoles.add(new Ecole("ec1","CEG1","Cotonou","Tokpa","Primaire","455"));
+//        ecoles.add(new Ecole("ec2","pahou","Cotonou","Tokpa","Primaire","455"));
         mEcoleRecyclerAdapter = new EcoleRecyclerAdapter(view.getContext(),ecoles);
         recyclerView.setAdapter(mEcoleRecyclerAdapter);
 

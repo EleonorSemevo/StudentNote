@@ -78,10 +78,14 @@ private void insertParent(String id,String nom, String prenom, String mail, Stri
         insertParent("Semevo","Eleonor","lorensemevo@gmail.com","tatatata","65707651");
     }
 
-    public void insEc()
+    public void insEc1()
     {
 
         insertEcole("Ecole de Tankpe","Calavi","Tankpe","primaire","pi04");
+
+    }
+    public void insEc2()
+    {
         insertEcole("CEG KPAHOU", "Calavi","kpahou","CEG","ccaa");
     }
     public void insEns()

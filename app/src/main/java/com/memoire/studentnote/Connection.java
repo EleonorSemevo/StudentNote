@@ -45,7 +45,7 @@ public class Connection extends AppCompatActivity {
         mConnecter = findViewById(R.id.connecter);
         mEnregistrerSecond = findViewById(R.id.enregistrer_second);
         mFirebaseAuth = FirebaseAuth.getInstance();
-        if(mDataWorker==null)
+        if(mdb==null)
         {
             mDatabaseOpenHelper = new DatabaseOpenHelper(this);
             mdb= mDatabaseOpenHelper.getReadableDatabase();
