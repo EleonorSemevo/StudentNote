@@ -54,11 +54,13 @@ public class Inscription extends AppCompatActivity {
         mTelephone = findViewById(R.id.telephone);
         mError = findViewById(R.id.error);
         mInscription = findViewById(R.id.inscription);
-        //mDatabaseOpenHelper = new DatabaseOpenHelper(this);
-        //mDataWorker = new DatabaseDataWorker(mdb);
-        mDatabaseOpenHelper = new DatabaseOpenHelper(this);
-        mdb= mDatabaseOpenHelper.getReadableDatabase();
-        mDataWorker = new DatabaseDataWorker(mdb);
+        ///
+        if(mDataWorker==null)
+        {
+            mDatabaseOpenHelper = new DatabaseOpenHelper(this);
+            mdb= mDatabaseOpenHelper.getReadableDatabase();
+            mDataWorker = new DatabaseDataWorker(mdb);
+        }
 
 
 

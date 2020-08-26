@@ -4,6 +4,7 @@ import android.database.Cursor;
 
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.memoire.studentnote.classes.Ecole;
 import com.memoire.studentnote.classes.Enseignant;
 import com.memoire.studentnote.classes.Note;
 import com.memoire.studentnote.classes.Parent;
@@ -19,6 +20,7 @@ public class DataManager {
     private List <Parent> mParents = new ArrayList<>();
     private List <Note> mNotes = new ArrayList<>();
     private List <Enseignant> mEnseignants = new ArrayList<>();
+    private List <Ecole> mEcoles = new ArrayList<>();
 
     public static DataManager getInstance()
     {
@@ -136,7 +138,7 @@ public class DataManager {
 
         final Cursor enseignantCursor = DatabaseUtil.mdb.query(ParentEntry.TABLE_NAME,
                 enseignantColumns,null,null,null,null,null,null);
-        loadFromDatabase((DatabaseOpenHelper) enseignantCursor);
+        //loadFromDatabase((DatabaseOpenHelper) enseignantCursor);
 
         int enseignantNomPos = enseignantCursor.getColumnIndex(ParentEntry.COLUMN_NOM);
         int enseignantPrenomPos = enseignantCursor.getColumnIndex(ParentEntry.COLUMN_PRENOM);
@@ -163,6 +165,49 @@ public class DataManager {
         enseignantCursor.close();
     }
 
+    private void loadEcoleFromDatabase()
+    {
+        final String[] ecoleColums ={
+                DatabaseContract.EcoleEntry.COLUMN_ID,
+                DatabaseContract.EcoleEntry.COLUMN_NOM,
+                DatabaseContract.EcoleEntry.COLUMN_VILLE,
+                DatabaseContract.EcoleEntry.COLUMN_QUARTIER,
+                DatabaseContract.EcoleEntry.COLUMN_TYPE,
+                DatabaseContract.EcoleEntry.COLUMN_CODE
+
+        };
+
+        final Cursor ecoleCursor = DatabaseUtil.mdb.query(DatabaseContract.EcoleEntry.TABLE_NAME,
+                ecoleColums,null,null,null,null,null,null);
+
+        int ecoleIdPos= ecoleCursor.getColumnIndex(DatabaseContract.EcoleEntry.COLUMN_ID);
+        int ecoleNomPos = ecoleCursor.getColumnIndex(DatabaseContract.EcoleEntry.COLUMN_NOM);
+        int ecoleVillePos = ecoleCursor.getColumnIndex(DatabaseContract.EcoleEntry.COLUMN_VILLE);
+        int ecoleQuartierPos = ecoleCursor.getColumnIndex(DatabaseContract.EcoleEntry.COLUMN_QUARTIER);
+        int ecoleTypePos = ecoleCursor.getColumnIndex(DatabaseContract.EcoleEntry.COLUMN_TYPE);
+        int ecoleCodePos = ecoleCursor.getColumnIndex(DatabaseContract.EcoleEntry.COLUMN_CODE);
+
+        DataManager dm = getInstance();
+        dm.mEcoles.clear();
+
+        while (ecoleCursor.moveToNext())
+        {
+            String id = ecoleCursor.getString(ecoleIdPos);
+            String nom = ecoleCursor.getString(ecoleNomPos);
+            String ville = ecoleCursor.getString(ecoleVillePos);
+            String quartier = ecoleCursor.getString(ecoleQuartierPos);
+            String type = ecoleCursor.getString(ecoleTypePos);
+            String code = ecoleCursor.getString(ecoleCodePos);
+
+            Ecole ecole = new Ecole(id,nom,ville,quartier,type,code);
+            mEcoles.add(ecole);
+        }
+
+        ecoleCursor.close();
+    }
+
+
+
 
     public int sizeParent()
     {
@@ -173,7 +218,6 @@ public class DataManager {
 
     public int sizeEnseignant()
     {
-        Cursor c=null;
         loadEnseignantFromDatabase();
         return mEnseignants.size();
     }
@@ -218,7 +262,14 @@ public class DataManager {
 
     }
 
+    public List<Ecole> getEcoles() {
+        loadEcoleFromDatabase();
+        return mEcoles;
+    }
 
-
-
+    public int sizeEcole()
+    {
+        loadEcoleFromDatabase();
+        return mEcoles.size();
+    }
 }

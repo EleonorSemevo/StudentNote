@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.memoire.studentnote.classes.Enseignant;
 import com.memoire.studentnote.classes.Parent;
 import com.memoire.studentnote.database.DataManager;
@@ -52,6 +53,10 @@ public class ProfilFragment extends Fragment {
         Bundle args = getArguments();
 
         DataManager dataManager = DataManager.getInstance();
+        if(DatabaseUtil.mFirebaseAuth==null)
+        {
+            DatabaseUtil.mFirebaseAuth = FirebaseAuth.getInstance();
+        }
         Object obj =dataManager.getProfil(DatabaseUtil.mFirebaseAuth.getCurrentUser().getEmail());
         String ml = DatabaseUtil.mFirebaseAuth.getCurrentUser().getEmail();
         Log.d("mail",DatabaseUtil.mFirebaseAuth.getCurrentUser().getEmail());

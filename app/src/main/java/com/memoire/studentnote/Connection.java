@@ -16,7 +16,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.memoire.studentnote.database.DatabaseDataWorker;
+import com.memoire.studentnote.database.DatabaseOpenHelper;
 import com.memoire.studentnote.database.DatabaseUtil;
+
+import static com.memoire.studentnote.database.DatabaseUtil.mDataWorker;
+import static com.memoire.studentnote.database.DatabaseUtil.mDatabaseOpenHelper;
+import static com.memoire.studentnote.database.DatabaseUtil.mdb;
 
 public class Connection extends AppCompatActivity {
 
@@ -39,6 +45,14 @@ public class Connection extends AppCompatActivity {
         mConnecter = findViewById(R.id.connecter);
         mEnregistrerSecond = findViewById(R.id.enregistrer_second);
         mFirebaseAuth = FirebaseAuth.getInstance();
+        if(mDataWorker==null)
+        {
+            mDatabaseOpenHelper = new DatabaseOpenHelper(this);
+            mdb= mDatabaseOpenHelper.getReadableDatabase();
+            mDataWorker = new DatabaseDataWorker(mdb);
+        }
+        mDataWorker.insPar();//A enlever apres //insertion d'un parent au début de l'application
+
 
 
         mConnecter.setOnClickListener(new View.OnClickListener() {

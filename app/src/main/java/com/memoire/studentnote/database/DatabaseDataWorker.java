@@ -42,6 +42,54 @@ private void insertParent(String id,String nom, String prenom, String mail, Stri
 
     }
 
+    public void insertEcole(String nom,String ville, String quartier, String type, String code)
+    {
+        ContentValues values = new ContentValues();
+        values.put(DatabaseContract.EcoleEntry.COLUMN_ID, dm.sizeEcole()+"Ecole");
+        values.put(DatabaseContract.EcoleEntry.COLUMN_NOM, nom);
+        values.put(DatabaseContract.EcoleEntry.COLUMN_QUARTIER, quartier);
+        values.put(DatabaseContract.EcoleEntry.COLUMN_VILLE, ville);
+        values.put(DatabaseContract.EcoleEntry.COLUMN_TYPE, type);
+        values.put(DatabaseContract.EcoleEntry.COLUMN_CODE, code);
+
+        long newRowId = mdb.insert(DatabaseContract.EcoleEntry.TABLE_NAME,null, values);
+
+    }
+
+    public void insertEnseignant(String nom, String prenom, String mail, String password, String telephone)
+    {
+        ContentValues values = new ContentValues();
+        values.put(DatabaseContract.EnseignantEntry.COLUMN_ID,dm.sizeEnseignant()+"Enseignant");
+        values.put(DatabaseContract.EnseignantEntry.COLUMN_NOM,nom);
+        values.put(DatabaseContract.EnseignantEntry.COLUMN_PRENOM, prenom);
+        values.put(DatabaseContract.EnseignantEntry.COLUMN_MAIL, mail);
+        values.put(DatabaseContract.EnseignantEntry.COLUMN_TELEPHONE,telephone);
+        values.put(DatabaseContract.EnseignantEntry.COLUMN_MDP, password);
+
+        long newRowId = mdb.insert(DatabaseContract.EnseignantEntry.TABLE_NAME, null, values);
+
+    }
+
+
+    //DONNEES STATIC CHARGER AU PREALABLE D4ABORS
+
+    public void insPar()
+    {
+        insertParent("Semevo","Eleonor","lorensemevo@gmail.com","tatatata","65707651");
+    }
+
+    public void insEc()
+    {
+
+        insertEcole("Ecole de Tankpe","Calavi","Tankpe","primaire","pi04");
+        insertEcole("CEG KPAHOU", "Calavi","kpahou","CEG","ccaa");
+    }
+    public void insEns()
+    {
+        insertEnseignant("Tomavo","Clarisse","fleursemevo@gmail.com","tatatata","95209390");
+    }
+
+
 
 }
 
