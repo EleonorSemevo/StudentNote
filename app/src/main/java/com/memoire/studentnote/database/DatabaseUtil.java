@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class DatabaseUtil {
     private Context context;
 
@@ -15,6 +17,8 @@ public class DatabaseUtil {
     public static boolean isEnseignant;
     public static boolean isParent;
     public static Cursor mCursor;
+    public static Object CurrentUser;
+    public static FirebaseAuth mFirebaseAuth;
 
 
 

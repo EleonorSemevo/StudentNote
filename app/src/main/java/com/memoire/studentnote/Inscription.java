@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.memoire.studentnote.database.DatabaseDataWorker;
 import com.memoire.studentnote.database.DatabaseOpenHelper;
+import com.memoire.studentnote.database.DatabaseUtil;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,10 +26,11 @@ import android.widget.TextView;
 
 import static com.memoire.studentnote.database.DatabaseUtil.mDataWorker;
 import static com.memoire.studentnote.database.DatabaseUtil.mDatabaseOpenHelper;
+import static com.memoire.studentnote.database.DatabaseUtil.mFirebaseAuth;
 import static com.memoire.studentnote.database.DatabaseUtil.mdb;
 
 public class Inscription extends AppCompatActivity {
-    private FirebaseAuth mFirebaseAuth;
+    //private FirebaseAuth mFirebaseAuth;
     private EditText mNom;
     private EditText mPrenom;
     private EditText mMail;

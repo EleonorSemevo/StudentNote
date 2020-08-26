@@ -40,6 +40,7 @@ public class Connection extends AppCompatActivity {
         mEnregistrerSecond = findViewById(R.id.enregistrer_second);
         mFirebaseAuth = FirebaseAuth.getInstance();
 
+
         mConnecter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +73,7 @@ public class Connection extends AppCompatActivity {
 
     private void connection()
     {
-        String email = mEmail.getText().toString();
+        final String email = mEmail.getText().toString();
         String password = mPassword.getText().toString();
         if(email.isEmpty() || password.isEmpty())
         {
@@ -94,6 +95,7 @@ public class Connection extends AppCompatActivity {
                                 //updateUI();
                                 Intent intent = new Intent(Connection.this, MenuTable.class);
                                 startActivity(intent);
+
 
                             } else {
                                 // If sign in fails, display a message to the user.

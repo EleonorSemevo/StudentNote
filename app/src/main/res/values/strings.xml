@@ -19,7 +19,9 @@
     <string name="menu_informations">Informations</string>
     <string name="menu_administrer">Administrer</string>
     <string name="menu_profil">Profil</string>
-
+    <string name="p_nom">Nom</string>
+    <string name="p_telephone">Telephone</string>
+    <string name="p_mail">Mail</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

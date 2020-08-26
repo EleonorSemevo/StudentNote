@@ -185,12 +185,12 @@ public class DataManager {
         Cursor ce=null;
         Object objet=new Object();
         loadParentFromDatabase();
-        loadEnseignantFromDatabase();
-        for(Enseignant enseignant:mEnseignants)
-        {
-            if(enseignant.getMail()==mail)
-                objet= enseignant;
-        }
+       // loadEnseignantFromDatabase();
+//        for(Enseignant enseignant:mEnseignants)
+//        {
+//            if(enseignant.getMail()==mail)
+//                objet= enseignant;
+//        }
 
         for (Parent parent:mParents)
         {
@@ -208,6 +208,7 @@ public class DataManager {
             DatabaseUtil.isEnseignant = true;
             DatabaseUtil.isParent = false;
         }
+        else
 
         if (dm.getProfil(mail).equals(Parent.class))
         {
