@@ -10,18 +10,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.memoire.studentnote.classes.Matiere;
+
 import java.util.List;
 
-public class ActionRecyclerAdapter extends RecyclerView.Adapter<ActionRecyclerAdapter.ViewHolder> {
+public class MatiereRecyclerAdapter extends RecyclerView.Adapter<MatiereRecyclerAdapter.ViewHolder> {
     private RecyclerView.ViewHolder mHolder;
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private List<String> mActions;
+    private List<Matiere> mMatieres;
 
-    public ActionRecyclerAdapter(Context context, List<String> actions)
+    public MatiereRecyclerAdapter(Context context, List<Matiere> matieres)
     {
         mContext = context;
-        mActions = actions;
+        mMatieres = matieres;
         mLayoutInflater = LayoutInflater.from(mContext);
     }
 
@@ -35,8 +37,8 @@ public class ActionRecyclerAdapter extends RecyclerView.Adapter<ActionRecyclerAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String texte = mActions.get(position);
-        holder.mTextAction.setText(texte);
+        Matiere matiere = mMatieres.get(position);
+        holder.mTextMatiere.setText(matiere.getNom());
         holder.mCurrentPosition = position;
 
     }
@@ -45,26 +47,22 @@ public class ActionRecyclerAdapter extends RecyclerView.Adapter<ActionRecyclerAd
 
     @Override
     public int getItemCount() {
-        return mActions.size();
+        return mMatieres.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public final TextView mTextAction;
+        public final TextView mTextMatiere;
         public int mCurrentPosition;
 
 
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
-            mTextAction = itemView.findViewById(R.id.text_action);
+            mTextMatiere = itemView.findViewById(R.id.text_action);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mCurrentPosition==0)
-                    {
-                        Intent intent = new Intent(mContext, ClasseMenu.class);
-                        mContext.startActivity(intent);
-                    }
+
 
 
                 }
