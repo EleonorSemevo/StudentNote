@@ -1,13 +1,13 @@
 package com.memoire.studentnote;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.memoire.studentnote.classes.Ecole;
@@ -63,13 +63,15 @@ class EcoleRecyclerAdapter extends  RecyclerView.Adapter <EcoleRecyclerAdapter.V
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mNomEcole = itemView.findViewById(R.id.item_nomEcole);
+            mNomEcole = itemView.findViewById(R.id.item_action);
             mLocationEcole = itemView.findViewById(R.id.item_localisation);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //Fragment fragment=new Fragment();
+                    Intent intent=new Intent(mContext, ActionMenu.class);
+                    mContext.startActivity(intent);
 
                 }
             });

@@ -53,23 +53,16 @@ public class NoteFragment extends Fragment {
         recyclerView.setLayoutManager(ecoleLayoutManager);
 
         List <Ecole> ecoles= new ArrayList<>();
-        //ecoles.add(new Ecole("ec1","CEG1","Cotonou","Tokpa","Primaire","455"));
         DataManager dataManager = DataManager.getInstance();
-        //
+        //A enlever
         if(dataManager.sizeEcole()==0)
         {
             DatabaseUtil.mDataWorker.insEc1();
             DatabaseUtil.mDataWorker.insEc2();
-
-
-
         }
-
         //
 
         ecoles =dataManager.getEcoles() ;
-//        ecoles.add(new Ecole("ec1","CEG1","Cotonou","Tokpa","Primaire","455"));
-//        ecoles.add(new Ecole("ec2","pahou","Cotonou","Tokpa","Primaire","455"));
         mEcoleRecyclerAdapter = new EcoleRecyclerAdapter(view.getContext(),ecoles);
         recyclerView.setAdapter(mEcoleRecyclerAdapter);
 

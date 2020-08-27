@@ -16,7 +16,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/item_nomEcole"
+                android:id="@+id/item_action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
@@ -32,7 +32,7 @@
                 android:text="TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/item_nomEcole" />
+                app:layout_constraintTop_toBottomOf="@+id/item_action" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </FrameLayout>
