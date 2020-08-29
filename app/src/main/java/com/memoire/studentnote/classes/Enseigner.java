@@ -4,12 +4,14 @@ public class Enseigner {
     private String idEnseignant;
     private String idMatiere;
     private String idEcole;
+    private String idClasse;
 
 
-    public Enseigner(String idEnseignant, String idMatiere, String idEcole) {
+    public Enseigner(String idEnseignant, String idMatiere, String idEcole, String idClasse) {
         this.idEnseignant = idEnseignant;
         this.idMatiere = idMatiere;
         this.idEcole = idEcole;
+        this.idClasse = idClasse;
     }
 
     public String getIdEnseignant() {
@@ -34,5 +36,13 @@ public class Enseigner {
 
     public void setIdEcole(String idEcole) {
         this.idEcole = idEcole;
+    }
+
+    public String getIdClasse() {
+        return idClasse;
+    }
+
+    public void setIdClasse(String idClasse) {
+        this.idClasse = idClasse;
     }
 }

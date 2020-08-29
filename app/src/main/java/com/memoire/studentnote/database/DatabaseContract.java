@@ -110,12 +110,14 @@ public class DatabaseContract {
         public static final String COLUMN_ID_ENSEIGNANT = "idEnseignant";
         public static final String COLUMN_ID_MATIERE="idMatiere";
         public static final String COLUMN_ID_ECOLE="idEcole";
+        public static final String COLUMN_CLASSE ="idClasse";
 
         public static final String SQL_CREATE_TABLE="CREATE TABLE "+
                 TABLE_NAME+ " ("+_ID+ " INTEGER PRIMARY KEY, "+
-                COLUMN_ID_ENSEIGNANT+ " TEXT NOT NULL, "+
-                COLUMN_ID_MATIERE+ " TEXT NOT NULL, "+
-                COLUMN_ID_ECOLE+ " TEXT NOT NULL )";
+                COLUMN_ID_ENSEIGNANT+ " TEXT, "+
+                COLUMN_ID_MATIERE+ " TEXT, "+
+                COLUMN_CLASSE+ " TEXT, "+
+                COLUMN_ID_ECOLE+ " TEXT)";
 
 
 

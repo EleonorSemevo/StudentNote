@@ -11,12 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.memoire.studentnote.classes.Ecole;
+import com.memoire.studentnote.database.Current;
 
 import java.util.List;
 //import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 class EcoleRecyclerAdapter extends  RecyclerView.Adapter <EcoleRecyclerAdapter.ViewHolder>{
 
+    private static final String ECOLE_ACTUElLE="ACTUELLE_ECOLE";
     private RecyclerView.ViewHolder mHolder;
     private int mPosition;
 
@@ -71,6 +73,8 @@ class EcoleRecyclerAdapter extends  RecyclerView.Adapter <EcoleRecyclerAdapter.V
                 public void onClick(View v) {
                     //Fragment fragment=new Fragment();
                     Intent intent=new Intent(mContext, ActionMenu.class);
+                    Current.currentIdEcole = mEcoles.get(mCurrentPosition).getId();
+                    //intent.putExtra(ActionMenu.ID_ECOLE, mEcoles.get(mCurrentPosition).getId());
                     mContext.startActivity(intent);
 
                 }

@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.memoire.studentnote.classes.Classe;
+import com.memoire.studentnote.database.Current;
 
 import java.util.List;
 
@@ -63,6 +64,8 @@ public class ClasseRecyclerAdapter extends RecyclerView.Adapter<ClasseRecyclerAd
                 @Override
                 public void onClick(View v) {
                     Intent intent =new Intent(mContext, MatiereMenu.class);
+                    //intent.putExtra(MatiereMenu.ID_CURRENT_CLASSE,mClasses.get(mCurrentPosition).getId());
+                    Current.currentIdClasse = mClasses.get(mCurrentPosition).getId();
                     mContext.startActivity(intent);
                 }
             });

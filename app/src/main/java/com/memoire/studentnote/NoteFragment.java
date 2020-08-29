@@ -55,11 +55,11 @@ public class NoteFragment extends Fragment {
         List <Ecole> ecoles= new ArrayList<>();
         DataManager dataManager = DataManager.getInstance();
         //A enlever
-        if(dataManager.sizeEcole()==0)
-        {
-            DatabaseUtil.mDataWorker.insEc1();
-            DatabaseUtil.mDataWorker.insEc2();
-        }
+//        if(dataManager.sizeEcole()==0)
+//        {
+//            DatabaseUtil.mDataWorker.insEc1();
+//            DatabaseUtil.mDataWorker.insEc2();
+//        }
         //
 
         ecoles =dataManager.getEcoles() ;

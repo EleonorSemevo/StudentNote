@@ -1,6 +1,12 @@
 package com.memoire.studentnote.classes;
 
-public class Ecole {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+public class Ecole implements Parcelable {
     private String id;
     private String nom;
     private String ville;
@@ -16,6 +22,27 @@ public class Ecole {
         this.type = type;
         this.code = code;
     }
+
+    private Ecole(Parcel in) {
+        id = in.readString();
+        nom = in.readString();
+        ville = in.readString();
+        quartier = in.readString();
+        type = in.readString();
+        code = in.readString();
+    }
+
+    public static final Parcelable.Creator<Ecole> CREATOR = new Parcelable.Creator<Ecole>() {
+        @Override
+        public Ecole createFromParcel(Parcel in) {
+            return new Ecole(in);
+        }
+
+        @Override
+        public Ecole[] newArray(int size) {
+            return new Ecole[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -64,4 +91,50 @@ public class Ecole {
     public void setCode(String code) {
         this.code = code;
     }
+
+    private String getCompareKey()
+    {
+        return   id + "|"+ nom + "|" + ville +"|" +quartier +"|" + type +"|" +
+                code ;
+    }
+
+
+    @Override
+    public boolean equals(@Nullable Object obj)
+    {
+        if (this ==obj) return true;
+        if(obj == null || getClass()!= obj.getClass())
+            return false;
+        Ecole that = (Ecole) obj;
+
+        return getCompareKey().equals(that.getCompareKey());
+    }
+
+    @Override
+    public int hashCode() {
+        return getCompareKey().hashCode();
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return getCompareKey();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags)
+    {
+        dest.writeString(id);
+        dest.writeString(nom);
+        dest.writeString(ville);
+        dest.writeString(quartier);
+        dest.writeString(type);
+        dest.writeString(code);
+    }
+
 }

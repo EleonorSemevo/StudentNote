@@ -51,8 +51,8 @@ public class Connection extends AppCompatActivity {
             mdb= mDatabaseOpenHelper.getReadableDatabase();
             mDataWorker = new DatabaseDataWorker(mdb);
         }
-        mDataWorker.insPar();//A enlever apres //insertion d'un parent au début de l'application
-
+        //mDataWorker.insPar();//A enlever apres //insertion d'un parent au début de l'application
+        mDataWorker.ins();
 
 
         mConnecter.setOnClickListener(new View.OnClickListener() {

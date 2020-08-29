@@ -4,21 +4,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.memoire.studentnote.classes.Matiere;
+import com.memoire.studentnote.database.Current;
 import com.memoire.studentnote.database.DataManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MatiereMenu extends AppCompatActivity {
+
     private MatiereRecyclerAdapter mMatiereRecyclerAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matiere_menu);
+        getExtra();
         initialiseDisplayContent();
     }
 
@@ -30,14 +35,20 @@ public class MatiereMenu extends AppCompatActivity {
         recyclerView.setLayoutManager(actionGridLayoutManager);
         List<Matiere> matieres = new ArrayList<>();
         //A enlever lorque la DM sera à jour
-        matieres.add(new Matiere("m1","math"));
-        matieres.add(new Matiere("m2","français"));
-        matieres.add(new Matiere("an2","anglais"));
+//        matieres.add(new Matiere("m1","math"));
+//        matieres.add(new Matiere("m2","français"));
+//        matieres.add(new Matiere("an2","anglais"));
         DataManager dm= DataManager.getInstance();
-       // matieres = dm.getMatiere();
-
-
+        //matieres = dm.getMatiere();
+        matieres = dm.getMtiereOfClasseFromEcole();
         mMatiereRecyclerAdapter = new MatiereRecyclerAdapter(this, matieres);
         recyclerView.setAdapter(mMatiereRecyclerAdapter);
+    }
+
+    private void getExtra()
+    {
+//        Intent intent = new Intent();
+//        mCurrentIdClasse = intent.getStringExtra(ID_CURRENT_CLASSE);
+
     }
 }
