@@ -4,11 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.memoire.studentnote.classes.Matiere;
-import com.memoire.studentnote.database.Current;
 import com.memoire.studentnote.database.DataManager;
 
 import java.util.ArrayList;
@@ -34,12 +32,11 @@ public class MatiereMenu extends AppCompatActivity {
                 1,RecyclerView.VERTICAL,false);
         recyclerView.setLayoutManager(actionGridLayoutManager);
         List<Matiere> matieres = new ArrayList<>();
-        //A enlever lorque la DM sera à jour
-//        matieres.add(new Matiere("m1","math"));
-//        matieres.add(new Matiere("m2","français"));
-//        matieres.add(new Matiere("an2","anglais"));
+
         DataManager dm= DataManager.getInstance();
-        //matieres = dm.getMatiere();
+
+        //matieres = dm.getMtiereOfClasseFromEcole();
+        //matieres = dm.getMatieresFClasseFEcole();
         matieres = dm.getMtiereOfClasseFromEcole();
         mMatiereRecyclerAdapter = new MatiereRecyclerAdapter(this, matieres);
         recyclerView.setAdapter(mMatiereRecyclerAdapter);

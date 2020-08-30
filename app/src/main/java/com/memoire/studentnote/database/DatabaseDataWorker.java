@@ -86,7 +86,7 @@ private void insertParent(String id,String nom, String prenom, String mail, Stri
     public void insertMatiere(String nom)
     {
         ContentValues values = new ContentValues();
-        values.put(DatabaseContract.MatiereEntry.COLUMN_ID,dm.sizeEnseignant()+"Matiere");
+        values.put(DatabaseContract.MatiereEntry.COLUMN_ID,dm.sizeMatiere()+"Matiere");
         values.put(DatabaseContract.MatiereEntry.COLUMN_NOM,nom);
         long newRowId = mdb.insert(DatabaseContract.MatiereEntry.TABLE_NAME, null, values);
 
