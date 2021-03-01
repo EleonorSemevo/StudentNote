@@ -1,16 +1,16 @@
 package com.memoire.studentnote.classes;
 
 public class NoteDocument {
-    private String idMatiere;
-    private String idEcole;
-    private String idClass;
-    private String idDocument;
+    private int idMatiere;
+    private int idEcole;
+    private int idClass;
+    private int idDocument;
     private String type;
     private String dateComposition;
     private String location;
     private int numeroComposition;
 
-    public NoteDocument(String idMatiere, String idEcole, String idClass, String idDocument, String type, String dateComposition, String location, int numeroComposition) {
+    public NoteDocument(int idMatiere, int idEcole, int idClass, int idDocument, String type, String dateComposition, String location, int numeroComposition) {
         this.idMatiere = idMatiere;
         this.idEcole = idEcole;
         this.idClass = idClass;
@@ -21,35 +21,35 @@ public class NoteDocument {
         this.numeroComposition = numeroComposition;
     }
 
-    public String getIdMatiere() {
+    public int getIdMatiere() {
         return idMatiere;
     }
 
-    public void setIdMatiere(String idMatiere) {
+    public void setIdMatiere(int idMatiere) {
         this.idMatiere = idMatiere;
     }
 
-    public String getIdEcole() {
+    public int getIdEcole() {
         return idEcole;
     }
 
-    public void setIdEcole(String idEcole) {
+    public void setIdEcole(int idEcole) {
         this.idEcole = idEcole;
     }
 
-    public String getIdClass() {
+    public int getIdClass() {
         return idClass;
     }
 
-    public void setIdClass(String idClass) {
+    public void setIdClass(int idClass) {
         this.idClass = idClass;
     }
 
-    public String getIdDocument() {
+    public int getIdDocument() {
         return idDocument;
     }
 
-    public void setIdDocument(String idDocument) {
+    public void setIdDocument(int idDocument) {
         this.idDocument = idDocument;
     }
 

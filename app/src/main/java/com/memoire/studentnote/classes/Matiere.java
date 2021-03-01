@@ -1,19 +1,20 @@
 package com.memoire.studentnote.classes;
 
 public class Matiere {
-    private String id;
+    private int id;
     private String nom;
 
-    public Matiere(String id, String nom) {
+
+    public Matiere(int id, String nom) {
         this.id = id;
         this.nom = nom;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

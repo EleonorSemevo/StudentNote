@@ -1,14 +1,14 @@
 package com.memoire.studentnote.classes;
 
 public class Enseignant {
-    private String id;
+    private int id;
     private String nom;
     private String prenom;
     private String mail;
     private String mdp;
     private String telephone;
 
-    public Enseignant(String id, String nom, String prenom, String mail, String mdp, String telephone) {
+    public Enseignant(int id, String nom, String prenom, String mail, String mdp, String telephone) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -17,7 +17,7 @@ public class Enseignant {
         this.telephone = telephone;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -41,7 +41,7 @@ public class Enseignant {
         return telephone;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

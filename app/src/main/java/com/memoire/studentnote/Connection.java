@@ -77,7 +77,7 @@ public class Connection extends AppCompatActivity {
         FirebaseUser currentUser = mFirebaseAuth.getCurrentUser();
         if(currentUser != null )
         {
-            Intent intent = new Intent(this,Inscription.class);//CECI DOIT ETRE LA PAGE SI L4UTILISATEUR EST DEJA CONNECTE
+            Intent intent = new Intent(this,Inscription.class);//CECI DOIT ETRE LA PAGE SI L'UTILISATEUR EST DEJA CONNECTE
             //A METTRE A JOUR LE CODE SI CETTE PAGE EST CREEE
             startActivity(intent);
         }
@@ -109,6 +109,7 @@ public class Connection extends AppCompatActivity {
                                 //updateUI();
                                 Intent intent = new Intent(Connection.this, MenuTable.class);
                                 startActivity(intent);
+                                finish();
 
 
                             } else {
@@ -146,5 +147,7 @@ public class Connection extends AppCompatActivity {
         }
 
     }
+
+
 
 }

@@ -60,7 +60,7 @@ public class ProfilFragment extends Fragment {
         Object obj =dataManager.getProfil(DatabaseUtil.mFirebaseAuth.getCurrentUser().getEmail());
         String ml = DatabaseUtil.mFirebaseAuth.getCurrentUser().getEmail();
         Log.d("mail",DatabaseUtil.mFirebaseAuth.getCurrentUser().getEmail());
-        dataManager.typeCurrentProfil();
+        //dataManager.typeCurrentProfil();
 
         if(obj.getClass().equals(Enseignant.class))
         {

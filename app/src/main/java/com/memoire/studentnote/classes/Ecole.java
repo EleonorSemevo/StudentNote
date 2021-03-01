@@ -1,20 +1,14 @@
 package com.memoire.studentnote.classes;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-public class Ecole implements Parcelable {
-    private String id;
+public class Ecole implements android.os.Parcelable {
+    private int id;
     private String nom;
     private String ville;
     private String quartier;
     private String type;
     private String code;
 
-    public Ecole(String id, String nom, String ville, String quartier, String type, String code) {
+    public Ecole(int id, String nom, String ville, String quartier, String type, String code) {
         this.id = id;
         this.nom = nom;
         this.ville = ville;
@@ -23,8 +17,8 @@ public class Ecole implements Parcelable {
         this.code = code;
     }
 
-    private Ecole(Parcel in) {
-        id = in.readString();
+    private Ecole(android.os.Parcel in) {
+        id = in.readInt();
         nom = in.readString();
         ville = in.readString();
         quartier = in.readString();
@@ -32,9 +26,9 @@ public class Ecole implements Parcelable {
         code = in.readString();
     }
 
-    public static final Parcelable.Creator<Ecole> CREATOR = new Parcelable.Creator<Ecole>() {
+    public static final Creator<Ecole> CREATOR = new Creator<Ecole>() {
         @Override
-        public Ecole createFromParcel(Parcel in) {
+        public Ecole createFromParcel(android.os.Parcel in) {
             return new Ecole(in);
         }
 
@@ -44,11 +38,11 @@ public class Ecole implements Parcelable {
         }
     };
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -100,7 +94,7 @@ public class Ecole implements Parcelable {
 
 
     @Override
-    public boolean equals(@Nullable Object obj)
+    public boolean equals(@androidx.annotation.Nullable Object obj)
     {
         if (this ==obj) return true;
         if(obj == null || getClass()!= obj.getClass())
@@ -115,7 +109,7 @@ public class Ecole implements Parcelable {
         return getCompareKey().hashCode();
     }
 
-    @NonNull
+    @androidx.annotation.NonNull
     @Override
     public String toString() {
         return getCompareKey();
@@ -127,9 +121,9 @@ public class Ecole implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags)
+    public void writeToParcel(android.os.Parcel dest, int flags)
     {
-        dest.writeString(id);
+        dest.writeInt(id);
         dest.writeString(nom);
         dest.writeString(ville);
         dest.writeString(quartier);

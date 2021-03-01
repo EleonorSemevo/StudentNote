@@ -1,39 +1,75 @@
 package com.memoire.studentnote.classes;
 
-public class Etudier {
-    private String idEleve;
-    private String idClasse;
-    private String idEcole;
+import android.os.Parcel;
+
+import androidx.annotation.NonNull;
+
+public class Etudier implements android.os.Parcelable{
+
+    private int id;
+    private int idEleve;
+    private int idClasse;
+    private int idEcole;
     private int annee;
 
-    public Etudier(String idEleve, String idClasse, String idEcole, int annee) {
+
+    public Etudier(int id, int idEleve, int idClasse, int idEcole, int annee) {
+        this.id = id;
         this.idEleve = idEleve;
         this.idClasse = idClasse;
         this.idEcole = idEcole;
         this.annee = annee;
     }
 
-    public String getIdEleve() {
+    protected Etudier(Parcel in) {
+        id = in.readInt();
+        idEleve = in.readInt();
+        idClasse = in.readInt();
+        idEcole = in.readInt();
+        annee = in.readInt();
+    }
+
+    public static final Creator<Etudier> CREATOR = new Creator<Etudier>() {
+        @Override
+        public Etudier createFromParcel(Parcel in) {
+            return new Etudier(in);
+        }
+
+        @Override
+        public Etudier[] newArray(int size) {
+            return new Etudier[size];
+        }
+    };
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getIdEleve() {
         return idEleve;
     }
 
-    public void setIdEleve(String idEleve) {
+    public void setIdEleve(int idEleve) {
         this.idEleve = idEleve;
     }
 
-    public String getIdClasse() {
+    public int getIdClasse() {
         return idClasse;
     }
 
-    public void setIdClasse(String idClasse) {
+    public void setIdClasse(int idClasse) {
         this.idClasse = idClasse;
     }
 
-    public String getIdEcole() {
+    public int getIdEcole() {
         return idEcole;
     }
 
-    public void setIdEcole(String idEcole) {
+    public void setIdEcole(int idEcole) {
         this.idEcole = idEcole;
     }
 
@@ -43,5 +79,30 @@ public class Etudier {
 
     public void setAnnee(int annee) {
         this.annee = annee;
+    }
+
+    private String getCompareKey()
+    {
+        return   id + "|"+ idEleve + "|" + idClasse +"|" +idEcole +"|" + annee ;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return  getCompareKey();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeInt(idEleve);
+        dest.writeInt(idClasse);
+        dest.writeInt(idEcole);
+        dest.writeInt(annee);
     }
 }

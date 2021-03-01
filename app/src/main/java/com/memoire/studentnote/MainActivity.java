@@ -1,6 +1,7 @@
 package com.memoire.studentnote;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -15,9 +16,12 @@ import android.os.Handler;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+
+import static com.memoire.studentnote.database.DatabaseUtil.mSharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
-    private static int SPLASH_TIME_OUT=3000;
+    private static final int SPLASH_TIME_OUT=3000;
     private FirebaseAuth mFirebaseAuth;
 
 
@@ -26,15 +30,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mFirebaseAuth = FirebaseAuth.getInstance();
+        //ALLER A L'INTERFACE PRINCIPALE SI LA PERSONNE S4ETAIT CONNECTER AU MOINS UNE FOIS DEJA
+//        if(mSharedPreferences==null)
+//        {
+//            mSharedPreferences =getSharedPreferences("studentNote",MODE_PRIVATE);
+//
+//        }
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(MainActivity.this, Connection.class);
-                startActivity(intent);
-                finish();
-            }
-        },SPLASH_TIME_OUT);
+      // if (!mSharedPreferences.getBoolean("logged",false))
+
+
+           new Handler().postDelayed(new Runnable() {
+               @Override
+               public void run() {
+                   Intent intent = new Intent(MainActivity.this, Connection.class);
+                   startActivity(intent);
+                   finish();
+               }
+           }, SPLASH_TIME_OUT);
+
+
 
     }
 
@@ -50,9 +65,16 @@ public class MainActivity extends AppCompatActivity {
         //updateUI(currentUser);
     }
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+    }
+
     private void updateUI(FirebaseUser currentUser)
     {
 
     }
+
 
 }

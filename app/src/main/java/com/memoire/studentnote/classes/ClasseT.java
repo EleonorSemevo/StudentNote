@@ -1,23 +1,23 @@
 package com.memoire.studentnote.classes;
 
 public class ClasseT {
-    private String id;
+    private int id;
     private String nom;
     private Ecole ecole;
 
 
-    public ClasseT(String id, String nom, Ecole ecole) {
+    public ClasseT(int id, String nom, Ecole ecole) {
         this.id = id;
         this.nom = nom;
 
         this.ecole = ecole;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -17,9 +17,9 @@ import java.util.List;
 
 public class ClasseRecyclerAdapter extends RecyclerView.Adapter<ClasseRecyclerAdapter.ViewHolder> {
     private RecyclerView.ViewHolder mHolder;
-    private Context mContext;
-    private LayoutInflater mLayoutInflater;
-    private List<Classe> mClasses;
+    private final Context mContext;
+    private final LayoutInflater mLayoutInflater;
+    private final List<Classe> mClasses;
 
     public ClasseRecyclerAdapter(Context context, List<Classe> classes)
     {

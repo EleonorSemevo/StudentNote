@@ -4,14 +4,12 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
-
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME="Student.db";
     public static final int DATABASE_VERSION = 1;
 
 
-    public DatabaseOpenHelper(@Nullable Context context) {
+    public DatabaseOpenHelper(@androidx.annotation.Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -29,6 +27,9 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         db.execSQL(DatabaseContract.NoteDocumentEntry.SQL_CREATE_TABLE);
         db.execSQL(DatabaseContract.MatiereEntry.SQL_CREATE_TABLE);
         db.execSQL(DatabaseContract.EnseignerEntry.SQL_CREATE_TABLE);
+        ///
+        db.execSQL(DatabaseContract.MesEnfantsEntry.SQL_CREATE_TABLE);
+        db.execSQL(DatabaseContract.UserEntry.SQL_CREATE_TABLE);
 
 
 

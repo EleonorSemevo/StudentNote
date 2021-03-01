@@ -1,22 +1,22 @@
 package com.memoire.studentnote.classes;
 
 public class Classe {
-    private String id;
+    private int id;
     private String nom;
-    private String idEcole;
+    private int idEcole;
 
 
-    public Classe(String id, String nom, String idEcole) {
+    public Classe(int id, String nom, int idEcole) {
         this.id = id;
         this.nom = nom;
         this.idEcole = idEcole;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -28,11 +28,11 @@ public class Classe {
         this.nom = nom;
     }
 
-    public String getIdEcole() {
+    public int getIdEcole() {
         return idEcole;
     }
 
-    public void setIdEcole(String idEcole) {
+    public void setIdEcole(int idEcole) {
         this.idEcole = idEcole;
     }
 }

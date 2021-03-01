@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Connection"
     tools:showIn="@layout/activity_connection">
 
@@ -15,12 +15,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:autofillHints=""
-        android:background="@drawable/border"
         android:ems="10"
         android:hint="@string/mail"
         android:inputType="textEmailAddress"
-        android:textAlignment="center"
-        android:textColorHint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -33,12 +30,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:autofillHints=""
-        android:background="@drawable/border"
+        android:drawableRight="@mipmap/eye_closed"
         android:ems="10"
         android:hint="@string/mot_de_passe"
         android:inputType="textPassword"
-        android:textAlignment="center"
-        android:textColorHint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="@+id/email"
         app:layout_constraintStart_toStartOf="@+id/email"
         app:layout_constraintTop_toBottomOf="@+id/email" />
@@ -48,9 +43,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="#FFFFFF"
+        android:background="#00FFFFFF"
         android:text="@string/mdp_oublie"
-        android:textColor="@color/orange"
+        android:textAllCaps="false"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="@+id/password"
         app:layout_constraintTop_toBottomOf="@+id/password" />
 
@@ -59,8 +55,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/border"
+        android:background="@drawable/grey_border"
+        android:shadowColor="#9C9898"
         android:text="Se connecter"
+        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="@+id/password"
         app:layout_constraintStart_toStartOf="@+id/password"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -80,12 +78,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="#FFFFFF"
+        android:background="#00FFFFFF"
         android:text="S'enrégistrer"
-        android:textColor="@color/orange"
+        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Se connecter"
+        android:textSize="30sp"
+        android:typeface="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="80dp"
+        android:layout_height="76dp"
+        app:layout_constraintBottom_toTopOf="@+id/email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:srcCompat="@mipmap/avatar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

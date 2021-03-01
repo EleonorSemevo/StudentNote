@@ -20,7 +20,7 @@ public class ClasseMenu extends AppCompatActivity {
     private ClasseRecyclerAdapter mClasseRecyclerAdapter;
     public  static final String ID_ECOLE="com.memoire.studentnote.ID_ECOLE";
     //public int mEcolePosition;
-    private List<Ecole> mEcoles=new ArrayList<>();
+    private final List<Ecole> mEcoles=new ArrayList<>();
     private List<Classe> mClasses;
 
 

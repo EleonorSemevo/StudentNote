@@ -14,9 +14,9 @@ import java.util.List;
 
 public class ActionRecyclerAdapter extends RecyclerView.Adapter<ActionRecyclerAdapter.ViewHolder> {
     private RecyclerView.ViewHolder mHolder;
-    private Context mContext;
-    private LayoutInflater mLayoutInflater;
-    private List<String> mActions;
+    private final Context mContext;
+    private final LayoutInflater mLayoutInflater;
+    private final List<String> mActions;
 
     public ActionRecyclerAdapter(Context context, List<String> actions)
     {

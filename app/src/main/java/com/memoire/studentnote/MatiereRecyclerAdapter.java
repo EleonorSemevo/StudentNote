@@ -16,9 +16,9 @@ import java.util.List;
 
 public class MatiereRecyclerAdapter extends RecyclerView.Adapter<MatiereRecyclerAdapter.ViewHolder> {
     private RecyclerView.ViewHolder mHolder;
-    private Context mContext;
-    private LayoutInflater mLayoutInflater;
-    private List<Matiere> mMatieres;
+    private final Context mContext;
+    private final LayoutInflater mLayoutInflater;
+    private final List<Matiere> mMatieres;
 
     public MatiereRecyclerAdapter(Context context, List<Matiere> matieres)
     {
@@ -62,7 +62,8 @@ public class MatiereRecyclerAdapter extends RecyclerView.Adapter<MatiereRecycler
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent intent =new Intent(mContext, BulletinSlidePageAdapter.class);
+                    mContext.startActivity(intent);
 
 
 

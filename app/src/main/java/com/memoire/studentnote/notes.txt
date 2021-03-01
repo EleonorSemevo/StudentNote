@@ -1,0 +1,7 @@
+Pour la connection à un clirnt API par exemple
+
+
+https://www.codota.com/code/java/methods/okhttp3.OkHttpClient/connectionPool
+
+bleu code: #00AFF0
+rgb(0,141,212)

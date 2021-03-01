@@ -1,15 +1,26 @@
 package com.memoire.studentnote.classes;
 
 public class Note {
-    private String idMatiere;
-    private String idEleve;
-    private String idClasse;
-    private String idEcole;
+    private int idMatiere;
+    private int idEleve;
+    private int idClasse;
+    private int idEcole;
     private String type;
     private String dateComposition;
     private String description;
+    private int anneeScolaire;
 
-    public Note(String idMatiere, String idEleve, String idClasse, String idEcole, String type, String dateComposition, String description) {
+    public int getAnneeScolaire() {
+        return anneeScolaire;
+    }
+
+    public void setAnneeScolaire(int anneeScolaire) {
+        this.anneeScolaire = anneeScolaire;
+    }
+
+
+
+    public Note(int idMatiere, int idEleve, int idClasse, int idEcole, String type, String dateComposition, String description, int anneeScolaire) {
         this.idMatiere = idMatiere;
         this.idEleve = idEleve;
         this.idClasse = idClasse;
@@ -17,37 +28,38 @@ public class Note {
         this.type = type;
         this.dateComposition = dateComposition;
         this.description = description;
+        this.anneeScolaire = anneeScolaire;
     }
 
-    public String getIdMatiere() {
+    public int getIdMatiere() {
         return idMatiere;
     }
 
-    public void setIdMatiere(String idMatiere) {
+    public void setIdMatiere(int idMatiere) {
         this.idMatiere = idMatiere;
     }
 
-    public String getIdEleve() {
+    public int getIdEleve() {
         return idEleve;
     }
 
-    public void setIdEleve(String idEleve) {
+    public void setIdEleve(int idEleve) {
         this.idEleve = idEleve;
     }
 
-    public String getIdClasse() {
+    public int getIdClasse() {
         return idClasse;
     }
 
-    public void setIdClasse(String idClasse) {
+    public void setIdClasse(int idClasse) {
         this.idClasse = idClasse;
     }
 
-    public String getIdEcole() {
+    public int getIdEcole() {
         return idEcole;
     }
 
-    public void setIdEcole(String idEcole) {
+    public void setIdEcole(int idEcole) {
         this.idEcole = idEcole;
     }
 

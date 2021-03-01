@@ -22,9 +22,9 @@ class EcoleRecyclerAdapter extends  RecyclerView.Adapter <EcoleRecyclerAdapter.V
     private RecyclerView.ViewHolder mHolder;
     private int mPosition;
 
-    private Context mContext;
-    private LayoutInflater mLayoutInflater;
-    private List<Ecole> mEcoles;
+    private final Context mContext;
+    private final LayoutInflater mLayoutInflater;
+    private final List<Ecole> mEcoles;
 
     public EcoleRecyclerAdapter(Context context, List<Ecole> ecoles)
     {
@@ -71,10 +71,11 @@ class EcoleRecyclerAdapter extends  RecyclerView.Adapter <EcoleRecyclerAdapter.V
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Fragment fragment=new Fragment();
-                    Intent intent=new Intent(mContext, ActionMenu.class);
+
+//                    Intent intent=new Intent(mContext, ActionMenu.class);
                     Current.currentIdEcole = mEcoles.get(mCurrentPosition).getId();
-                    //intent.putExtra(ActionMenu.ID_ECOLE, mEcoles.get(mCurrentPosition).getId());
+//                    mContext.startActivity(intent);
+                    Intent intent = new Intent(mContext, ClasseMenu.class);
                     mContext.startActivity(intent);
 
                 }

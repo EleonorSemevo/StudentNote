@@ -1,10 +1,14 @@
 package com.memoire.studentnote.database;
 
 import android.content.Context;
-import android.database.Cursor;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.memoire.studentnote.EnfantRecyclerAdapter;
+import com.memoire.studentnote.classes.MesEnfants;
+
+import java.util.List;
 
 public class DatabaseUtil {
     private Context context;
@@ -16,9 +20,16 @@ public class DatabaseUtil {
     public static DataManager mDataManager;
     public static boolean isEnseignant;
     public static boolean isParent;
-    public static Cursor mCursor;
+    public static android.database.Cursor mCursor;
     public static Object CurrentUser;
     public static FirebaseAuth mFirebaseAuth;
+    public static SharedPreferences mSharedPreferences;
+
+    //Pour les recyclerviews
+
+
+    public static List<MesEnfants> mesEnfants;
+    public static EnfantRecyclerAdapter mEnfantRecyclerAdapter;
 
 
 
@@ -26,10 +37,7 @@ public class DatabaseUtil {
 
     public  void getInstance()
     {
-//        mdb= mDatabaseOpenHelper.getReadableDatabase();
-//        mDatabaseOpenHelper = new DatabaseOpenHelper(context);
-//        mDataWorker = new DatabaseDataWorker(mdb);
-        //mDataManager = DataManager.getInstance();
+
         isEnseignant=false;
         isParent=false;
 

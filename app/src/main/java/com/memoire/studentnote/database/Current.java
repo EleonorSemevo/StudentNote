@@ -2,8 +2,8 @@ package com.memoire.studentnote.database;
 
 public class Current {
     private Current(){}
-    public static String currentIdEcole;
-    public static String currentIdClasse;
+    public static int currentIdEcole;
+    public static int currentIdClasse;
 
     public Current getInstance()
     {

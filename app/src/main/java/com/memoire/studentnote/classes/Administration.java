@@ -1,7 +1,7 @@
 package com.memoire.studentnote.classes;
 
 public class Administration {
-    private String id;
+    private int id;
     private String nom;
     private String prenom;
     private String mail;
@@ -9,7 +9,7 @@ public class Administration {
     private String telephone;
     private String role;
 
-    public Administration(String id, String nom, String prenom, String mail, String mdp, String telephone, String role) {
+    public Administration(int id, String nom, String prenom, String mail, String mdp, String telephone, String role) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -19,7 +19,7 @@ public class Administration {
         this.role = role;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -47,7 +47,7 @@ public class Administration {
         return role;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

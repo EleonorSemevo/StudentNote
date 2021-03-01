@@ -1,23 +1,23 @@
 package com.memoire.studentnote.classes;
 
 public class Information {
-    private String id;
+    private int id;
     private String description;
     private String chemin;
     private String  datePublication;
 
-    public Information(String id, String description, String chemin, String datePublication) {
+    public Information(int id, String description, String chemin, String datePublication) {
         this.id = id;
         this.description = description;
         this.chemin = chemin;
         this.datePublication = datePublication;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
