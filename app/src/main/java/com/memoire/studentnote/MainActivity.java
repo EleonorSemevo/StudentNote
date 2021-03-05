@@ -16,6 +16,8 @@ import android.os.Handler;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 
 import static com.memoire.studentnote.database.DatabaseUtil.mSharedPreferences;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         mFirebaseAuth = FirebaseAuth.getInstance();
         //ALLER A L'INTERFACE PRINCIPALE SI LA PERSONNE S4ETAIT CONNECTER AU MOINS UNE FOIS DEJA

@@ -17,18 +17,18 @@ public class DatabaseDataWorker {
 
     }
 
-private void insertParent(String nom, String prenom, String mail, String telephone, String password)
-{
-    ContentValues values = new ContentValues();
-    //values.put(DatabaseContract.ParentEntry._ID,id);
-    values.put(DatabaseContract.ParentEntry.COLUMN_NOM,nom);
-    values.put(DatabaseContract.ParentEntry.COLUMN_PRENOM, prenom);
-    values.put(DatabaseContract.ParentEntry.COLUMN_MAIL, mail);
-    values.put(DatabaseContract.ParentEntry.COLUMN_TELEPHONE,telephone);
-    values.put(DatabaseContract.ParentEntry.COLUMN_MDP, password);
+    private void insertParent(String nom, String prenom, String mail, String telephone, String password)
+    {
+        ContentValues values = new ContentValues();
+        //values.put(DatabaseContract.ParentEntry._ID,id);
+        values.put(DatabaseContract.ParentEntry.COLUMN_NOM,nom);
+        values.put(DatabaseContract.ParentEntry.COLUMN_PRENOM, prenom);
+        values.put(DatabaseContract.ParentEntry.COLUMN_MAIL, mail);
+        values.put(DatabaseContract.ParentEntry.COLUMN_TELEPHONE,telephone);
+        values.put(DatabaseContract.ParentEntry.COLUMN_MDP, password);
 
-    long newRowId = mdb.insert(DatabaseContract.ParentEntry.TABLE_NAME, null, values);
-}
+        long newRowId = mdb.insert(DatabaseContract.ParentEntry.TABLE_NAME, null, values);
+    }
 
     public void insertEcole(String nom,String ville, String quartier, String type, String code)
     {
@@ -225,6 +225,44 @@ private void insertParent(String nom, String prenom, String mail, String telepho
         android.util.Log.d("Etudier enrégistrer", newRowId+"");
 
     }
+
+    public void insertNote(int idMatiere, int idEleve, int idClasse, int idEcole, String type, String dateComposition, String description, int anneeScolaire, double note)
+    {
+        ContentValues values = new ContentValues();
+        ;
+        values.put(DatabaseContract.NoteEntry.COLUMN_ID_ELEVE, idEleve);
+        values.put(DatabaseContract.NoteEntry.COLUMN_ID_CLASSE, idClasse);
+        values.put(DatabaseContract.NoteEntry.COLUMN_ID_MATIERE, idMatiere);
+        values.put(DatabaseContract.NoteEntry.COLUMN_ID_ECOLE, idEcole);
+
+        values.put(DatabaseContract.NoteEntry.COLUMN_TYPE, type);
+        values.put(DatabaseContract.NoteEntry.COLUMN_DATE_COMPOSITION, dateComposition);
+        values.put(DatabaseContract.NoteEntry.COLUMN_ANNEE_SCOLAIRE, anneeScolaire);
+        values.put(DatabaseContract.NoteEntry.COLUMN_DESCRIPTION, description);
+        values.put(DatabaseContract.NoteEntry.COLUMN_NOTE, note);
+
+
+        long newRowId = mdb.insert(DatabaseContract.NoteEntry.TABLE_NAME, null, values);
+        android.util.Log.d("insert note", newRowId+"");
+
+    }
+
+    public void insertInformations(int idAuteur, int idEcole, String description, String datePublication, String chemin)
+    {
+        ContentValues values = new ContentValues();
+        //values.put(DatabaseContract.EnseignerEntry.COLUMN_ID,dm.sizeEnseignant()+"Enseignant");
+
+        values.put(DatabaseContract.InformationEntry.COLUMN_ID_AUTEUR, idAuteur);
+        values.put(DatabaseContract.InformationEntry.COLUMN_ID_ECOLE, idEcole);
+        values.put(DatabaseContract.InformationEntry.COLUMN_DESCRIPTION, description);
+        values.put(DatabaseContract.InformationEntry.COLUMN_DATE_PUBLICATION, datePublication);
+        values.put(DatabaseContract.InformationEntry.COLUMN_CHEMIN, chemin);
+
+
+        long newRowId = mdb.insert(DatabaseContract.InformationEntry.TABLE_NAME, null, values);
+
+    }
+
     ////////////////////////INSERTION PRELIMINAIRE
 
     public void preliminaire()
@@ -271,7 +309,12 @@ private void insertParent(String nom, String prenom, String mail, String telepho
         insertEtudier(3,1,1,2017);
         insertEtudier(4,1,1,2017);
 
-        insertMesEnfants(1,1,1,"seee","Lor",1,"CEG 1","5eme");
+        insertMesEnfants(1,1,1,"SATI","Ramida",1,"CEG 1 CALAVI","5eme");
+        insertMesEnfants(1,1,2,"SOSSA","Romuald",1,"CEG 2 CALAVI","4eme");
+        insertMesEnfants(1,1,3,"GAMOUDOU","Thomas",1,"LES RAMES","5eme");
+        insertMesEnfants(1,1,4,"FATOU","Doriane",1,"LES RAMES","4eme");
+
+        insertInformations(1,1,"Loren ipsum Loren ipsum Loren ipsum Loren ipsum Loren ipsum","08/04/1999","ici");
 
 
 

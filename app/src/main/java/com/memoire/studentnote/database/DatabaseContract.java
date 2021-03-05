@@ -143,10 +143,17 @@ public class DatabaseContract {
         public static final String COLUMN_CHEMIN="chemin";
         public static final String COLUMN_DATE_PUBLICATION="datePublication";
 
+        public static final String COLUMN_ID_ECOLE="idEcole";
+        public static final String COLUMN_ID_AUTEUR="idAuteur";
+//        public static final String COLUMN_AUTEUR="auteur";
+//        public static final String COLUMN_Ecole="ecole";
+
         public static final String SQL_CREATE_TABLE="CREATE TABLE "+
                 TABLE_NAME+ " ( "+ _ID+" INTEGER PRIMARY KEY, "+
                 COLUMN_DESCRIPTION+ " TEXT, "+
                 COLUMN_CHEMIN+ " TEXT, "+
+                COLUMN_ID_AUTEUR+ " INTEGER, "+
+                COLUMN_ID_ECOLE+ " INTEGER, "+
                 COLUMN_DATE_PUBLICATION+ " TEXT NOT NULL )";
     }
 
@@ -174,6 +181,8 @@ public class DatabaseContract {
         public static final String COLUMN_TYPE="type";
         public static final String COLUMN_DATE_COMPOSITION="dateComposition";
         public static final String COLUMN_DESCRIPTION="description";
+        public static final String COLUMN_ANNEE_SCOLAIRE="anneeScolaire";
+        public static final String COLUMN_NOTE="note";
 
         public static final String SQL_CREATE_TABLE="CREATE TABLE "+
                 TABLE_NAME+ " ( "+_ID+" INTEGER PRIMARY KEY, "+
@@ -181,8 +190,11 @@ public class DatabaseContract {
                 COLUMN_ID_ELEVE+ " INTEGER NOT NULL, "+
                 COLUMN_ID_CLASSE+ " INTEGER NOT NULL, "+
                 COLUMN_ID_ECOLE+ " INTEGER NOT NULL, "+
+
                 COLUMN_TYPE+ " TEXT NOT NULL, "+
                 COLUMN_DATE_COMPOSITION+ " TEXT NOT NULL, "+
+                COLUMN_ANNEE_SCOLAIRE+ " INTEGER NOT NULL, "+
+                COLUMN_NOTE+ " real, "+
                 COLUMN_DESCRIPTION+ " TEXT )";
     }
 

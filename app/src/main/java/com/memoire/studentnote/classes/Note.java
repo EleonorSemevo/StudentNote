@@ -1,14 +1,37 @@
 package com.memoire.studentnote.classes;
 
 public class Note {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    private int id;
+
     private int idMatiere;
     private int idEleve;
     private int idClasse;
     private int idEcole;
+
     private String type;
     private String dateComposition;
     private String description;
     private int anneeScolaire;
+
+    private double note;
+
+    public double getNote() {
+        return note;
+    }
+
+    public void setNote(double note) {
+        this.note = note;
+    }
+
+
 
     public int getAnneeScolaire() {
         return anneeScolaire;
@@ -20,7 +43,8 @@ public class Note {
 
 
 
-    public Note(int idMatiere, int idEleve, int idClasse, int idEcole, String type, String dateComposition, String description, int anneeScolaire) {
+    public Note(int idMatiere, int idEleve, int idClasse, int idEcole, String type,
+                String dateComposition, String description, int anneeScolaire, double note) {
         this.idMatiere = idMatiere;
         this.idEleve = idEleve;
         this.idClasse = idClasse;
@@ -29,6 +53,21 @@ public class Note {
         this.dateComposition = dateComposition;
         this.description = description;
         this.anneeScolaire = anneeScolaire;
+        this.note = note;
+    }
+
+    public Note(int id, int idMatiere, int idEleve, int idClasse, int idEcole, String type,
+                String dateComposition, String description, int anneeScolaire, double note) {
+        this.idMatiere = idMatiere;
+        this.idEleve = idEleve;
+        this.idClasse = idClasse;
+        this.idEcole = idEcole;
+        this.type = type;
+        this.dateComposition = dateComposition;
+        this.description = description;
+        this.anneeScolaire = anneeScolaire;
+        this.note = note;
+        this.id = id;
     }
 
     public int getIdMatiere() {

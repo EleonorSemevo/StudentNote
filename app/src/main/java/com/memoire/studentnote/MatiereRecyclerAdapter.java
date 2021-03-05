@@ -62,8 +62,10 @@ public class MatiereRecyclerAdapter extends RecyclerView.Adapter<MatiereRecycler
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent =new Intent(mContext, BulletinSlidePageAdapter.class);
-                    mContext.startActivity(intent);
+//                    Intent intent =new Intent(mContext, BulletinSlidePageAdapter.class);
+//                    mContext.startActivity(intent);
+                      Intent intent = new Intent(mContext,NoteAfficher.class);
+                      mContext.startActivity(intent);
 
 
 

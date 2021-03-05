@@ -12,6 +12,7 @@ import com.memoire.studentnote.classes.Enseignant;
 import com.memoire.studentnote.classes.Enseigner;
 import com.memoire.studentnote.classes.EnseignerT;
 import com.memoire.studentnote.classes.Etudier;
+import com.memoire.studentnote.classes.Information;
 import com.memoire.studentnote.classes.Matiere;
 import com.memoire.studentnote.classes.MesEnfants;
 import com.memoire.studentnote.classes.Note;
@@ -32,6 +33,10 @@ public class DataManager {
     private final java.util.List<Enseigner> mEnseigners = new ArrayList<>();
     private final java.util.List<ClasseT> mClasseTs = new ArrayList<>();
     private final java.util.List<EnseignerT> mEnseignerTs = new ArrayList<>();
+
+
+
+    private final List <Information> mInformation = new ArrayList<>();
 
 
 
@@ -348,6 +353,46 @@ public class DataManager {
         }
 
         matiereCursor.close();
+    }
+
+    private void loadInformationsFromDatabase()
+    {
+        final String[] informationsColumns ={
+                DatabaseContract.InformationEntry.COLUMN_DESCRIPTION,
+                DatabaseContract.InformationEntry.COLUMN_CHEMIN,
+                DatabaseContract.InformationEntry.COLUMN_ID_ECOLE,
+                DatabaseContract.InformationEntry.COLUMN_ID_AUTEUR,
+                DatabaseContract.InformationEntry.COLUMN_DATE_PUBLICATION,
+                DatabaseContract.InformationEntry._ID
+        };
+
+        final android.database.Cursor informationCursor = DatabaseUtil.mdb.query(DatabaseContract.InformationEntry.TABLE_NAME,
+                informationsColumns,null,null,null,null,null,null);
+
+        int infosDatePos = informationCursor.getColumnIndex(DatabaseContract.InformationEntry.COLUMN_DATE_PUBLICATION);
+        int infosCheminPos = informationCursor.getColumnIndex(DatabaseContract.InformationEntry.COLUMN_CHEMIN);
+        int infosidEcolePos = informationCursor.getColumnIndex(DatabaseContract.InformationEntry.COLUMN_ID_ECOLE);
+        int infosIdAuteurPos = informationCursor.getColumnIndex(DatabaseContract.InformationEntry.COLUMN_ID_AUTEUR);
+        int infosDescriptionPos = informationCursor.getColumnIndex(DatabaseContract.InformationEntry.COLUMN_DESCRIPTION);
+        int infosId = informationCursor.getColumnIndex(DatabaseContract.InformationEntry._ID);
+
+
+        DataManager dm =getInstance();
+        dm.mInformation.clear();
+        while (informationCursor.moveToNext())
+        {
+            String datePublication = informationCursor.getString(infosDatePos);
+            String chemin = informationCursor.getString(infosCheminPos);
+            String description = informationCursor.getString(infosDescriptionPos);
+            int idEcole = informationCursor.getInt(infosidEcolePos);
+            int idAuteur = informationCursor.getInt(infosIdAuteurPos);
+            int id = informationCursor.getInt(infosId);
+
+            Information information = new Information(id,description,chemin,datePublication,idEcole,idAuteur);
+            dm.mInformation.add(information);
+        }
+
+        informationCursor.close();
     }
 
     private void loadEnseignerFromDatabase() {
@@ -736,6 +781,68 @@ public class DataManager {
         etudierCursor.close();
     }
 
+    private void loadAllNotes()
+    {
+
+
+        final String[] notesColumns ={
+                DatabaseContract.NoteEntry.COLUMN_ID_ELEVE,
+                DatabaseContract.NoteEntry.COLUMN_ID_ECOLE,
+                DatabaseContract.NoteEntry.COLUMN_ID_CLASSE,
+                DatabaseContract.NoteEntry.COLUMN_ANNEE_SCOLAIRE,
+
+                DatabaseContract.NoteEntry.COLUMN_DATE_COMPOSITION,
+                DatabaseContract.NoteEntry.COLUMN_DESCRIPTION,
+                DatabaseContract.NoteEntry.COLUMN_ID_MATIERE,
+                DatabaseContract.NoteEntry.COLUMN_TYPE,
+
+                DatabaseContract.NoteEntry.COLUMN_NOTE,
+
+                DatabaseContract.NoteEntry._ID
+        };
+
+        final android.database.Cursor noteCursor = DatabaseUtil.mdb.query(DatabaseContract.NoteEntry.TABLE_NAME,
+                notesColumns,null,null,null,null,null,null);
+
+        int idEcolePos = noteCursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_ID_ECOLE);
+        int idClassePos = noteCursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_ID_CLASSE);
+        int idElevePos = noteCursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_ID_ELEVE);
+        int idMatierePos = noteCursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_ID_MATIERE);
+
+        int typePos = noteCursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_TYPE);
+        int descriptionPos = noteCursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_DESCRIPTION);
+        int notePos = noteCursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_NOTE);
+        int dateCompPos = noteCursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_DATE_COMPOSITION);
+        int anneScolairePos = noteCursor.getColumnIndex(DatabaseContract.NoteEntry.COLUMN_ANNEE_SCOLAIRE);
+
+
+        int idPos = noteCursor.getColumnIndex(DatabaseContract.NoteEntry._ID);
+
+        DataManager dm =getInstance();
+        dm.mNotes.clear();
+        while (noteCursor.moveToNext())
+        {
+            int idEcole = noteCursor.getInt(idEcolePos);
+            int idClasse = noteCursor.getInt(idClassePos);
+            int idEleve = noteCursor.getInt(idElevePos);
+            int idMatiere = noteCursor.getInt(idMatierePos);
+
+            String type = noteCursor.getString(typePos);
+            String description = noteCursor.getString(dateCompPos);
+            double notes = noteCursor.getDouble(notePos);
+            String dateComp = noteCursor.getString(dateCompPos);
+            int anneScolaire = noteCursor.getInt(anneScolairePos);
+
+            int id =noteCursor.getInt(idPos);
+
+            Note note =new Note(id,idMatiere,idEleve,idClasse,idEcole,type,dateComp,description,anneScolaire,notes);
+            dm.mNotes.add(note);
+
+        }
+
+        noteCursor.close();
+    }
+
     public boolean virifierEtudier(int idEcole, int idEleve)
     {
         loadAllEtudiers();
@@ -859,6 +966,9 @@ public class DataManager {
         return  nom;
     }
 
-
+    public List<Information> getInformation() {
+        loadInformationsFromDatabase();
+        return mInformation;
+    }
 
 }

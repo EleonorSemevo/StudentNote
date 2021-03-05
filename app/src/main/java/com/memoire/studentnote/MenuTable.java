@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -67,15 +68,16 @@ public class MenuTable extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private final int[] tabIcons = {
-            R.drawable.common_google_signin_btn_text_light,
-            R.drawable.common_google_signin_btn_text_light_normal,
-            R.drawable.common_google_signin_btn_icon_dark,
-            R.drawable.common_google_signin_btn_icon_light,
-            R.drawable.common_google_signin_btn_text_light};
+            R.mipmap.eleve,
+            R.mipmap.note,
+            R.mipmap.message,
+            R.mipmap.information,
+            R.mipmap.avatar};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_menu_table);
         /////
 
@@ -91,12 +93,12 @@ public class MenuTable extends AppCompatActivity {
          setupTabIcons();
 
          ///
-        if(!mdb.isOpen())
-        {
+ //       if(!mdb.isOpen())
+   //     {
             mDatabaseOpenHelper = new DatabaseOpenHelper(this);
             mdb= mDatabaseOpenHelper.getReadableDatabase();
             mDataWorker = new DatabaseDataWorker(mdb);
-        }
+ //       }
 
 //        if(mSharedPreferences==null)
 //        {

@@ -27,7 +27,6 @@ public class DatabaseUtil {
 
     //Pour les recyclerviews
 
-
     public static List<MesEnfants> mesEnfants;
     public static EnfantRecyclerAdapter mEnfantRecyclerAdapter;
 
