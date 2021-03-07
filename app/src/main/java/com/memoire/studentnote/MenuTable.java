@@ -1,18 +1,24 @@
 package com.memoire.studentnote;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Adapter;
@@ -23,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.memoire.studentnote.classes.Ecole;
@@ -32,6 +39,7 @@ import com.memoire.studentnote.classes.MesEnfants;
 import com.memoire.studentnote.database.DataManager;
 import com.memoire.studentnote.database.DatabaseDataWorker;
 import com.memoire.studentnote.database.DatabaseOpenHelper;
+import com.memoire.studentnote.enseignant.AjoutNote;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,11 +54,18 @@ import static com.memoire.studentnote.database.DatabaseUtil.mSharedPreferences;
 import static com.memoire.studentnote.database.DatabaseUtil.mdb;
 import static com.memoire.studentnote.database.DatabaseUtil.mesEnfants;
 
-public class MenuTable extends AppCompatActivity {
+public class MenuTable extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    //For drawer
+    private Toolbar toolbar;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+
+
+
     private FloatingActionButton boutton_ajouter;
     private TextView mMatricule;
     private Spinner mSpinner;
-    //private DatabaseDataWorker mDataWorker;
     private TextView mAnnee;
 
     //
@@ -64,7 +79,7 @@ public class MenuTable extends AppCompatActivity {
     private List<Etudier> m_etudier =new ArrayList<>();
 
 
-    private Toolbar toolbar;
+ //   private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private final int[] tabIcons = {
@@ -79,7 +94,14 @@ public class MenuTable extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_menu_table);
-        /////
+
+        //- Configure all views
+
+        this.configureToolBar();
+
+        this.configureDrawerLayout();
+
+        this.configureNavigationView();
 
 
         /////
@@ -92,24 +114,13 @@ public class MenuTable extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
          setupTabIcons();
 
-         ///
- //       if(!mdb.isOpen())
+
    //     {
             mDatabaseOpenHelper = new DatabaseOpenHelper(this);
             mdb= mDatabaseOpenHelper.getReadableDatabase();
             mDataWorker = new DatabaseDataWorker(mdb);
  //       }
 
-//        if(mSharedPreferences==null)
-//        {
-//            mSharedPreferences =getSharedPreferences("studentNote",MODE_PRIVATE);
-//
-//        }
-//
-//        SharedPreferences.Editor myEditor =mSharedPreferences.edit();
-//        myEditor.putBoolean("logged",true);
-//        myEditor.putString("mail", mFirebaseAuth.getCurrentUser().getEmail());
-//        myEditor.apply();
 
         boutton_ajouter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +130,7 @@ public class MenuTable extends AppCompatActivity {
             }
         });
     }
+
 
     private void setupTabIcons()
     {
@@ -375,6 +387,66 @@ public class MenuTable extends AppCompatActivity {
     }
 
 
+    ///Pour le menu principal
+
+    @Override
+    public void onBackPressed() {
+        // 5 - Handle back click to close menu
+        if (this.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            this.drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+
+        // 4 - Handle Navigation Item Click
+        int id = item.getItemId();
+        Intent note= new Intent(MenuTable.this, AjoutNote.class);
+
+        switch (id){
+            case R.id.menu_note :
+                this.startActivity(note);
+                break;
+            case R.id.menu_information:
+                break;
+            case R.id.menu_emploi_temps:
+                break;
+            default:
+                break;
+        }
+
+        this.drawerLayout.closeDrawer(GravityCompat.START);
+
+        return true;
+    }
+
+    // ---------------------
+    // CONFIGURATION
+    // ---------------------
+
+    // 1 - Configure Toolbar
+    private void configureToolBar(){
+        this.toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
+        setSupportActionBar(toolbar);
+    }
+
+    // 2 - Configure Drawer Layout
+    private void configureDrawerLayout(){
+        this.drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+    // 3 - Configure NavigationView
+    private void configureNavigationView(){
+        this.navigationView = (NavigationView) findViewById(R.id.activity_main_nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
 
 
 }

@@ -13,6 +13,7 @@ import com.memoire.studentnote.classes.Enseigner;
 import com.memoire.studentnote.classes.EnseignerT;
 import com.memoire.studentnote.classes.Etudier;
 import com.memoire.studentnote.classes.Information;
+import com.memoire.studentnote.classes.ListeUser;
 import com.memoire.studentnote.classes.Matiere;
 import com.memoire.studentnote.classes.MesEnfants;
 import com.memoire.studentnote.classes.Note;
@@ -37,6 +38,7 @@ public class DataManager {
 
 
     private final List <Information> mInformation = new ArrayList<>();
+    private final List<ListeUser> mListeUsers = new ArrayList<>();
 
 
 
@@ -428,6 +430,43 @@ public class DataManager {
             mEnseigners.add(enseigner);
 
         }
+    }
+
+    private void loadListeUsersFromDatabase()
+    {
+        final String[] listeUsersColumn ={
+                DatabaseContract.ListUserEntry.COLUMN_UID,
+                DatabaseContract.ListUserEntry.COLUMN_NOM,
+                DatabaseContract.ListUserEntry.COLUMN_PRENOM,
+                DatabaseContract.ListUserEntry.COLUMN_MAIL,
+                DatabaseContract.ListUserEntry._ID
+        };
+
+        final android.database.Cursor listeUsersCursor = DatabaseUtil.mdb.query(DatabaseContract.ListUserEntry.TABLE_NAME,
+                listeUsersColumn,null,null,null,null,null,null);
+
+        int listeUsersNomPos = listeUsersCursor.getColumnIndex(DatabaseContract.ListUserEntry.COLUMN_NOM);
+        int listeUsersPrenomPos = listeUsersCursor.getColumnIndex(DatabaseContract.ListUserEntry.COLUMN_PRENOM);
+        int listeUsersMailPos = listeUsersCursor.getColumnIndex(DatabaseContract.ListUserEntry.COLUMN_MAIL);
+        int listeUsersUidPos = listeUsersCursor.getColumnIndex(DatabaseContract.ListUserEntry.COLUMN_UID);
+        int listeUsersId = listeUsersCursor.getColumnIndex(DatabaseContract.ListUserEntry._ID);
+
+
+        DataManager dm =getInstance();
+        dm.mListeUsers.clear();
+        while (listeUsersCursor.moveToNext())
+        {
+            String nom = listeUsersCursor.getString(listeUsersNomPos);
+            String prenom = listeUsersCursor.getString(listeUsersPrenomPos);
+            String mail = listeUsersCursor.getString(listeUsersMailPos);
+            String uid = listeUsersCursor.getString(listeUsersUidPos);
+            int id = listeUsersCursor.getInt(listeUsersId);
+
+            ListeUser listeUser = new ListeUser(uid,nom,prenom,mail);
+            dm.mListeUsers.add(listeUser);
+        }
+
+        listeUsersCursor.close();
     }
 
     public int sizeMatiere()
@@ -971,4 +1010,9 @@ public class DataManager {
         return mInformation;
     }
 
+    public List<ListeUser> getListeUsers()
+    {
+        loadListeUsersFromDatabase();
+        return mListeUsers;
+    }
 }

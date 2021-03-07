@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/activity_main_drawer_news"
+            android:icon="@drawable/ic_facebook"
+            android:title="Se déconnecter" />
+    </group>
+
+    <item android:title="Enseignant">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menu_note"
+                    android:icon="@drawable/ic_visibility_off_black_24dp"
+                    android:title="Notes" />
+                <item
+                    android:id="@+id/menu_emploi_temps"
+                    android:icon="@drawable/img"
+                    android:title="Emplois du temps" />
+                <item
+                    android:id="@+id/menu_information"
+                    android:icon="@drawable/ic_visibility_off_black_24dp"
+                    android:title="Informations"/>
+            </group>
+        </menu>
+    </item>
+
+</menu>

@@ -11,4 +11,8 @@
     <color name="bleu">#00AFF0</color>
 
 
+
+    <color name="primary_text_color">#212121</color>
+    <color name="text_hint_color">#BDBDBD</color>
+
 </resources>

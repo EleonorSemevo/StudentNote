@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.memoire.studentnote.chat.UserDetails;
 import com.memoire.studentnote.database.DatabaseDataWorker;
 import com.memoire.studentnote.database.DatabaseOpenHelper;
 import com.memoire.studentnote.pojo.Api;
@@ -134,6 +135,7 @@ public class Inscription extends AppCompatActivity {
                                 if(telephone==null)
                                 {
                                     mDataWorker.insertUser(nom,prenom,email,"",password,type);
+                                    UserDetails.list_uid_Users.add(FirebaseAuth.getInstance().getCurrentUser().getUid());
                                 }
                                 else
                                 {

@@ -263,6 +263,18 @@ public class DatabaseDataWorker {
 
     }
 
+    private void insertListeUser(String uid,String nom, String prenom, String mail)
+    {
+        ContentValues values = new ContentValues();
+        //values.put(DatabaseContract.ParentEntry._ID,id);
+        values.put(DatabaseContract.ListUserEntry.COLUMN_NOM,nom);
+        values.put(DatabaseContract.ListUserEntry.COLUMN_PRENOM, prenom);
+        values.put(DatabaseContract.ListUserEntry.COLUMN_MAIL, mail);
+        values.put(DatabaseContract.ListUserEntry.COLUMN_UID,uid);
+
+        long newRowId = mdb.insert(DatabaseContract.ListUserEntry.TABLE_NAME, null, values);
+    }
+
     ////////////////////////INSERTION PRELIMINAIRE
 
     public void preliminaire()
@@ -316,6 +328,12 @@ public class DatabaseDataWorker {
 
         insertInformations(1,1,"Loren ipsum Loren ipsum Loren ipsum Loren ipsum Loren ipsum","08/04/1999","ici");
 
+
+        insertListeUser("00","Semevo","Loren","lorensemevo@gmail.com");
+        insertListeUser("010","Savi","Nel","eleonorsemevo@gmail.com");
+        insertListeUser("020","Somakou","Dora","fleursemevo@gmail.com");
+        insertListeUser("030","Sossa","Sorelle","sorellesemevo@gmail.com");
+        insertListeUser("040","Gatibou","Garelle","garellesemevo@gmail.com");
 
 
 

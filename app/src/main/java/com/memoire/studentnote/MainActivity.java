@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.Toast;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 
@@ -25,6 +27,7 @@ import static com.memoire.studentnote.database.DatabaseUtil.mSharedPreferences;
 public class MainActivity extends AppCompatActivity {
     private static final int SPLASH_TIME_OUT=3000;
     private FirebaseAuth mFirebaseAuth;
+    private int SIGN_IN_REQUEST_CODE;
 
 
     @Override
@@ -33,51 +36,56 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         mFirebaseAuth = FirebaseAuth.getInstance();
-        //ALLER A L'INTERFACE PRINCIPALE SI LA PERSONNE S4ETAIT CONNECTER AU MOINS UNE FOIS DEJA
-//        if(mSharedPreferences==null)
-//        {
-//            mSharedPreferences =getSharedPreferences("studentNote",MODE_PRIVATE);
-//
-//        }
-
-      // if (!mSharedPreferences.getBoolean("logged",false))
 
 
-           new Handler().postDelayed(new Runnable() {
-               @Override
-               public void run() {
-                   Intent intent = new Intent(MainActivity.this, Connection.class);
-                   startActivity(intent);
-                   finish();
-               }
-           }, SPLASH_TIME_OUT);
-
-
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mFirebaseAuth.getCurrentUser();
-        if(currentUser != null )
+        if(mFirebaseAuth.getCurrentUser()==null)
         {
-//            Intent intent = new Intent(this,Tabbed.class);
-//            startActivity(intent);
+            //Si l'utilisateur n'est pas connecté
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intentConnection = new Intent(MainActivity.this, Connection.class);
+                    startActivityForResult(intentConnection, SIGN_IN_REQUEST_CODE);
+                }
+            }, SPLASH_TIME_OUT);
         }
-        //updateUI(currentUser);
+        else
+        {
+            //Si l'utilisateur est connecté
+
+            Toast.makeText(this,"Bon retour "+mFirebaseAuth.getCurrentUser().getDisplayName(),Toast.LENGTH_LONG).show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent menuTableContent = new Intent(MainActivity.this, MenuTable.class);
+                    startActivityForResult(menuTableContent, SIGN_IN_REQUEST_CODE);
+                }
+            }, SPLASH_TIME_OUT);
+        }
+
     }
 
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if(requestCode == SIGN_IN_REQUEST_CODE) {
+            if(resultCode == RESULT_OK) {
+                Toast.makeText(this,
+                        "Bonne arrivée",
+                        Toast.LENGTH_LONG)
+                        .show();
+
+            } else {
+                Toast.makeText(this,
+                        "Essayer plus tard",
+                        Toast.LENGTH_LONG)
+                        .show();
+
+                // Close the app
+                finish();
+            }
+        }
     }
-
-    private void updateUI(FirebaseUser currentUser)
-    {
-
-    }
-
-
 }

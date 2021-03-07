@@ -260,7 +260,7 @@ public class DatabaseContract {
                 COLUMN_ID_ELEVE+ " INTEGER UNIQUE NOT NULL, "+
                 COLUMN_NOM+ " TEXT NOT NULL, "+
                 COLUMN_PRENOM+ " TEXT NOT NULL, "+
-                COLUMN_ID_ECOLE + " INTEGER UNIQUE NOT NULL, "+
+                COLUMN_ID_ECOLE + " INTEGER NOT NULL, "+
                 COLUMN_NOM_ECOLE + " TEXT NOT NULL, "+
                 COLUMN_ID_CLASSE + " INTEGER NOT NULL, "+
                 COLUMN_ID_PARENT + " INTEGER NOT NULL, "+
@@ -286,5 +286,21 @@ public class DatabaseContract {
                 COLUMN_MAIL + " TEXT UNIQUE NOT NULL, "+
                 COLUMN_MOTS_DE_PASSE + " TEXT NOT NULL, "+
                 COLUMN_TYPE + " TEXT )";
+    }
+
+    public static final class ListUserEntry implements BaseColumns
+    {
+        public static final String TABLE_NAME="list_user";
+        public static final String COLUMN_UID="id";
+        public static final String COLUMN_NOM = "nom";
+        public static final String COLUMN_PRENOM ="prenom";
+        public static final String COLUMN_MAIL ="mail";
+
+        public static final String SQL_CREATE_TABLE="CREATE TABLE "+
+                TABLE_NAME+" ( "+_ID+" INTEGER PRIMARY KEY, "+
+                COLUMN_UID + " TEXT UNIQUE NOT NULL, "+
+                COLUMN_NOM + " TEXT, "+
+                COLUMN_PRENOM + " TEXT, "+
+                COLUMN_MAIL + " TEXT UNIQUE NOT NULL )";
     }
 }
