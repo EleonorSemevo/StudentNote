@@ -10,7 +10,7 @@ public class Eleve implements android.os.Parcelable{
     private String prenom;
     private String sexe;
     private String dateNaissance;
-    private String matricule;
+  //  private String matricule;
 
     public static final Creator<Eleve> CREATOR = new Creator<Eleve>() {
         @Override
@@ -24,21 +24,15 @@ public class Eleve implements android.os.Parcelable{
         }
     };
 
-    public String getMatricule() {
-        return matricule;
-    }
 
-    public void setMatricule(String matricule) {
-        this.matricule = matricule;
-    }
 
-    public Eleve(int id, String nom, String prenom, String sexe, String dateNaissance, String matricule) {
+    public Eleve(int id, String nom, String prenom, String sexe, String dateNaissance) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.sexe = sexe;
         this.dateNaissance = dateNaissance;
-        this.matricule = matricule;
+
     }
 
     public int getId() {
@@ -93,7 +87,7 @@ public class Eleve implements android.os.Parcelable{
         dest.writeString(prenom);
         dest.writeString(sexe);
         dest.writeString(dateNaissance);
-        dest.writeString(matricule);
+
     }
 
     private Eleve(android.os.Parcel in) {
@@ -102,13 +96,12 @@ public class Eleve implements android.os.Parcelable{
         prenom = in.readString();
         dateNaissance = in.readString();
         sexe = in.readString();
-        matricule = in.readString();
+
     }
 
     private String getCompareKey()
     {
-        return   id + "|"+ nom + "|" + prenom +"|" +sexe +"|" + dateNaissance +"|" +
-                matricule ;
+        return   id + "|"+ nom + "|" + prenom +"|" +sexe +"|" + dateNaissance ;
     }
 
     @NonNull

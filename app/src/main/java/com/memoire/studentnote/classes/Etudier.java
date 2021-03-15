@@ -11,6 +11,7 @@ public class Etudier implements android.os.Parcelable{
     private int idClasse;
     private int idEcole;
     private int annee;
+    private String matricule;
 
 
     public Etudier(int id, int idEleve, int idClasse, int idEcole, int annee) {
@@ -40,6 +41,15 @@ public class Etudier implements android.os.Parcelable{
             return new Etudier[size];
         }
     };
+
+    public Etudier(int id, int idEleve, int idClasse, int idEcole, int annee, String matricule) {
+        this.id = id;
+        this.idEleve = idEleve;
+        this.idClasse = idClasse;
+        this.idEcole = idEcole;
+        this.annee = annee;
+        this.matricule = matricule;
+    }
 
     public int getId() {
         return id;
@@ -104,5 +114,13 @@ public class Etudier implements android.os.Parcelable{
         dest.writeInt(idClasse);
         dest.writeInt(idEcole);
         dest.writeInt(annee);
+    }
+
+    public String getMatricule() {
+        return matricule;
+    }
+
+    public void setMatricule(String matricule) {
+        this.matricule = matricule;
     }
 }

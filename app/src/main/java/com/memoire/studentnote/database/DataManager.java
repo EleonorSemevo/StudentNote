@@ -4,6 +4,9 @@ package com.memoire.studentnote.database;
 //import com.google.firebase.auth.FirebaseAuth;
 
 
+import android.database.Cursor;
+import android.util.Log;
+
 import com.memoire.studentnote.classes.Classe;
 import com.memoire.studentnote.classes.ClasseT;
 import com.memoire.studentnote.classes.Ecole;
@@ -23,17 +26,33 @@ import com.memoire.studentnote.classes.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.memoire.studentnote.database.DatabaseUtil.mEnseignant;
+import static com.memoire.studentnote.database.DatabaseUtil.mListeMatiere;
+
 public class DataManager {
     private static DataManager ourInstance=null;
-    private final java.util.List<Parent> mParents = new ArrayList<>();
-    private final java.util.List<Note> mNotes = new ArrayList<>();
-    private final java.util.List<Enseignant> mEnseignants = new ArrayList<>();
-    private final java.util.List<Ecole> mEcoles = new ArrayList<>();
-    private final java.util.List<Classe> mClasses = new ArrayList<>();
-    private final java.util.List<Matiere> mMatieres = new ArrayList<>();
-    private final java.util.List<Enseigner> mEnseigners = new ArrayList<>();
-    private final java.util.List<ClasseT> mClasseTs = new ArrayList<>();
-    private final java.util.List<EnseignerT> mEnseignerTs = new ArrayList<>();
+    private final List<Parent> mParents = new ArrayList<>();
+    private final List<Note> mNotes = new ArrayList<>();
+
+    public List<Enseignant> getEnseignants() {
+        loadEnseignantFromDatabase();
+        return mEnseignants;
+    }
+
+    private final List<Enseignant> mEnseignants = new ArrayList<>();
+    private final List<Ecole> mEcoles = new ArrayList<>();
+    private final List<Classe> mClasses = new ArrayList<>();
+    private final List<Matiere> mMatieres = new ArrayList<>();
+    private final List<User> mUsers = new ArrayList<>();
+
+    public List<Enseigner> getEnseigners() {
+        loadEnseignerFromDatabase();
+        return mEnseigners;
+    }
+
+    private final List<Enseigner> mEnseigners = new ArrayList<>();
+    private final List<ClasseT> mClasseTs = new ArrayList<>();
+    private final List<EnseignerT> mEnseignerTs = new ArrayList<>();
 
 
 
@@ -43,16 +62,16 @@ public class DataManager {
 
 
     ////
-    private final java.util.List<MesEnfants> mMesEnfants = new ArrayList<>();
-    private final java.util.List<User> mUsers = new ArrayList<>();
+    private final List<MesEnfants> mMesEnfants = new ArrayList<>();
 
-    public java.util.List<Eleve> getEleves() {
+
+    public List<Eleve> getEleves() {
         loadEleveFromDatabase();
         return mEleves;
     }
 
-    private final java.util.List<Eleve> mEleves = new ArrayList<>();
-    private final java.util.List<Etudier> mEtudiers = new ArrayList<>();
+    private final List<Eleve> mEleves = new ArrayList<>();
+    private final List<Etudier> mEtudiers = new ArrayList<>();
 
 
     public static DataManager getInstance()
@@ -481,7 +500,7 @@ public class DataManager {
                 DatabaseContract.EleveEntry._ID,
                 DatabaseContract.EleveEntry.COLUMN_NOM,
                 DatabaseContract.EleveEntry.COLUMN_PRENOM,
-                DatabaseContract.EleveEntry.COLUMN_MATRICULE,
+               // DatabaseContract.EleveEntry.COLUMN_MATRICULE,
                 DatabaseContract.EleveEntry.COLUMN_SEXE,
                 DatabaseContract.EleveEntry.COLUMN_DATE_NAISSASSNCE
 
@@ -492,7 +511,7 @@ public class DataManager {
 
         int eleveIdPos= eleveCursor.getColumnIndex(DatabaseContract.EleveEntry._ID);
         int eleveNomPos = eleveCursor.getColumnIndex(DatabaseContract.EleveEntry.COLUMN_NOM);
-        int eleveMatriculePos = eleveCursor.getColumnIndex(DatabaseContract.EleveEntry.COLUMN_MATRICULE);
+   //     int eleveMatriculePos = eleveCursor.getColumnIndex(DatabaseContract.EleveEntry.COLUMN_MATRICULE);
         int eleveSexPos = eleveCursor.getColumnIndex(DatabaseContract.EleveEntry.COLUMN_SEXE);
         int eleveDateNaissancePos = eleveCursor.getColumnIndex(DatabaseContract.EleveEntry.COLUMN_DATE_NAISSASSNCE);
         int elevePrenomPos = eleveCursor.getColumnIndex(DatabaseContract.EleveEntry.COLUMN_PRENOM);
@@ -506,10 +525,10 @@ public class DataManager {
             String nom = eleveCursor.getString(eleveNomPos);
             String prenom = eleveCursor.getString(elevePrenomPos);
             String sexe = eleveCursor.getString(eleveSexPos);
-            String matricule = eleveCursor.getString(eleveMatriculePos);
+     //       String matricule = eleveCursor.getString(eleveMatriculePos);
             String dateNaissaance = eleveCursor.getString(eleveDateNaissancePos);
 
-            Eleve eleve = new Eleve(id,nom,prenom,sexe,dateNaissaance,matricule);
+            Eleve eleve = new Eleve(id,nom,prenom,sexe,dateNaissaance);
             mEleves.add(eleve);
         }
 
@@ -741,44 +760,58 @@ public class DataManager {
     }
     private void loadUsersFromDatabase()
     {
-        final String[] userColumns ={
+
+
+        final String[] usersColumns ={
+                DatabaseContract.UserEntry.COLUMN_MAIL,
                 DatabaseContract.UserEntry.COLUMN_NOM,
                 DatabaseContract.UserEntry.COLUMN_PRENOM,
-                DatabaseContract.UserEntry.COLUMN_MAIL,
                 DatabaseContract.UserEntry.COLUMN_TELEPHONE,
-                DatabaseContract.UserEntry.COLUMN_MOTS_DE_PASSE,
                 DatabaseContract.UserEntry.COLUMN_TYPE,
+                DatabaseContract.UserEntry.COLUMN_MOTS_DE_PASSE,
                 DatabaseContract.UserEntry._ID
         };
 
         final android.database.Cursor userCursor = DatabaseUtil.mdb.query(DatabaseContract.UserEntry.TABLE_NAME,
-                userColumns,null,null,null,null,null,null);
+                usersColumns,null,null,null,null,null,null);
 
-        int userNomPos = userCursor.getColumnIndex(DatabaseContract.UserEntry.COLUMN_NOM);
-        int userPrenomPos = userCursor.getColumnIndex(DatabaseContract.UserEntry.COLUMN_PRENOM);
-        int userMailPos = userCursor.getColumnIndex(DatabaseContract.UserEntry.COLUMN_MAIL);
-        int userMdpPos = userCursor.getColumnIndex(DatabaseContract.UserEntry.COLUMN_MOTS_DE_PASSE);
-        int userTelephone = userCursor.getColumnIndex(DatabaseContract.UserEntry.COLUMN_TELEPHONE);
-        int userType = userCursor.getColumnIndex(DatabaseContract.UserEntry.COLUMN_TYPE);
-        int userId = userCursor.getColumnIndex(DatabaseContract.UserEntry._ID);
+        int idPos = userCursor.getColumnIndex(DatabaseContract.UserEntry._ID);
+        int nomPos = userCursor.getColumnIndex(DatabaseContract.UserEntry.COLUMN_NOM);
+        int prenomPos = userCursor.getColumnIndex(DatabaseContract.UserEntry.COLUMN_PRENOM);
+        int mailPos = userCursor.getColumnIndex(DatabaseContract.UserEntry.COLUMN_MAIL);
+        int typePos = userCursor.getColumnIndex(DatabaseContract.UserEntry.COLUMN_TYPE);
+        int mdpPos = userCursor.getColumnIndex(DatabaseContract.UserEntry.COLUMN_MOTS_DE_PASSE);
+        int telephonePos = userCursor.getColumnIndex(DatabaseContract.UserEntry.COLUMN_TELEPHONE);
 
         DataManager dm =getInstance();
         dm.mUsers.clear();
         while (userCursor.moveToNext())
         {
-            String nom = userCursor.getString(userNomPos);
-            String prenom = userCursor.getString(userPrenomPos);
-            String mail = userCursor.getString(userMailPos);
-            String mdp = userCursor.getString(userMdpPos);
-            String telephone = userCursor.getString(userTelephone);
-            int id = userCursor.getInt(userId);
-            String type = userCursor.getString(userType);
+            int id = userCursor.getInt(idPos);
+            String mail = userCursor.getString(mailPos);
+            String nom = userCursor.getString(nomPos);
+            String prenom  = userCursor.getString(prenomPos);
+            String telephone =userCursor.getString(telephonePos);
+            String type =userCursor.getString(typePos);
+            String mdp =userCursor.getString(mdpPos);
 
             User user = new User(id,nom,prenom,mail,mdp,telephone,type);
             dm.mUsers.add(user);
+
         }
 
         userCursor.close();
+    }
+
+    public User getUserSelonMail(String mail)
+    {
+        loadUsersFromDatabase();
+        for(int f=0;f<mUsers.size();f++)
+        {
+            if(mUsers.get(f).getMail().equals(mail))
+                return mUsers.get(f);
+        }
+        return new User();
     }
 
     public void loadAllEtudiers()
@@ -902,15 +935,6 @@ public class DataManager {
             return true;
     }
 
-    public Eleve getEleveChoisit(String matricule)
-    {
-        loadEleveFromDatabase();
-        for (Eleve eleve: mEleves) {
-            if(eleve.getMatricule()==matricule)
-                return eleve;
-        }
-        return null;
-    }
 
     public int eleveSize()
     {
@@ -971,6 +995,22 @@ public class DataManager {
         return nomEcole;
     }
 
+    public int getIdElveFromMatricule(int idEcole, String matricule)
+    {
+        loadAllEtudiers();
+        int id=0;
+        for(int i=0;i<mEtudiers.size();i++)
+        {
+            Etudier etudier=mEtudiers.get(i);
+            if(etudier.getMatricule().equals(matricule) && etudier.getIdEleve()==idEcole)
+            {
+                id=etudier.getIdEleve();
+            }
+        }
+        return id;
+
+    }
+
     public String getNomEleve(int idEleve)
     {
         loadEleveFromDatabase();
@@ -1015,4 +1055,141 @@ public class DataManager {
         loadListeUsersFromDatabase();
         return mListeUsers;
     }
+
+    public Matiere getMatiere(int id)
+    {
+        loadMatiereFromDatabase();
+        Matiere matiere=new Matiere();
+        for(int d=0;d<mMatieres.size();d++)
+        {
+            if (mMatieres.get(d).getId()==id)
+                matiere = mMatieres.get(d);
+        }
+        return matiere;
+    }
+
+    public List<Classe> getClasses()
+    {
+        loadClasseFromDatabase();
+        return mClasses;
+    }
+
+    public Classe getClasse(int idClasse)
+    {
+        loadClasseFromDatabase();
+
+        for(int f=0;f<mClasses.size();f++)
+        {
+            if (mClasses.get(f).getId()==idClasse)
+                return mClasses.get(f);
+        }
+        return new Classe();
+    }
+
+    public Enseignant getEnseignantDepuisMail(String mail)
+    {
+        loadEnseignantFromDatabase();
+        for(int j=0;j<mEnseignants.size();j++)
+        {
+            if(mEnseignants.get(j).getMail().equals(mail))
+                return mEnseignants.get(j);
+        }
+        return new Enseignant();
+    }
+
+    public List<Ecole> getListeEcoleEnseignant(int idEnseignant)
+    {
+        loadEnseignerFromDatabase();
+        List<Ecole> ecoles = new ArrayList<>();
+        loadEcoleFromDatabase();
+
+        for (Enseigner enseigner: mEnseigners) {
+            if(enseigner.getIdEnseignant()==idEnseignant)
+                ecoles.add(getEcole(enseigner.getIdEcole()));
+        }
+
+
+        return ecoles;
+    }
+
+    public Ecole getEcole(int idEcole)
+    {
+        loadEcoleFromDatabase();
+        for(int n=0;n<mEcoles.size();n++)
+        {
+            if (mEcoles.get(n).getId()==idEcole)
+                return mEcoles.get(n);
+        }
+        return null;
+    }
+
+    public List<Matiere> getListeMatieresEnseignant(int idEnseignant)
+    {
+        loadEnseignerFromDatabase();
+        List<Matiere> matieres = new ArrayList<>();
+        loadMatiereFromDatabase();
+
+        for(int m=0;m<mEnseigners.size();m++)
+        {
+            if(mEnseigners.get(m).getIdEnseignant()==idEnseignant)
+            {
+                matieres.add(getMatiere(mEnseigners.get(m).getIdMatiere()));
+            }
+
+        }
+
+
+        return matieres;
+    }
+
+    public Matiere getMattiere(int idMatiere)
+    {
+        loadMatiereFromDatabase();
+        for(int a=0;a<mMatieres.size();a++)
+        {
+            if(mMatieres.get(a).getId()==idMatiere)
+                return mMatieres.get(a);
+        }
+        return null;
+    }
+
+    public List<Classe> getListeClassesEnseignant(int idEnseignant)
+    {
+        loadEnseignerFromDatabase();
+        List<Classe> classes = new ArrayList<>();
+        List<Integer> listeIdClasse=new ArrayList<>();
+        loadClasseFromDatabase();
+
+        for(int l=0;l<mEnseigners.size();l++)
+        {
+            if(mEnseigners.get(l).getIdEnseignant()==idEnseignant)
+               classes.add(getClasse(mEnseigners.get(l).getIdClasse()));
+        }
+
+
+        return classes;
+    }
+
+    public List<String> getAnneesScolaire(){
+       List<Integer> yearsInt= new ArrayList<>();
+       List<String> annees = new ArrayList<>();
+
+       loadAllEtudiers();
+
+       for(int i=0;i<mEtudiers.size();i++)
+       {
+           if(yearsInt.contains(mEtudiers.get(i).getAnnee())==false)
+           {
+               yearsInt.add(mEtudiers.get(i).getAnnee());
+           }
+       }
+        for (Integer it: yearsInt) {
+            annees.add(String.valueOf(it));
+
+        }
+       return annees;
+    }
+
+
+
 }

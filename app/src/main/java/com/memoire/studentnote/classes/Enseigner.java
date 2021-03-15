@@ -16,6 +16,7 @@ public class Enseigner {
     private int idClasse;
 
 
+
     public Enseigner(int id, int idEnseignant, int idMatiere, int idEcole, int idClasse) {
         this.id=id;
         this.idEnseignant = idEnseignant;

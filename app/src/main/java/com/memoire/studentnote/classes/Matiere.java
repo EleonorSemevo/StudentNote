@@ -10,6 +10,8 @@ public class Matiere {
         this.nom = nom;
     }
 
+    public Matiere()
+    {}
     public int getId() {
         return id;
     }

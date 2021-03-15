@@ -4,11 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -18,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".enseignant.AjoutNote"></activity>
+        <activity android:name=".Header_Activity"></activity>
+        <activity android:name=".enseignant.AjoutNote" />
         <activity android:name=".NoteAfficher" />
         <activity android:name=".BulletinSlidePageAdapter" />
         <activity android:name=".MatiereMenu" />

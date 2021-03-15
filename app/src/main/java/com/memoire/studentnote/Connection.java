@@ -16,12 +16,26 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.memoire.studentnote.classes.Ecole;
+import com.memoire.studentnote.classes.Enseignant;
+import com.memoire.studentnote.classes.Enseigner;
+import com.memoire.studentnote.classes.User;
+import com.memoire.studentnote.database.DataManager;
 import com.memoire.studentnote.database.DatabaseDataWorker;
 import com.memoire.studentnote.database.DatabaseOpenHelper;
 import com.memoire.studentnote.database.DatabaseUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.memoire.studentnote.database.DatabaseUtil.mDataManager;
 import static com.memoire.studentnote.database.DatabaseUtil.mDataWorker;
 import static com.memoire.studentnote.database.DatabaseUtil.mDatabaseOpenHelper;
+import static com.memoire.studentnote.database.DatabaseUtil.mEnseignant;
+import static com.memoire.studentnote.database.DatabaseUtil.mListeClasses;
+import static com.memoire.studentnote.database.DatabaseUtil.mListeEcoles;
+import static com.memoire.studentnote.database.DatabaseUtil.mListeMatiere;
+import static com.memoire.studentnote.database.DatabaseUtil.mUtilisateurActuel;
 import static com.memoire.studentnote.database.DatabaseUtil.mdb;
 
 public class Connection extends AppCompatActivity {
@@ -71,17 +85,7 @@ public class Connection extends AppCompatActivity {
         });
 
     }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mFirebaseAuth.getCurrentUser();
-        if(currentUser != null )
-        {
-            Intent intent = new Intent(this,Inscription.class);//CECI DOIT ETRE LA PAGE SI L'UTILISATEUR EST DEJA CONNECTE
-            //A METTRE A JOUR LE CODE SI CETTE PAGE EST CREEE
-            startActivity(intent);
-        }
-    }
+
 
 
 
@@ -105,6 +109,20 @@ public class Connection extends AppCompatActivity {
                                 FirebaseUser user = mFirebaseAuth.getCurrentUser();
                                 Toast.makeText(Connection.this, "Authentication réussie",
                                         Toast.LENGTH_SHORT).show();
+
+
+                                //Enrégistrement de quelques information
+
+                                DatabaseUtil.mUtilisateurActuel= mDataManager.getUserSelonMail(email);
+                                if(mUtilisateurActuel.getType().equals("Enseignant"))
+                                {
+                                    DatabaseUtil.isEnseignant=true;
+                                    mEnseignant = mDataManager.getEnseignantDepuisMail(email);
+                                }
+                                else if(mUtilisateurActuel.getType().equals("Parent"))
+                                {
+                                    DatabaseUtil.isParent=true;
+                                }
 
                                 //updateUI();
                                 Intent intent = new Intent(Connection.this, MenuTable.class);
@@ -131,22 +149,8 @@ public class Connection extends AppCompatActivity {
 
     }
 
-    public void updateUI()
-    {
-        String mail = mFirebaseAuth.getCurrentUser().getEmail();
-        if(DatabaseUtil.isParent)
-        {
-            //UI CORRESPONDANT
-//            Intent intent = new Intent(Connection.this, Tabbed.class);
-//            startActivity(intent);
-        }
-        if(DatabaseUtil.isEnseignant)
-        {
-            //UI CORRESPONDANT
 
-        }
 
-    }
 
 
 

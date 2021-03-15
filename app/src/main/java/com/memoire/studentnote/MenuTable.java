@@ -34,11 +34,13 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.memoire.studentnote.classes.Ecole;
 import com.memoire.studentnote.classes.Eleve;
+import com.memoire.studentnote.classes.Enseigner;
 import com.memoire.studentnote.classes.Etudier;
 import com.memoire.studentnote.classes.MesEnfants;
 import com.memoire.studentnote.database.DataManager;
 import com.memoire.studentnote.database.DatabaseDataWorker;
 import com.memoire.studentnote.database.DatabaseOpenHelper;
+import com.memoire.studentnote.database.DatabaseUtil;
 import com.memoire.studentnote.enseignant.AjoutNote;
 
 import java.util.ArrayList;
@@ -53,9 +55,10 @@ import static com.memoire.studentnote.database.DatabaseUtil.mFirebaseAuth;
 import static com.memoire.studentnote.database.DatabaseUtil.mSharedPreferences;
 import static com.memoire.studentnote.database.DatabaseUtil.mdb;
 import static com.memoire.studentnote.database.DatabaseUtil.mesEnfants;
+import static java.security.AccessController.getContext;
 
 public class MenuTable extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+    Spinner s;
     //For drawer
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -105,6 +108,23 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
 
 
         /////
+//        s= findViewById(R.id.spinner_liste_enseigant_ecoles);
+//        Header_Activity h= new Header_Activity();
+//        List<String> mListeecoles = new ArrayList<>();
+//        mListeecoles.add("AAA");
+//        ArrayAdapter<String> ecoleAdapter = new ArrayAdapter<String>(MenuTable.this, android.R.layout.simple_spinner_item, mListeecoles);
+//        ecoleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        h.mSpinnerEcoles.setAdapter(ecoleAdapter);
+
+//        View v = View.inflate inflate(getContext(), R.layout.menu_header, this);
+//        s  = (Spinner) v.findViewById(R.id.spinner_liste_enseigant_ecoles);
+
+
+        //////////
+
+
+
+
         //        setSupportActionBar(toolbar);
         boutton_ajouter = findViewById(R.id.ajouter);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
@@ -155,53 +175,53 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
 
 
 
-    public void simpleAlert() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final AlertDialog alertDialog = builder.create();
-        //Récupération des éléments de l'alert
-        mMatricule =findViewById(R.id.matricule);
-        mSpinner = alertDialog.findViewById(R.id.list_ecoles);
-        //erroMessage = alertDialog.findViewById(R.id.error_ajout);
-        mAnnee = alertDialog.findViewById(R.id.annee);
-
-        //Récupération des données pour le spinner
-        final DataManager dataManager= DataManager.getInstance();
-        mEcoles = dataManager.getEcoles();
-        List<String> nomEcoles= new ArrayList<>();
-        for(int i=0;i<mEcoles.size();i++)
-        {
-            nomEcoles.add(mEcoles.get(i).getNom());
-        }
-
-       Log.d("**********",nomEcoles.toString());
-
-
-
-
-
-        //Insertions des données dans le spinner
-        ArrayAdapter<String> spinerAdapter = new ArrayAdapter<String>(MenuTable.this, android.R.layout.simple_spinner_item, nomEcoles);
-        spinerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinner.setAdapter(spinerAdapter);
-
-
-        builder.setTitle("Ajouter enfant");
-        //builder.setMessage("We have a message");
-        builder.setPositiveButton("Ajouter",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-
-                    }
-                });
-        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                alertDialog.dismiss();
-            }
-        });
-        builder.setCancelable(false);
-        builder.show();
-    }
+//    public void simpleAlert() {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        final AlertDialog alertDialog = builder.create();
+//        //Récupération des éléments de l'alert
+//        mMatricule =findViewById(R.id.matricule);
+//        mSpinner = alertDialog.findViewById(R.id.list_ecoles);
+//        //erroMessage = alertDialog.findViewById(R.id.error_ajout);
+//        mAnnee = alertDialog.findViewById(R.id.annee);
+//
+//        //Récupération des données pour le spinner
+//        final DataManager dataManager= DataManager.getInstance();
+//        mEcoles = dataManager.getEcoles();
+//        List<String> nomEcoles= new ArrayList<>();
+//        for(int i=0;i<mEcoles.size();i++)
+//        {
+//            nomEcoles.add(mEcoles.get(i).getNom());
+//        }
+//
+//       Log.d("**********",nomEcoles.toString());
+//
+//
+//
+//
+//
+//        //Insertions des données dans le spinner
+//        ArrayAdapter<String> spinerAdapter = new ArrayAdapter<String>(MenuTable.this, android.R.layout.simple_spinner_item, nomEcoles);
+//        spinerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        mSpinner.setAdapter(spinerAdapter);
+//
+//
+//        builder.setTitle("Ajouter enfant");
+//        //builder.setMessage("We have a message");
+//        builder.setPositiveButton("Ajouter",
+//                new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//
+//                    }
+//                });
+//        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int which) {
+//                alertDialog.dismiss();
+//            }
+//        });
+//        builder.setCancelable(false);
+//        builder.show();
+//    }
 
     public void showAlertDialogButtonClicked() {
         // create an alert builder
@@ -343,9 +363,11 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
     public boolean eleveexiste(String matricule)
     {
         boolean est_verifier = false;
-        for(int m=0;m<m_eleves.size();m++)
+        List<Etudier> listeEtudiers= mDataManager.getEtudiers();
+
+        for(int m=0;m<listeEtudiers.size();m++)
         {
-            if(m_eleves.get(m).getMatricule().equals(matricule))
+            if(listeEtudiers.get(m).getMatricule().equals(matricule))
                 est_verifier =true;
             break;
         }
@@ -355,11 +377,12 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
 
     public int  idDepuisMatricule(String matricule)
     {
-        int idEleve=0;
-        for (int b=0;b<m_eleves.size();b++)
+        int idEleve=-1;
+        List<Etudier> listeEtudiers= mDataManager.getEtudiers();
+        for (int b=0;b<listeEtudiers.size();b++)
         {
-            if(m_eleves.get(b).getMatricule().equals(matricule))
-                idEleve=m_eleves.get(b).getId();
+            if(listeEtudiers.get(b).getMatricule().equals(matricule))
+                idEleve=listeEtudiers.get(b).getIdEleve();
             break;
         }
         return idEleve;
@@ -409,6 +432,13 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
 
         switch (id){
             case R.id.menu_note :
+//            {
+//                if(DatabaseUtil.isEnseignant)
+//                    this.startActivity(note);
+//                else
+//                    item.setEnabled(false);
+//
+//            }
                 this.startActivity(note);
                 break;
             case R.id.menu_information:
@@ -421,6 +451,13 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
 
         this.drawerLayout.closeDrawer(GravityCompat.START);
 
+        return true;
+    }
+
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+        if(DatabaseUtil.isEnseignant)
+            menu.findItem(R.id.menu_note).setEnabled(false);
         return true;
     }
 
@@ -446,7 +483,14 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
     private void configureNavigationView(){
         this.navigationView = (NavigationView) findViewById(R.id.activity_main_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
-
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater =getMenuInflater();
+//        inflater.inflate(R.menu.chat_main_menu, menu);
+//
+//        return true;
+//    }
 }

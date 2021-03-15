@@ -17,7 +17,7 @@ public class DatabaseDataWorker {
 
     }
 
-    private void insertParent(String nom, String prenom, String mail, String telephone, String password)
+    public void insertParent(String nom, String prenom, String mail, String telephone, String password)
     {
         ContentValues values = new ContentValues();
         //values.put(DatabaseContract.ParentEntry._ID,id);
@@ -197,13 +197,12 @@ public class DatabaseDataWorker {
 
     }
 
-    public void insertEleve(String nom, String prenom, String matricule, String dateNaissance, String sexe)
+    public void insertEleve(String nom, String prenom, String dateNaissance, String sexe)
     {
         ContentValues values = new ContentValues();
 ;
         values.put(DatabaseContract.EleveEntry.COLUMN_NOM, nom);
         values.put(DatabaseContract.EleveEntry.COLUMN_PRENOM,prenom);
-        values.put(DatabaseContract.EleveEntry.COLUMN_MATRICULE,matricule);
         values.put(DatabaseContract.EleveEntry.COLUMN_DATE_NAISSASSNCE,dateNaissance);
         values.put(DatabaseContract.EleveEntry.COLUMN_SEXE,sexe);
 
@@ -212,7 +211,7 @@ public class DatabaseDataWorker {
 
     }
 
-    public void insertEtudier(int idEleve, int idEcole, int idClasse, int annee)
+    public void insertEtudier(int idEleve, int idEcole, int idClasse, int annee, String matricule)
     {
         ContentValues values = new ContentValues();
 
@@ -220,6 +219,7 @@ public class DatabaseDataWorker {
         values.put(DatabaseContract.EtudierEntry.COLUMN_ID_ECOLE,idEcole);
         values.put(DatabaseContract.EtudierEntry.COLUMN_ID_CLASSE,idClasse);
         values.put(DatabaseContract.EtudierEntry.COLUMN_ANNEE,annee);
+        values.put(DatabaseContract.EtudierEntry.COLUMN_MATRICULE, matricule);
 
         long newRowId = mdb.insert(DatabaseContract.EtudierEntry.TABLE_NAME, null, values);
         android.util.Log.d("Etudier enrégistrer", newRowId+"");
@@ -272,6 +272,7 @@ public class DatabaseDataWorker {
         values.put(DatabaseContract.ListUserEntry.COLUMN_MAIL, mail);
         values.put(DatabaseContract.ListUserEntry.COLUMN_UID,uid);
 
+
         long newRowId = mdb.insert(DatabaseContract.ListUserEntry.TABLE_NAME, null, values);
     }
 
@@ -279,16 +280,16 @@ public class DatabaseDataWorker {
 
     public void preliminaire()
     {
-        insertUser("SEMEVO","Loren","eleonorsemevo@gmail.com","69874512","azerty","Parent");
+        insertUser("SEMEVO","Loren","eleonorsemevo@gmail.com","69874512","azerty","Enseignant");
         insertUser("TAMOU","Tarille","tarille@gmail.com","65879562","tatata","Parent");
 
         insertUser("SEDA","Ramine","lor@gmail.com","89563214","aaaaaa","Enseignant");
         insertUser("SOSSA","Marine","marine@gmail.com","77896521","aaaaaa","Enseignant");
 
-        insertEleve("SOTA","Tarisse","0147","08:04:06","F");
-        insertEleve("FASSA","Saminta","0478","08:04:06","M");
-        insertEleve("LOLA","Tarse","0496","08:03:06","F");
-        insertEleve("MAMA","Mariline","2018","09:04:06","M");
+        insertEleve("SOTA","Tarisse","08:04:06","F");
+        insertEleve("FASSA","Saminta","08:04:06","M");
+        insertEleve("LOLA","Tarse","08:03:06","F");
+        insertEleve("MAMA","Mariline","09:04:06","M");
 
         insertEcole("CEG 1 CALAVI","CALAVI","Cavi","CEG","000");
         insertEcole("CEG 2 CALAVI","CALAVI","Coda","CEG","111");
@@ -316,10 +317,10 @@ public class DatabaseDataWorker {
         insertClasse("CP",2);
         insertClasse("CE1",2);
 
-        insertEtudier(1,1,1,2017);
-        insertEtudier(2,1,1,2017);
-        insertEtudier(3,1,1,2017);
-        insertEtudier(4,1,1,2017);
+        insertEtudier(1,1,1,2017,"1147" );
+        insertEtudier(2,1,1,2017,"1478");
+        insertEtudier(3,1,1,2017,"1496");
+        insertEtudier(4,1,1,2017,"2018");
 
         insertMesEnfants(1,1,1,"SATI","Ramida",1,"CEG 1 CALAVI","5eme");
         insertMesEnfants(1,1,2,"SOSSA","Romuald",1,"CEG 2 CALAVI","4eme");
@@ -335,6 +336,13 @@ public class DatabaseDataWorker {
         insertListeUser("030","Sossa","Sorelle","sorellesemevo@gmail.com");
         insertListeUser("040","Gatibou","Garelle","garellesemevo@gmail.com");
 
+        insertEnseigner(1,0,1,1);
+        insertEnseigner(1,1,2,2);
+        insertEnseigner(1,2,3,1);
+
+        insertEnseignant("Sem","Lor","eleonorsemevo@gmail.com","azerty","65707651");
+        insertEnseignant("Larou","Sami","fleursemevo@gmail.com","azerty","98745621");
+        insertEnseignant("Lora","Solam","dora@gmail.com","azerty","66758954");
 
 
 

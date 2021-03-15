@@ -67,11 +67,11 @@ public class DatabaseContract {
         public static final String COLUMN_PRENOM="prenom";
         public static final String COLUMN_SEXE="sexe";
         public static final String  COLUMN_DATE_NAISSASSNCE="date_naissance";
-        public static final String COLUMN_MATRICULE="matricule";
+ //       public static final String COLUMN_MATRICULE="matricule";
 
         public static final String SQL_CREATE_TABLE="CREATE TABLE "+
                 TABLE_NAME+" ("+_ID+" INTEGER PRIMARY KEY, "+
-                COLUMN_MATRICULE+ " TEXT, "+
+        //        COLUMN_MATRICULE+ " TEXT, "+
                 COLUMN_NOM+ " TEXT NOT NULL, "+
                 COLUMN_PRENOM+ " TEXT NOT NULL, "+
                 COLUMN_SEXE+ " TEXT, "+
@@ -126,10 +126,13 @@ public class DatabaseContract {
         public static final String COLUMN_ID_CLASSE="idClasse";
         public static final String COLUMN_ID_ECOLE="idEcole";
         public static final String COLUMN_ANNEE="anne";
+        //Ajouter plus tard;
+        public static final String COLUMN_MATRICULE="matricule";
 
         public static final String SQL_CREATE_TABLE="CREATE TABLE "+
                 TABLE_NAME+ " ( "+ _ID+" INTEGER PRIMARY KEY, "+
                 COLUMN_ID_ELEVE+ " INTEGER NOT NULL, "+
+                COLUMN_MATRICULE+ "TEXT NOT NULL, "+
                 COLUMN_ID_CLASSE+ " INTEGER NOT NULL, "+
                 COLUMN_ID_ECOLE+ " INTEGER NOT NULL, "+
                 COLUMN_ANNEE+ " INTEGER NOT NULL )";
@@ -295,12 +298,14 @@ public class DatabaseContract {
         public static final String COLUMN_NOM = "nom";
         public static final String COLUMN_PRENOM ="prenom";
         public static final String COLUMN_MAIL ="mail";
+        public static final String COLUMN_TYPE ="type";
 
         public static final String SQL_CREATE_TABLE="CREATE TABLE "+
                 TABLE_NAME+" ( "+_ID+" INTEGER PRIMARY KEY, "+
                 COLUMN_UID + " TEXT UNIQUE NOT NULL, "+
                 COLUMN_NOM + " TEXT, "+
                 COLUMN_PRENOM + " TEXT, "+
+                COLUMN_TYPE + " TEXT NOT NULL, "+
                 COLUMN_MAIL + " TEXT UNIQUE NOT NULL )";
     }
 }

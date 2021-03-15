@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.memoire.studentnote.chat.UserDetails;
 import com.memoire.studentnote.database.DatabaseDataWorker;
 import com.memoire.studentnote.database.DatabaseOpenHelper;
+import com.memoire.studentnote.database.DatabaseUtil;
 import com.memoire.studentnote.pojo.Api;
 import com.memoire.studentnote.pojo.RegisterResponse;
 
@@ -29,8 +30,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.memoire.studentnote.database.DatabaseUtil.mDataManager;
 import static com.memoire.studentnote.database.DatabaseUtil.mDataWorker;
 import static com.memoire.studentnote.database.DatabaseUtil.mDatabaseOpenHelper;
+import static com.memoire.studentnote.database.DatabaseUtil.mEnseignant;
+import static com.memoire.studentnote.database.DatabaseUtil.mUtilisateurActuel;
 import static com.memoire.studentnote.database.DatabaseUtil.mdb;
 
 public class Inscription extends AppCompatActivity {
@@ -141,6 +145,21 @@ public class Inscription extends AppCompatActivity {
                                 {
                                     mDataWorker.insertUser(nom,prenom,email,telephone,password,type);
 
+                                }
+
+                                if(type.equals("Enseignant"))
+                                {
+                                    DatabaseUtil.isEnseignant=true;
+                                    mEnseignant = mDataManager.getEnseignantDepuisMail(email);
+                                    mDataWorker.insertEnseignant(nom,prenom,email,telephone,password);
+//                                    mListeEcoles = mDataManager.getListeEcoleEnseignant(mEnseignant.getId());
+//                                    mListeMatiere = mDataManager.getListeMatieresEnseignant(mEnseignant.getId());
+//                                    mListeClasses = mDataManager.getListeClassesEnseignant(mEnseignant.getId());
+                                }
+                                else if(type.equals("Parent"))
+                                {
+                                    DatabaseUtil.isParent=true;
+                                    mDataWorker.insertParent(nom,prenom,email,telephone,password);
                                 }
                                 // Sign in success, update UI with the signed-in user's information
                                 //Log.d("user email", "createUserWithEmail:success");

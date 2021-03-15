@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/spinner_menu_header"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="#B2B9E1"
@@ -10,8 +10,15 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/circle" />
+        android:layout_width="83dp"
+        android:layout_height="58dp"
+        android:background="@drawable/circle"
+        app:srcCompat="@mipmap/avatar"
+        android:contentDescription="@string/title_activity_tabbed"/>
+
+    <Spinner
+        android:id="@+id/spinner_liste_enseigant_ecoles"
+        android:layout_width="match_parent"
+        android:layout_height="37dp" />
 
 </LinearLayout>

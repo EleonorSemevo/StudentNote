@@ -16,6 +16,7 @@ public class Enseignant {
         this.mdp = mdp;
         this.telephone = telephone;
     }
+    public Enseignant(){}
 
     public int getId() {
         return id;
