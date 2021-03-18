@@ -50,7 +50,7 @@ import static com.memoire.studentnote.database.DatabaseUtil.mdb;
 import static com.memoire.studentnote.database.DatabaseUtil.mesEnfants;
 
 public class MenuTable extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    Spinner s;
+
     //For drawer
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
@@ -102,24 +102,6 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
 
         this.configureNavigationView();
         idEcoleActuelle();
-
-
-        /////
-//        s= findViewById(R.id.spinner_liste_enseigant_ecoles);
-//        Header_Activity h= new Header_Activity();
-//        List<String> mListeecoles = new ArrayList<>();
-//        mListeecoles.add("AAA");
-//        ArrayAdapter<String> ecoleAdapter = new ArrayAdapter<String>(MenuTable.this, android.R.layout.simple_spinner_item, mListeecoles);
-//        ecoleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        h.mSpinnerEcoles.setAdapter(ecoleAdapter);
-
-//        View v = View.inflate inflate(getContext(), R.layout.menu_header, this);
-//        s  = (Spinner) v.findViewById(R.id.spinner_liste_enseigant_ecoles);
-//        findViewById(R.id.spinner_liste_enseigant_ecoles).setVisibility(View.INVISIBLE);
-        
-
-        //////////
-
 
 
 

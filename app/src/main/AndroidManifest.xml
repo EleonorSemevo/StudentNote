@@ -16,7 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Header_Activity"></activity>
+        <activity android:name=".emplois.TableEmplois"></activity>
+        <!-- <activity -->
+        <!-- android:name=".emplois.TableEmplois" -->
+        <!-- android:label="@string/title_activity_table_emplois" -->
+        <!-- android:theme="@style/AppTheme.NoActionBar"></activity> -->
+        <activity android:name=".Header_Activity" />
         <activity android:name=".enseignant.AjoutNote" />
         <activity android:name=".NoteAfficher" />
         <activity android:name=".BulletinSlidePageAdapter" />

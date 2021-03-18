@@ -10,9 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.memoire.studentnote.classes.Ecole;
 import com.memoire.studentnote.classes.MesEnfants;
 import com.memoire.studentnote.database.Current;
+import com.memoire.studentnote.emplois.TableEmplois;
 
 import java.util.List;
 //import androidx.recyclerview.widget.RecyclerView.ViewHolder;
@@ -76,7 +76,7 @@ class EcoleRecyclerAdapter extends  RecyclerView.Adapter <EcoleRecyclerAdapter.V
 //                    Intent intent=new Intent(mContext, ActionMenu.class);
                     Current.carteEmplois = mMesEnfants.get(mCurrentPosition);
 //                    mContext.startActivity(intent);
-                    Intent intent = new Intent(mContext, ClasseMenu.class);
+                    Intent intent = new Intent(mContext, TableEmplois.class);
                     mContext.startActivity(intent);
 
                 }
