@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,6 +105,10 @@ public class MessageFragment extends Fragment {
         DataManager dataManager = DataManager.getInstance();
         listeUser.clear();
         listeUser = dataManager.getListeUsers();
+        listeUser.add(new ListeUser("1000","nom","prenom","lo@gmail.com"));
+        listeUser.add(new ListeUser("1100","sossa","sola","ro@gmail.com"));
+        listeUser.add(new ListeUser("1200","sossou","sos","mo@gmail.com"));
+
 
 
         mMessageRecyclerAdapter = new MessageRecyclerAdapter(view.getContext(),listeUser);

@@ -26,15 +26,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.memoire.studentnote.database.DatabaseUtil.mdb;
+import static com.memoire.studentnote.database.DatabaseUtil.mesEnfants;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NoteFragment extends Fragment {
+public class EmploisFragment extends Fragment {
     private EcoleRecyclerAdapter mEcoleRecyclerAdapter;
 
-    public NoteFragment() {
+    public EmploisFragment() {
         // Required empty public constructor
     }
 
@@ -62,8 +63,8 @@ public class NoteFragment extends Fragment {
 //        }
         //
 
-        ecoles =dataManager.getEcoles() ;
-        mEcoleRecyclerAdapter = new EcoleRecyclerAdapter(view.getContext(),ecoles);
+
+        mEcoleRecyclerAdapter = new EcoleRecyclerAdapter(view.getContext(),mesEnfants);
         recyclerView.setAdapter(mEcoleRecyclerAdapter);
 
     }

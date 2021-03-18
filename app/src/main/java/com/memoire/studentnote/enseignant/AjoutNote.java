@@ -1,15 +1,24 @@
 package com.memoire.studentnote.enseignant;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Message;
+import android.text.Layout;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -39,6 +48,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.facebook.internal.CallbackManagerImpl.RequestCodeOffset.Message;
+import static com.memoire.studentnote.database.DatabaseUtil.idEcoleActuelle_enseignant;
 import static com.memoire.studentnote.database.DatabaseUtil.mDataManager;
 import static com.memoire.studentnote.database.DatabaseUtil.mDataWorker;
 import static com.memoire.studentnote.database.DatabaseUtil.mDatabaseOpenHelper;
@@ -59,6 +70,7 @@ public class AjoutNote extends AppCompatActivity {
     Button mButtonChoixFichier;
     Button mButtonAnnuler;
     Button mButtonEnregistrer;
+    ProgressDialog mProgressBar;
 
     EditText output;;
 
@@ -72,6 +84,7 @@ public class AjoutNote extends AppCompatActivity {
     String mDescription="";
     String mType="";
     String mDateComposition ="";
+    private Handler mHandler;
 
 
 
@@ -126,17 +139,6 @@ public class AjoutNote extends AppCompatActivity {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-
-                if(verifierChampFichier())
-                {
-                    Toast.makeText(AjoutNote.this, "Bien",Toast.LENGTH_LONG).show();
-
-
-                }
-                else
-                {
-                    Toast.makeText(AjoutNote.this, "Mauvais",Toast.LENGTH_LONG).show();
-                }
             }
         });
 
@@ -170,10 +172,6 @@ public class AjoutNote extends AppCompatActivity {
 
     }
 
-    public void annuler()
-    {
-        finish();
-    }
 
     public void onReadClick(View view) throws FileNotFoundException {
 
@@ -382,10 +380,10 @@ public class AjoutNote extends AppCompatActivity {
 
     public void insererNote() throws FileNotFoundException {
         //Les données à recevoir depuis le formulaire
-        int idecole=1;
-        int idclasse=1;
-        int idmatiere=1;
-        int ideleve=1;
+        int idecole;
+        int idclasse;
+        int idmatiere;
+        int ideleve;
         String description=mSpinnerDescription.getSelectedItem().toString();
         String type= mSpinnerType.getSelectedItem().toString();
         String dateComposition =mEditTextDate.getText().toString();
@@ -401,16 +399,72 @@ public class AjoutNote extends AppCompatActivity {
             XSSFSheet sheet = workbook.getSheetAt(0);
             int rowsCount = sheet.getPhysicalNumberOfRows();
             FormulaEvaluator formulaEvaluator = workbook.getCreationHelper().createFormulaEvaluator();
+            //Initialisation
+
+            idmatiere=mListeMatiere.get(mSpinnerMatiere.getSelectedItemPosition()).getId();
+            idclasse = mListeClasses.get(mSpinnerClasse.getSelectedItemPosition()).getId();
+            mAnneeScolaire = Integer.parseInt(mSpinnerAnneeScolaire.getSelectedItem().toString());
+
+            //progressBar set up
+            mProgressBar = new ProgressDialog(this);
+            mProgressBar.setCancelable(false);
+            mProgressBar.setMessage("Enrégistrement en cours");
+            mProgressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            mProgressBar.setProgress(0);
+            mProgressBar.setMax(100);
+            double progressEvolution=0;
+            final int tour = (100/rowsCount);
+            mProgressBar.show();
+
+//Cotrole du progressDialog en arrière plan
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        while (mProgressBar.getProgress() <= mProgressBar
+                                .getMax()) {
+                            Thread.sleep(200);
+                            mHandler.sendMessage(mHandler.obtainMessage());
+                            if (mProgressBar.getProgress() == mProgressBar
+                                    .getMax()) {
+
+                                    mProgressBar.dismiss();
+
+                                    AjoutNote.this.finish();
+                                    Toast.makeText(AjoutNote.this,"Enrégistrement réussi",Toast.LENGTH_LONG).show();
+
+                            }
+                        }
+                    } catch (Exception e) {
+
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+
             for (int r = 1; r<rowsCount; r++) {
                 Row row = sheet.getRow(r);
 
                 String matricule = getCellAsString(row, numeroColumnMatricule, formulaEvaluator);
                 String n= getCellAsString(row, numeroColumnNote, formulaEvaluator);
                 Double note = Double.parseDouble(n);
-                ideleve = mDataManager.getIdElveFromMatricule(idecole,matricule);
-                mDataWorker.insertNote(idmatiere,ideleve,idclasse,idecole,type, dateComposition,description,mAnneeScolaire,note);
+                ideleve = mDataManager.getIdElveFromMatricule(idEcoleActuelle_enseignant,matricule);
+
+
+
+                mDataWorker.insertNote(idmatiere,ideleve,idclasse,idEcoleActuelle_enseignant,type, dateComposition,description,mAnneeScolaire,note);
                 Log.d("**********","#############"+n);
                 Log.d("aaa","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                progressEvolution = progressEvolution+tour;
+
+                mHandler = new Handler(){
+                    @Override
+                    public void handleMessage(@NonNull Message msg) {
+                        super.handleMessage(msg);
+                        mProgressBar.incrementProgressBy(tour);
+                    }
+                };
 
             }
         } catch (Exception e) {
@@ -449,31 +503,31 @@ public class AjoutNote extends AppCompatActivity {
 
     }
 
-    public void idEcoleFromIdEnseignant()
-    {
-        List<Enseigner> enseigners= new ArrayList<>();
-        enseigners = DataManager.getInstance().getEnseigners();
-
-        for(int j=0;j<enseigners.size();j++)
-        {
-            if(enseigners.get(j).getIdEnseignant()==mEnseignant.getId())
-                DatabaseUtil.mIdEcole = enseigners.get(j).getIdEcole();
-        }
-    }
-
-    public void idMatiereFromIdEnseignant()
-    {
-        List<Enseigner> enseigners= new ArrayList<>();
-        enseigners = DataManager.getInstance().getEnseigners();
-
-        for(int k=0;k<enseigners.size();k++)
-        {
-            if(enseigners.get(k).getId()== mEnseignant.getId())
-            {
-                DatabaseUtil.mIdMatiere = enseigners.get(k).getIdMatiere();
-            }
-        }
-    }
+//    public void idEcoleFromIdEnseignant()
+//    {
+//        List<Enseigner> enseigners= new ArrayList<>();
+//        enseigners = DataManager.getInstance().getEnseigners();
+//
+//        for(int j=0;j<enseigners.size();j++)
+//        {
+//            if(enseigners.get(j).getIdEnseignant()==mEnseignant.getId())
+//                DatabaseUtil.mIdEcole = enseigners.get(j).getIdEcole();
+//        }
+//    }
+//
+//    public void idMatiereFromIdEnseignant()
+//    {
+//        List<Enseigner> enseigners= new ArrayList<>();
+//        enseigners = DataManager.getInstance().getEnseigners();
+//
+//        for(int k=0;k<enseigners.size();k++)
+//        {
+//            if(enseigners.get(k).getId()== mEnseignant.getId())
+//            {
+//                DatabaseUtil.mIdMatiere = enseigners.get(k).getIdMatiere();
+//            }
+//        }
+//    }
 
     public void initialiserFormulaire()
     {

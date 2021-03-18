@@ -37,24 +37,24 @@ public class NoteAfficher extends AppCompatActivity {
                 "08:04:2020","semestre 1",2017,18));
 
         notes.add(1,new Note(2,1,1,1,1,"exercice2",
-                "08:04:2020","semestre 1",2017,20));
+                "08:04:2020","semestre 1",2017,11));
 
         notes.add(2,new Note(2,1,1,1,1,"Interrogation 1",
-                "08:04:2020","semestre 1",2017,20));
+                "08:04:2020","semestre 1",2017,13));
         notes.add(3,new Note(2,1,1,1,1,"Interrogation 2",
-                "08:04:2020","semestre 1",2017,20));
+                "08:04:2020","semestre 1",2017,8));
 
 
         notes.add(4,new Note(2,1,1,1,1,"Devoir 1",
-                "08:04:2020","semestre 1",2017,20));
+                "08:04:2020","semestre 1",2017,14));
         notes.add(5,new Note(2,1,1,1,1,"Devoir 2",
-                "08:04:2020","semestre 1",2017,20));
+                "08:04:2020","semestre 1",2017,16));
         notes.add(6,new Note(2,1,1,1,1,"exercice 3",
-                "08:04:2020","semestre 2",2017,20));
+                "08:04:2020","semestre 2",2017,12));
         notes.add(7,new Note(2,1,1,1,1,"exercice 4",
-                "08:04:2020","semestre 1",2017,20));
+                "08:04:2020","semestre 1",2017,12));
         notes.add(8,new Note(2,1,1,1,1,"exercice 5",
-                "08:04:2020","semestre 1",2017,20));
+                "08:04:2020","semestre 1",2017,03));
 
         mNotes.add(0,Notes.createSection(notes.get(0)));
         mNotes.add(1,Notes.createRow(notes.get(1)));

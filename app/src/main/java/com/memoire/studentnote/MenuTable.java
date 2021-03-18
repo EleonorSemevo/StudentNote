@@ -1,6 +1,5 @@
 package com.memoire.studentnote;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -9,21 +8,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.ContextMenu;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,9 +28,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.memoire.studentnote.classes.Ecole;
 import com.memoire.studentnote.classes.Eleve;
-import com.memoire.studentnote.classes.Enseigner;
 import com.memoire.studentnote.classes.Etudier;
-import com.memoire.studentnote.classes.MesEnfants;
 import com.memoire.studentnote.database.DataManager;
 import com.memoire.studentnote.database.DatabaseDataWorker;
 import com.memoire.studentnote.database.DatabaseOpenHelper;
@@ -46,16 +38,16 @@ import com.memoire.studentnote.enseignant.AjoutNote;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.memoire.studentnote.database.DatabaseUtil.idEcoleActuelle_enseignant;
 import static com.memoire.studentnote.database.DatabaseUtil.mDataManager;
 import static com.memoire.studentnote.database.DatabaseUtil.mDataWorker;
 import static com.memoire.studentnote.database.DatabaseUtil.mDatabaseOpenHelper;
 
 import static com.memoire.studentnote.database.DatabaseUtil.mEnfantRecyclerAdapter;
 import static com.memoire.studentnote.database.DatabaseUtil.mFirebaseAuth;
-import static com.memoire.studentnote.database.DatabaseUtil.mSharedPreferences;
+import static com.memoire.studentnote.database.DatabaseUtil.mListeEcoles;
 import static com.memoire.studentnote.database.DatabaseUtil.mdb;
 import static com.memoire.studentnote.database.DatabaseUtil.mesEnfants;
-import static java.security.AccessController.getContext;
 
 public class MenuTable extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Spinner s;
@@ -81,6 +73,8 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
     private List<Eleve> m_eleves = new ArrayList<>();
     private List<Etudier> m_etudier =new ArrayList<>();
 
+//Pour les enseignants
+    private Spinner mSpinnerListeEcole;
 
  //   private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -91,6 +85,8 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
             R.mipmap.message,
             R.mipmap.information,
             R.mipmap.avatar};
+    private View mHeaderView;
+    private List<String> mNomEcoles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +101,7 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
         this.configureDrawerLayout();
 
         this.configureNavigationView();
+        idEcoleActuelle();
 
 
         /////
@@ -118,7 +115,8 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
 
 //        View v = View.inflate inflate(getContext(), R.layout.menu_header, this);
 //        s  = (Spinner) v.findViewById(R.id.spinner_liste_enseigant_ecoles);
-
+//        findViewById(R.id.spinner_liste_enseigant_ecoles).setVisibility(View.INVISIBLE);
+        
 
         //////////
 
@@ -164,7 +162,7 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
     private void setViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new EnfantFragment(), "Elèves");
-        adapter.addFragment(new NoteFragment(), "Notes");
+        adapter.addFragment(new EmploisFragment(), "Emplois");
         adapter.addFragment(new MessageFragment(),"Messages");
         adapter.addFragment(new InformationFragment(),"Informations");
         adapter.addFragment(new ProfilFragment(),"Profile");
@@ -432,14 +430,8 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
 
         switch (id){
             case R.id.menu_note :
-//            {
-//                if(DatabaseUtil.isEnseignant)
-//                    this.startActivity(note);
-//                else
-//                    item.setEnabled(false);
-//
-//            }
-                this.startActivity(note);
+                //this.startActivity(note);
+                confirmerChoixEcoleEtDemarrerAjotNote();
                 break;
             case R.id.menu_information:
                 break;
@@ -459,6 +451,11 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
         if(DatabaseUtil.isEnseignant)
             menu.findItem(R.id.menu_note).setEnabled(false);
         return true;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
     }
 
     // ---------------------
@@ -483,14 +480,62 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
     private void configureNavigationView(){
         this.navigationView = (NavigationView) findViewById(R.id.activity_main_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+/////////////////////////////////////////////////////////////////////////////////
+        mHeaderView = navigationView.inflateHeaderView(R.layout.menu_header);
+        mSpinnerListeEcole = mHeaderView.findViewById(R.id.spinner_liste_enseigant_ecoles);
+
+        mNomEcoles = new ArrayList<>();
+        for(int i=0;i<mListeEcoles.size();i++)
+        {
+            mNomEcoles.add(mListeEcoles.get(i).getNom());
+        }
+
+        ArrayAdapter<String> spinerAdapter = new ArrayAdapter<String>(MenuTable.this, android.R.layout.simple_spinner_item, mNomEcoles);
+        spinerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerListeEcole.setAdapter(spinerAdapter);
+
+
 
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater =getMenuInflater();
-//        inflater.inflate(R.menu.chat_main_menu, menu);
-//
-//        return true;
-//    }
+
+
+    private void idEcoleActuelle()
+    {
+        int a= mSpinnerListeEcole.getSelectedItemPosition();
+        idEcoleActuelle_enseignant = mListeEcoles.get(a).getId();
+    }
+
+    private void confirmerChoixEcoleEtDemarrerAjotNote()
+    {
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmez le choix d'école");
+    // set the custom layout
+    final View customLayout = getLayoutInflater().inflate(R.layout.layout_confirmer_ecole, null);
+    final Spinner conf=customLayout.findViewById(R.id.ecoles_liste);
+
+
+    ArrayAdapter<String> spinerAdapter = new ArrayAdapter<String>(MenuTable.this, android.R.layout.simple_spinner_item, mNomEcoles);
+        spinerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        conf.setAdapter(spinerAdapter);
+
+        builder.setView(customLayout);
+    // add a button
+        builder.setPositiveButton("Confirmez", new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            int position = conf.getSelectedItemPosition();
+           idEcoleActuelle_enseignant = mListeEcoles.get(position).getId();
+           mSpinnerListeEcole.setSelection(position);
+           Intent intent = new Intent(MenuTable.this,AjoutNote.class);
+           startActivity(intent);
+
+
+
+    };
+    // create and show the alert dialog
+
+    });
+    AlertDialog dialog = builder.create();
+    dialog.show();}
 }

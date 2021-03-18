@@ -4,13 +4,11 @@ package com.memoire.studentnote.database;
 //import com.google.firebase.auth.FirebaseAuth;
 
 
-import android.database.Cursor;
-import android.util.Log;
-
 import com.memoire.studentnote.classes.Classe;
 import com.memoire.studentnote.classes.ClasseT;
 import com.memoire.studentnote.classes.Ecole;
 import com.memoire.studentnote.classes.Eleve;
+import com.memoire.studentnote.classes.Emplois;
 import com.memoire.studentnote.classes.Enseignant;
 import com.memoire.studentnote.classes.Enseigner;
 import com.memoire.studentnote.classes.EnseignerT;
@@ -25,9 +23,6 @@ import com.memoire.studentnote.classes.User;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.memoire.studentnote.database.DatabaseUtil.mEnseignant;
-import static com.memoire.studentnote.database.DatabaseUtil.mListeMatiere;
 
 public class DataManager {
     private static DataManager ourInstance=null;
@@ -53,6 +48,9 @@ public class DataManager {
     private final List<Enseigner> mEnseigners = new ArrayList<>();
     private final List<ClasseT> mClasseTs = new ArrayList<>();
     private final List<EnseignerT> mEnseignerTs = new ArrayList<>();
+
+
+    private final List<Emplois> mEmplois = new ArrayList<>();
 
 
 
@@ -1010,6 +1008,59 @@ public class DataManager {
         return id;
 
     }
+
+    public List<Emplois> getEmplois() {
+        loadAllEmplois();
+        return mEmplois;
+    }
+
+    private void loadAllEmplois() {
+        final String[] emploisColumns ={
+
+                DatabaseContract.EmploisEntry.COLUMN_ID_ECOLE,
+                DatabaseContract.EmploisEntry.COLUMN_ID_CLASSE,
+                DatabaseContract.EmploisEntry.COLUMN_ID_MATIERE,
+                DatabaseContract.EmploisEntry.ANNEE_SCOLAIRE,
+                DatabaseContract.EmploisEntry.COLUMN_JOUR,
+                DatabaseContract.EmploisEntry.COLUMN_HEURE_FIN,
+                DatabaseContract.EmploisEntry.COLUMN_HEURE_FIN,
+                DatabaseContract.EmploisEntry._ID
+
+        };
+
+        final android.database.Cursor emploisCursor = DatabaseUtil.mdb.query(DatabaseContract.EmploisEntry.TABLE_NAME,
+                emploisColumns,null,null,null,null,null,null);
+
+        int idEcolePos = emploisCursor.getColumnIndex(DatabaseContract.EmploisEntry.COLUMN_ID_ECOLE);
+        int idClassePos = emploisCursor.getColumnIndex(DatabaseContract.EmploisEntry.COLUMN_ID_CLASSE);
+        int idMatierePos = emploisCursor.getColumnIndex(DatabaseContract.EmploisEntry.COLUMN_ID_MATIERE);
+        int anneePos = emploisCursor.getColumnIndex(DatabaseContract.EmploisEntry.ANNEE_SCOLAIRE);
+        int jourPos = emploisCursor.getColumnIndex(DatabaseContract.EmploisEntry.COLUMN_JOUR);
+        int heureDebutPos = emploisCursor.getColumnIndex(DatabaseContract.EmploisEntry.COLUMN_HEURE_DEBUT);
+        int heureFinPos = emploisCursor.getColumnIndex(DatabaseContract.EmploisEntry.COLUMN_HEURE_FIN);
+        int idPos = emploisCursor.getColumnIndex(DatabaseContract.EmploisEntry._ID);
+
+        DataManager dm =getInstance();
+        dm.mEmplois.clear();
+        while (emploisCursor.moveToNext())
+        {
+            int idEcole = emploisCursor.getInt(idEcolePos);
+            int idClasse = emploisCursor.getInt(idClassePos);
+            int idMatiere = emploisCursor.getInt(idMatierePos);
+            int annee_scolaire  = emploisCursor.getInt(anneePos);
+            String jour = emploisCursor.getString(jourPos);
+            String heure_debut= emploisCursor.getString(heureDebutPos);
+            String heure_fin = emploisCursor.getString(heureFinPos);
+            int id =emploisCursor.getInt(idPos);
+
+            Emplois emplois = new Emplois(id, idEcole,idClasse, idMatiere,jour, heure_debut, heure_fin, annee_scolaire);
+            dm.mEmplois.add(emplois);
+
+        }
+
+        emploisCursor.close();
+    }
+
 
     public String getNomEleve(int idEleve)
     {

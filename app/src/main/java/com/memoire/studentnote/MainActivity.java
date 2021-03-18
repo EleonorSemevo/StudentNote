@@ -8,6 +8,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.memoire.studentnote.classes.Ecole;
+import com.memoire.studentnote.classes.Enseigner;
 import com.memoire.studentnote.database.DatabaseDataWorker;
 import com.memoire.studentnote.database.DatabaseOpenHelper;
 import com.memoire.studentnote.database.DatabaseUtil;
@@ -25,10 +27,14 @@ import android.widget.Toast;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.memoire.studentnote.database.DatabaseUtil.mDataManager;
 import static com.memoire.studentnote.database.DatabaseUtil.mDataWorker;
 import static com.memoire.studentnote.database.DatabaseUtil.mDatabaseOpenHelper;
 import static com.memoire.studentnote.database.DatabaseUtil.mEnseignant;
+import static com.memoire.studentnote.database.DatabaseUtil.mListeEcoles;
 import static com.memoire.studentnote.database.DatabaseUtil.mSharedPreferences;
 import static com.memoire.studentnote.database.DatabaseUtil.mUtilisateurActuel;
 import static com.memoire.studentnote.database.DatabaseUtil.mdb;
@@ -114,11 +120,36 @@ public class MainActivity extends AppCompatActivity {
         {
             DatabaseUtil.isEnseignant=true;
             mEnseignant = mDataManager.getEnseignantDepuisMail(email);
+            initialliseListeEcole();
         }
         else if(mUtilisateurActuel.getType().equals("Parent"))
         {
             DatabaseUtil.isParent=true;
 
+        }
+    }
+
+    private void initialliseListeEcole()
+    {
+        if(DatabaseUtil.isEnseignant)
+        {
+            List<Enseigner> enseigners = mDataManager.getEnseigners();
+            List<Ecole> ecoles = mDataManager.getEcoles();
+            List<Integer> idEcoles =new ArrayList<>();
+            for(int j=0;j<enseigners.size();j++)
+            {
+                if(enseigners.get(j).getIdEnseignant()==mEnseignant.getId())
+                    idEcoles.add(enseigners.get(j).getIdEcole());
+            }
+
+            for(int k=0;k<idEcoles.size();k++)
+            {
+                for(int m=0;m<ecoles.size();m++)
+                {
+                    if(ecoles.get(m).getId()==idEcoles.get(k))
+                        mListeEcoles.add(ecoles.get(m));
+                }
+            }
         }
     }
 }

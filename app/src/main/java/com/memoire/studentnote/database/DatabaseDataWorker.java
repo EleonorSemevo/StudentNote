@@ -2,7 +2,6 @@ package com.memoire.studentnote.database;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.DatabaseUtils;
 
 import static com.memoire.studentnote.database.DatabaseUtil.mdb;
 
@@ -263,7 +262,7 @@ public class DatabaseDataWorker {
 
     }
 
-    private void insertListeUser(String uid,String nom, String prenom, String mail)
+    public void insertListeUser(String uid,String nom, String prenom, String mail)
     {
         ContentValues values = new ContentValues();
         //values.put(DatabaseContract.ParentEntry._ID,id);
@@ -274,6 +273,22 @@ public class DatabaseDataWorker {
 
 
         long newRowId = mdb.insert(DatabaseContract.ListUserEntry.TABLE_NAME, null, values);
+    }
+
+    public void insertEmplois(int idEcole, int idClasse, int idMatiere, String jour, String heur_debut, String heure_fin, int anneeScolaire)
+    {
+        ContentValues values = new ContentValues();
+        //values.put(DatabaseContract.ParentEntry._ID,id);
+        values.put(DatabaseContract.EmploisEntry.COLUMN_ID_ECOLE, idEcole);
+        values.put(DatabaseContract.EmploisEntry.COLUMN_ID_CLASSE, idClasse);
+        values.put(DatabaseContract.EmploisEntry.COLUMN_ID_MATIERE, idMatiere);
+        values.put(DatabaseContract.EmploisEntry.COLUMN_JOUR,jour);
+        values.put(DatabaseContract.EmploisEntry.COLUMN_HEURE_DEBUT, heur_debut);
+        values.put(DatabaseContract.EmploisEntry.COLUMN_HEURE_FIN,heure_fin);
+        values.put(DatabaseContract.EmploisEntry.ANNEE_SCOLAIRE, anneeScolaire);
+
+
+        long newRowId = mdb.insert(DatabaseContract.EmploisEntry.TABLE_NAME, null, values);
     }
 
     ////////////////////////INSERTION PRELIMINAIRE
@@ -343,6 +358,10 @@ public class DatabaseDataWorker {
         insertEnseignant("Sem","Lor","eleonorsemevo@gmail.com","azerty","65707651");
         insertEnseignant("Larou","Sami","fleursemevo@gmail.com","azerty","98745621");
         insertEnseignant("Lora","Solam","dora@gmail.com","azerty","66758954");
+
+        insertListeUser("10000","Sem","Lor","eleonorsemevo@gmail.com");
+        insertListeUser("2000","Larou","Sami","fleursemevo@gmail.com");
+        insertListeUser("0125","Lora","Solam","dora@gmail.com");
 
 
 

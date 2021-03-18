@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.memoire.studentnote.classes.Ecole;
+import com.memoire.studentnote.classes.MesEnfants;
 import com.memoire.studentnote.database.Current;
 
 import java.util.List;
@@ -18,18 +19,15 @@ import java.util.List;
 
 class EcoleRecyclerAdapter extends  RecyclerView.Adapter <EcoleRecyclerAdapter.ViewHolder>{
 
-    private static final String ECOLE_ACTUElLE="ACTUELLE_ECOLE";
-    private RecyclerView.ViewHolder mHolder;
-    private int mPosition;
 
     private final Context mContext;
     private final LayoutInflater mLayoutInflater;
-    private final List<Ecole> mEcoles;
+    private final List<MesEnfants> mMesEnfants;
 
-    public EcoleRecyclerAdapter(Context context, List<Ecole> ecoles)
+    public EcoleRecyclerAdapter(Context context, List<MesEnfants> mesEnfants)
     {
         mContext = context;
-        mEcoles = ecoles;
+        mMesEnfants = mesEnfants;
         mLayoutInflater =LayoutInflater.from(mContext);
     }
 
@@ -42,9 +40,10 @@ class EcoleRecyclerAdapter extends  RecyclerView.Adapter <EcoleRecyclerAdapter.V
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Ecole ecole =mEcoles.get(position);
-        holder.mNomEcole.setText(ecole.getNom());
-        holder.mLocationEcole.setText(ecole.getVille()+" "+ecole.getQuartier());
+        MesEnfants mesEnfants =mMesEnfants.get(position);
+        holder.mNomEcole.setText(mesEnfants.getNomEcole());
+       // holder.mLocationEcole.setText(mesEnfants.get+" "+mesEnfants.getQuartier());
+        holder.mClasse.setText(mesEnfants.getClasse());
         holder.mCurrentPosition = position;
 
     }
@@ -54,26 +53,28 @@ class EcoleRecyclerAdapter extends  RecyclerView.Adapter <EcoleRecyclerAdapter.V
 
     @Override
     public int getItemCount() {
-        return mEcoles.size();
+        return mMesEnfants.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public final TextView mNomEcole;
         public final TextView mLocationEcole;
         public int mCurrentPosition;
+        public final TextView mClasse;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mNomEcole = itemView.findViewById(R.id.item_action);
             mLocationEcole = itemView.findViewById(R.id.item_localisation);
+            mClasse = itemView.findViewById(R.id.textview_classe);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
 //                    Intent intent=new Intent(mContext, ActionMenu.class);
-                    Current.currentIdEcole = mEcoles.get(mCurrentPosition).getId();
+                    Current.carteEmplois = mMesEnfants.get(mCurrentPosition);
 //                    mContext.startActivity(intent);
                     Intent intent = new Intent(mContext, ClasseMenu.class);
                     mContext.startActivity(intent);

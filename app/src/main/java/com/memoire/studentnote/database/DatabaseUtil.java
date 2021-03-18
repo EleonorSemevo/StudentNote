@@ -40,11 +40,12 @@ public class DatabaseUtil {
 ////Pour les enseignants;
     public static Enseignant mEnseignant;
 
-    public static int mIdEcole;
-    public static int mIdMatiere;
+//    public static int mIdEcole;
+//    public static int mIdMatiere;
     public static List<Matiere> mListeMatiere= new ArrayList<>();
     public static List<Classe> mListeClasses = new ArrayList<>();
     public static List<Ecole> mListeEcoles= new ArrayList<>();
+    public static int idEcoleActuelle_enseignant;
 
 //// User
     public static User mUtilisateurActuel;

@@ -10,6 +10,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.memoire.studentnote.chat.UserDetails;
+import com.memoire.studentnote.classes.Ecole;
+import com.memoire.studentnote.classes.Enseigner;
 import com.memoire.studentnote.database.DatabaseDataWorker;
 import com.memoire.studentnote.database.DatabaseOpenHelper;
 import com.memoire.studentnote.database.DatabaseUtil;
@@ -26,6 +28,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,6 +39,7 @@ import static com.memoire.studentnote.database.DatabaseUtil.mDataManager;
 import static com.memoire.studentnote.database.DatabaseUtil.mDataWorker;
 import static com.memoire.studentnote.database.DatabaseUtil.mDatabaseOpenHelper;
 import static com.memoire.studentnote.database.DatabaseUtil.mEnseignant;
+import static com.memoire.studentnote.database.DatabaseUtil.mListeEcoles;
 import static com.memoire.studentnote.database.DatabaseUtil.mUtilisateurActuel;
 import static com.memoire.studentnote.database.DatabaseUtil.mdb;
 
@@ -140,18 +146,20 @@ public class Inscription extends AppCompatActivity {
                                 {
                                     mDataWorker.insertUser(nom,prenom,email,"",password,type);
                                     UserDetails.list_uid_Users.add(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                    mDataWorker.insertListeUser(FirebaseAuth.getInstance().getCurrentUser().getUid(),nom,prenom,email);
                                 }
                                 else
                                 {
                                     mDataWorker.insertUser(nom,prenom,email,telephone,password,type);
-
+                                    mDataWorker.insertListeUser(FirebaseAuth.getInstance().getCurrentUser().getUid(),nom,prenom,email);
                                 }
 
                                 if(type.equals("Enseignant"))
                                 {
                                     DatabaseUtil.isEnseignant=true;
-                                    mEnseignant = mDataManager.getEnseignantDepuisMail(email);
                                     mDataWorker.insertEnseignant(nom,prenom,email,telephone,password);
+                                    mEnseignant = mDataManager.getEnseignantDepuisMail(email);
+                                    initialliseListeEcole();
 //                                    mListeEcoles = mDataManager.getListeEcoleEnseignant(mEnseignant.getId());
 //                                    mListeMatiere = mDataManager.getListeMatieresEnseignant(mEnseignant.getId());
 //                                    mListeClasses = mDataManager.getListeClassesEnseignant(mEnseignant.getId());
@@ -220,6 +228,30 @@ public class Inscription extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void initialliseListeEcole()
+    {
+        if(DatabaseUtil.isEnseignant)
+        {
+            List<Enseigner> enseigners = mDataManager.getEnseigners();
+            List<Ecole> ecoles = mDataManager.getEcoles();
+            List<Integer> idEcoles =new ArrayList<>();
+            for(int j=0;j<enseigners.size();j++)
+            {
+                if(enseigners.get(j).getIdEnseignant()==mEnseignant.getId())
+                    idEcoles.add(enseigners.get(j).getIdEcole());
+            }
+
+            for(int k=0;k<idEcoles.size();k++)
+            {
+                for(int m=0;m<ecoles.size();m++)
+                {
+                    if(ecoles.get(m).getId()==idEcoles.get(k))
+                        mListeEcoles.add(ecoles.get(m));
+                }
+            }
+        }
     }
 
 

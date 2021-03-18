@@ -31,6 +31,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         db.execSQL(DatabaseContract.MesEnfantsEntry.SQL_CREATE_TABLE);
         db.execSQL(DatabaseContract.UserEntry.SQL_CREATE_TABLE);
         db.execSQL(DatabaseContract.ListUserEntry.SQL_CREATE_TABLE);
+        db.execSQL(DatabaseContract.EmploisEntry.SQL_CREATE_TABLE);
 
 
 
