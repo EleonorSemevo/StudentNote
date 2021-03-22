@@ -50,6 +50,7 @@ import static com.memoire.studentnote.database.DatabaseUtil.mEnfantRecyclerAdapt
 import static com.memoire.studentnote.database.DatabaseUtil.mFirebaseAuth;
 import static com.memoire.studentnote.database.DatabaseUtil.mListeClasses;
 import static com.memoire.studentnote.database.DatabaseUtil.mListeEcoles;
+import static com.memoire.studentnote.database.DatabaseUtil.mUtilisateurActuel;
 import static com.memoire.studentnote.database.DatabaseUtil.mdb;
 import static com.memoire.studentnote.database.DatabaseUtil.mesEnfants;
 
@@ -157,55 +158,6 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
 
     }
 
-
-
-//    public void simpleAlert() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        final AlertDialog alertDialog = builder.create();
-//        //Récupération des éléments de l'alert
-//        mMatricule =findViewById(R.id.matricule);
-//        mSpinner = alertDialog.findViewById(R.id.list_ecoles);
-//        //erroMessage = alertDialog.findViewById(R.id.error_ajout);
-//        mAnnee = alertDialog.findViewById(R.id.annee);
-//
-//        //Récupération des données pour le spinner
-//        final DataManager dataManager= DataManager.getInstance();
-//        mEcoles = dataManager.getEcoles();
-//        List<String> nomEcoles= new ArrayList<>();
-//        for(int i=0;i<mEcoles.size();i++)
-//        {
-//            nomEcoles.add(mEcoles.get(i).getNom());
-//        }
-//
-//       Log.d("**********",nomEcoles.toString());
-//
-//
-//
-//
-//
-//        //Insertions des données dans le spinner
-//        ArrayAdapter<String> spinerAdapter = new ArrayAdapter<String>(MenuTable.this, android.R.layout.simple_spinner_item, nomEcoles);
-//        spinerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        mSpinner.setAdapter(spinerAdapter);
-//
-//
-//        builder.setTitle("Ajouter enfant");
-//        //builder.setMessage("We have a message");
-//        builder.setPositiveButton("Ajouter",
-//                new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//
-//                    }
-//                });
-//        builder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-//            public void onClick(DialogInterface dialog, int which) {
-//                alertDialog.dismiss();
-//            }
-//        });
-//        builder.setCancelable(false);
-//        builder.show();
-//    }
 
     public void showAlertDialogButtonClicked() {
         // create an alert builder
@@ -461,6 +413,7 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
     // 2 - Configure Drawer Layout
     private void configureDrawerLayout(){
         this.drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_drawer_layout);
+       // drawerLayout.
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
@@ -468,8 +421,20 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
 
     // 3 - Configure NavigationView
     private void configureNavigationView(){
-        this.navigationView = (NavigationView) findViewById(R.id.activity_main_nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+
+            this.navigationView = (NavigationView) findViewById(R.id.activity_main_nav_view);
+           if(mUtilisateurActuel.getType().equals("Parent"))
+           {
+               navigationView.getMenu().clear();
+               navigationView.inflateMenu(R.menu.menu_main);
+           }
+           else if(mUtilisateurActuel.getType().equals("Enseignant"))
+           {
+               navigationView.getMenu().clear();
+               navigationView.inflateMenu(R.menu.chat_main_menu);
+           }
+            navigationView.setNavigationItemSelectedListener(this);
+
 /////////////////////////////////////////////////////////////////////////////////
         mHeaderView = navigationView.inflateHeaderView(R.layout.menu_header);
         mSpinnerListeEcole = mHeaderView.findViewById(R.id.spinner_liste_enseigant_ecoles);

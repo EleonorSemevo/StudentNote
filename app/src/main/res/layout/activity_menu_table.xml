@@ -82,7 +82,8 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:menu="@menu/chat_main_menu"
+        android:pointerIcon="hand"/>
 
-        />
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

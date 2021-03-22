@@ -16,13 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".infos.GestionsInformations"></activity>
-        <activity android:name=".emplois.AjoutEmplois" />
-<!--        <activity android:name=".emplois.SamediFragment" />-->
-<!--        <activity android:name=".emplois.VendrediFragment" />-->
-<!--        <activity android:name=".emplois.JeudiFragment" />-->
-<!--        <activity android:name=".emplois.MercrediFragment" />-->
-<!--        <activity android:name=".emplois.MardiFragment" />-->
+        <activity android:name=".admin.Dashbord"></activity>
+        <activity android:name=".infos.GestionsInformations" />
+        <activity android:name=".emplois.AjoutEmplois" /> <!-- <activity android:name=".emplois.SamediFragment" /> -->
+        <!-- <activity android:name=".emplois.VendrediFragment" /> -->
+        <!-- <activity android:name=".emplois.JeudiFragment" /> -->
+        <!-- <activity android:name=".emplois.MercrediFragment" /> -->
+        <!-- <activity android:name=".emplois.MardiFragment" /> -->
         <activity android:name=".emplois.TableEmplois" /> <!-- <activity -->
         <!-- android:name=".emplois.TableEmplois" -->
         <!-- android:label="@string/title_activity_table_emplois" -->
