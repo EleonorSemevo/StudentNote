@@ -4,6 +4,10 @@ package com.memoire.studentnote.database;
 //import com.google.firebase.auth.FirebaseAuth;
 
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.util.Log;
+
 import com.memoire.studentnote.classes.Classe;
 import com.memoire.studentnote.classes.ClasseT;
 import com.memoire.studentnote.classes.Ecole;
@@ -23,6 +27,8 @@ import com.memoire.studentnote.classes.User;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.http.PUT;
 
 public class DataManager {
     private static DataManager ourInstance=null;
@@ -183,19 +189,19 @@ public class DataManager {
 
         };
 
-        final android.database.Cursor enseignantCursor = DatabaseUtil.mdb.query(DatabaseContract.ParentEntry.TABLE_NAME,
+        final android.database.Cursor enseignantCursor = DatabaseUtil.mdb.query(DatabaseContract.EnseignantEntry.TABLE_NAME,
                 enseignantColumns,null,null,null,null,null,null);
         //loadFromDatabase((DatabaseOpenHelper) enseignantCursor);
 
-        int enseignantNomPos = enseignantCursor.getColumnIndex(DatabaseContract.ParentEntry.COLUMN_NOM);
-        int enseignantPrenomPos = enseignantCursor.getColumnIndex(DatabaseContract.ParentEntry.COLUMN_PRENOM);
-        int enseignantMailPos = enseignantCursor.getColumnIndex(DatabaseContract.ParentEntry.COLUMN_MAIL);
-        int enseignantMdpPos = enseignantCursor.getColumnIndex(DatabaseContract.ParentEntry.COLUMN_MDP);
-        int enseignantTelephone = enseignantCursor.getColumnIndex(DatabaseContract.ParentEntry.COLUMN_TELEPHONE);
-        int enseignantId = enseignantCursor.getColumnIndex(DatabaseContract.ParentEntry._ID);
+        int enseignantNomPos = enseignantCursor.getColumnIndex(DatabaseContract.EnseignantEntry.COLUMN_NOM);
+        int enseignantPrenomPos = enseignantCursor.getColumnIndex(DatabaseContract.EnseignantEntry.COLUMN_PRENOM);
+        int enseignantMailPos = enseignantCursor.getColumnIndex(DatabaseContract.EnseignantEntry.COLUMN_MAIL);
+        int enseignantMdpPos = enseignantCursor.getColumnIndex(DatabaseContract.EnseignantEntry.COLUMN_MDP);
+        int enseignantTelephone = enseignantCursor.getColumnIndex(DatabaseContract.EnseignantEntry.COLUMN_TELEPHONE);
+        int enseignantId = enseignantCursor.getColumnIndex(DatabaseContract.EnseignantEntry._ID);
 
         DataManager dm =getInstance();
-        dm.mParents.clear();
+        dm.mEnseignants.clear();
         while (enseignantCursor.moveToNext())
         {
             String nom = enseignantCursor.getString(enseignantNomPos);
@@ -407,7 +413,7 @@ public class DataManager {
             int idAuteur = informationCursor.getInt(infosIdAuteurPos);
             int id = informationCursor.getInt(infosId);
 
-            Information information = new Information(id,description,chemin,datePublication,idEcole,idAuteur);
+            Information information = new Information(id,description,datePublication,idEcole,idAuteur);
             dm.mInformation.add(information);
         }
 
@@ -1014,51 +1020,51 @@ public class DataManager {
         return mEmplois;
     }
 
-    private void loadAllEmplois() {
-        final String[] emploisColumns ={
-
+    private void loadAllEmplois(){
+        final String[] emploisColumns= {
                 DatabaseContract.EmploisEntry.COLUMN_ID_ECOLE,
                 DatabaseContract.EmploisEntry.COLUMN_ID_CLASSE,
                 DatabaseContract.EmploisEntry.COLUMN_ID_MATIERE,
-                DatabaseContract.EmploisEntry.ANNEE_SCOLAIRE,
+                DatabaseContract.EmploisEntry.COLUMN_ANNEE_SCOLAIRE,
                 DatabaseContract.EmploisEntry.COLUMN_JOUR,
-                DatabaseContract.EmploisEntry.COLUMN_HEURE_FIN,
+                DatabaseContract.EmploisEntry.COLUMN_HEURE_DEBUT,
                 DatabaseContract.EmploisEntry.COLUMN_HEURE_FIN,
                 DatabaseContract.EmploisEntry._ID
-
         };
 
-        final android.database.Cursor emploisCursor = DatabaseUtil.mdb.query(DatabaseContract.EmploisEntry.TABLE_NAME,
-                emploisColumns,null,null,null,null,null,null);
-
+        final Cursor emploisCursor = DatabaseUtil.mdb.query(
+                DatabaseContract.EmploisEntry.TABLE_NAME,
+                emploisColumns, null, null,null,
+                null, DatabaseContract.EmploisEntry.COLUMN_HEURE_DEBUT+" ASC");
         int idEcolePos = emploisCursor.getColumnIndex(DatabaseContract.EmploisEntry.COLUMN_ID_ECOLE);
         int idClassePos = emploisCursor.getColumnIndex(DatabaseContract.EmploisEntry.COLUMN_ID_CLASSE);
         int idMatierePos = emploisCursor.getColumnIndex(DatabaseContract.EmploisEntry.COLUMN_ID_MATIERE);
-        int anneePos = emploisCursor.getColumnIndex(DatabaseContract.EmploisEntry.ANNEE_SCOLAIRE);
+        int anneScolairePos = emploisCursor.getColumnIndex(DatabaseContract.EmploisEntry.COLUMN_ANNEE_SCOLAIRE);
         int jourPos = emploisCursor.getColumnIndex(DatabaseContract.EmploisEntry.COLUMN_JOUR);
-        int heureDebutPos = emploisCursor.getColumnIndex(DatabaseContract.EmploisEntry.COLUMN_HEURE_DEBUT);
-        int heureFinPos = emploisCursor.getColumnIndex(DatabaseContract.EmploisEntry.COLUMN_HEURE_FIN);
+        int heure_debutPos = emploisCursor.getColumnIndex(DatabaseContract.EmploisEntry.COLUMN_HEURE_DEBUT);
+        int heure_finPos = emploisCursor.getColumnIndex(DatabaseContract.EmploisEntry.COLUMN_HEURE_FIN);
         int idPos = emploisCursor.getColumnIndex(DatabaseContract.EmploisEntry._ID);
 
-        DataManager dm =getInstance();
+        DataManager dm = getInstance();
         dm.mEmplois.clear();
+
         while (emploisCursor.moveToNext())
         {
             int idEcole = emploisCursor.getInt(idEcolePos);
             int idClasse = emploisCursor.getInt(idClassePos);
             int idMatiere = emploisCursor.getInt(idMatierePos);
-            int annee_scolaire  = emploisCursor.getInt(anneePos);
+            int annee = emploisCursor.getInt(anneScolairePos);
             String jour = emploisCursor.getString(jourPos);
-            String heure_debut= emploisCursor.getString(heureDebutPos);
-            String heure_fin = emploisCursor.getString(heureFinPos);
-            int id =emploisCursor.getInt(idPos);
+            int debut = emploisCursor.getInt(heure_debutPos);
+            int fin = emploisCursor.getInt(heure_finPos);
+            int id = emploisCursor.getInt(idPos);
 
-            Emplois emplois = new Emplois(id, idEcole,idClasse, idMatiere,jour, heure_debut, heure_fin, annee_scolaire);
-            dm.mEmplois.add(emplois);
-
+            Emplois emplois = new Emplois(id,idEcole,idClasse,idMatiere,jour, debut,fin,annee);
+            mEmplois.add(emplois);
         }
 
         emploisCursor.close();
+
     }
 
 
@@ -1158,9 +1164,16 @@ public class DataManager {
             if(enseigner.getIdEnseignant()==idEnseignant)
                 ecoles.add(getEcole(enseigner.getIdEcole()));
         }
+    //Enlever les redondances
+        List<Ecole> ec =new ArrayList<>();
+        for(int k=0;k<ecoles.size();k++)
+        {
+            if(!ec.contains(ecoles.get(k)))
+                ec.add(ecoles.get(k));
+        }
 
 
-        return ecoles;
+        return ec;
     }
 
     public Ecole getEcole(int idEcole)
@@ -1207,16 +1220,24 @@ public class DataManager {
     public List<Classe> getListeClassesEnseignant(int idEnseignant)
     {
         loadEnseignerFromDatabase();
-        List<Classe> classes = new ArrayList<>();
-        List<Integer> listeIdClasse=new ArrayList<>();
+        List<Classe> les_classes = new ArrayList<>();
+        //List<Integer> listeIdClasse=new ArrayList<>();
         loadClasseFromDatabase();
 
-        for(int l=0;l<mEnseigners.size();l++)
-        {
-            if(mEnseigners.get(l).getIdEnseignant()==idEnseignant)
-               classes.add(getClasse(mEnseigners.get(l).getIdClasse()));
+        for (Enseigner enseigner: mEnseigners) {
+            if(enseigner.getIdEnseignant()==idEnseignant)
+                les_classes.add(getClasse(enseigner.getIdEcole()));
         }
+        Log.d("les classes", les_classes.toString());
+        Log.d("dm","&&&&&&&&&&&&&&&&");
 
+        //Enlever les redondances
+        List<Classe> classes= new ArrayList<>();
+        for(int l=0;l<les_classes.size();l++)
+        {
+            if(!classes.contains(les_classes.get(l)))
+                classes.add(les_classes.get(l));
+        }
 
         return classes;
     }
@@ -1240,6 +1261,26 @@ public class DataManager {
         }
        return annees;
     }
+
+
+    public Information getLastInformation()
+    {
+        loadInformationsFromDatabase();
+        return mInformation.get(mInformation.size()-1);
+    }
+
+    public List getInfosSelonIdcoles(int idEcole)
+    {
+        loadInformationsFromDatabase();
+        List<Information> information =new ArrayList<>();
+        for(int j=0;j<mInformation.size();j++)
+        {
+            if(mInformation.get(j).getIdEcole()==idEcole)
+                information.add(mInformation.get(j));
+        }
+        return  information;
+    }
+
 
 
 

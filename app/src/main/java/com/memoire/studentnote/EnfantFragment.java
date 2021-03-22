@@ -1,6 +1,10 @@
 package com.memoire.studentnote;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,20 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.memoire.studentnote.classes.Ecole;
-import com.memoire.studentnote.classes.Enfant;
-import com.memoire.studentnote.classes.MesEnfants;
 import com.memoire.studentnote.database.DataManager;
-import com.memoire.studentnote.database.DatabaseUtil;
-
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.memoire.studentnote.database.DatabaseUtil.mEnfantRecyclerAdapter;
 import static com.memoire.studentnote.database.DatabaseUtil.mesEnfants;

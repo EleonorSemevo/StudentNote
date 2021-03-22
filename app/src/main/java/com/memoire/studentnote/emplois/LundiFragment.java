@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,7 @@ public class LundiFragment extends Fragment {
 
         mEmplois = updateEmplois();
 
+
         mLundiRecyclerAdapter = new LundiRecyclerAdapter(view.getContext(), mEmplois);
         recyclerView.setAdapter(mLundiRecyclerAdapter);
     }
@@ -65,72 +67,103 @@ public class LundiFragment extends Fragment {
 
 public List<Emplois> updateEmplois()
 {
-    List<Emplois> emplois = DataManager.getInstance().getEmplois();
+    List<Emplois> lundi_emplois =new ArrayList<>() ;
+   List<Emplois> emplois = DataManager.getInstance().getEmplois();
+//   Log.d("tout emp",emplois.size()+"");
+//   Log.d("r","ééééééééééééééééééééééééé"+emplois.size());
+
+
+    //Choix des lundi_emplois du lundi
+    for(int vu=0;vu<emplois.size();vu++)
+    {
+        if(emplois.get(vu).getJour().equals("Lundi"))
+            lundi_emplois.add(emplois.get(vu));
+    }
+
+
+    Log.d("début ooh",lundi_emplois.toString()+ lundi_emplois.size());
+
     List<Ecole> ecoles = DataManager.getInstance().getEcoles();
+   // Log.d("ecoles",ecoles.toString()+ ecoles.size());
+
     List<Classe> classes = DataManager.getInstance().getClasses();
+    //Log.d("classes",classes.toString()+ classes.size());
+
     List<Enseigner> enseigners = DataManager.getInstance().getEnseigners();
+ //   Log.d("enseigners",enseigners.toString()+ enseigners.size());
+
     List<Enseignant> enseignants = DataManager.getInstance().getEnseignants();
+ //   Log.d("enseignants",enseignants.toString()+ enseignants.size());
+
     List<Matiere> matieres = DataManager.getInstance().getMatiere();
+  //  Log.d("matieres",matieres.toString()+ matieres.size());
+
+    Log.d("tag","###############################################################################################################################################");
 
     //Pour ecoles
-    for(int i=0;i<emplois.size();i++)
+    for(int i=0;i<lundi_emplois.size();i++)
     {
         for(int j=0;j<ecoles.size();j++)
         {
-            if(emplois.get(i).getIdEcole()==ecoles.get(j).getId())
-                emplois.get(i).setNomEcole(ecoles.get(j).getNom());
+            if(lundi_emplois.get(i).getIdEcole()==ecoles.get(j).getId())
+                lundi_emplois.get(i).setNomEcole(ecoles.get(j).getNom());
+                //lundi_emplois.get(i).
         }
     }
+
+    Log.d("ecole",lundi_emplois.toString()+ lundi_emplois.size());
 
     //Pour matiere
 
-    for(int a=0;a<emplois.size();a++)
+    for(int a=0;a<lundi_emplois.size();a++)
     {
         for(int b=0;b<matieres.size();b++)
         {
-            if(emplois.get(a).getIdMatiere()==matieres.get(b).getId())
-                emplois.get(a).setNomMatiere(matieres.get(b).getNom());
+            if(lundi_emplois.get(a).getIdMatiere()==matieres.get(b).getId())
+                lundi_emplois.get(a).setNomMatiere(matieres.get(b).getNom());
         }
     }
-
+    Log.d("matiere",lundi_emplois.toString()+ lundi_emplois.size());
     //pour classe
 
-    for(int c=0; c<emplois.size();c++)
+    for(int c=0; c<lundi_emplois.size();c++)
     {
         for(int d=0;d<classes.size();d++)
         {
-            if(emplois.get(c).getIdClasse()==classes.get(d).getId())
-                emplois.get(c).setNomClasse(classes.get(d).getNom());
+            if(lundi_emplois.get(c).getIdClasse()==classes.get(d).getId())
+                lundi_emplois.get(c).setNomClasse(classes.get(d).getNom());
         }
     }
-
+    Log.d("classe",lundi_emplois.toString()+ lundi_emplois.size());
     //enseignants
 
-    for(int e=0;e<emplois.size();e++)
+    for(int e=0;e<lundi_emplois.size();e++)
     {
         for(int f=0;f<enseigners.size();f++)
         {
-            if(emplois.get(e).getIdClasse()==enseigners.get(f).getIdClasse() &&
-                    emplois.get(e).getIdEcole() ==enseigners.get(f).getIdEcole() &&
-                    emplois.get(e).getIdMatiere() == enseigners.get(f).getIdMatiere())
+            if(lundi_emplois.get(e).getIdClasse()==enseigners.get(f).getIdClasse() &&
+                    lundi_emplois.get(e).getIdEcole() ==enseigners.get(f).getIdEcole() &&
+                    lundi_emplois.get(e).getIdMatiere() == enseigners.get(f).getIdMatiere())
             {
-                emplois.get(e).setIdEnseignant(enseigners.get(f).getIdEnseignant());
+                lundi_emplois.get(e).setIdEnseignant(enseigners.get(f).getIdEnseignant());
             }
         }
     }
 
-    for(int g=0;g<emplois.size();g++)
+    for(int g=0;g<lundi_emplois.size();g++)
     {
+        Log.d("tailles",enseignants.size()+"");
+        Log.d("t","*********************");
         for(int h=0;h<enseignants.size();h++)
         {
-            if(emplois.get(g).getIdEnseignant()== enseignants.get(h).getId())
+            if(lundi_emplois.get(g).getIdEnseignant()== enseignants.get(h).getId())
             {
-                emplois.get(g).setNomEnseignant(enseignants.get(h).getNom()+" "+enseignants.get(h).getPrenom());
+                lundi_emplois.get(g).setNomEnseignant(enseignants.get(h).getNom()+" "+enseignants.get(h).getPrenom());
             }
         }
     }
-
-    return emplois;
+    Log.d("final",lundi_emplois.toString()+ lundi_emplois.size());
+    return lundi_emplois;
 
 }
 }

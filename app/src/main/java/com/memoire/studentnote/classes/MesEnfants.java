@@ -3,6 +3,7 @@ package com.memoire.studentnote.classes;
 import android.os.Parcel;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class MesEnfants implements android.os.Parcelable {
     private int id;
@@ -14,6 +15,29 @@ public class MesEnfants implements android.os.Parcelable {
     private String nomEcole;
     private int  idclasse;
     private String classe;
+
+    //
+    private String quartierEcole;
+    private String villeEcole;
+    public String getVilleEcole() {
+        return villeEcole;
+    }
+
+    public void setVilleEcole(String villeEcole) {
+        this.villeEcole = villeEcole;
+    }
+
+
+
+    public String getQuartierEcole() {
+        return quartierEcole;
+    }
+
+    public void setQuartierEcole(String quartierEcole) {
+        this.quartierEcole = quartierEcole;
+    }
+
+
 
 
     public MesEnfants(int id, int idParent, int idEleve, String nom, String prenom, int idEcole, String nomEcole, int idclasse, String classe) {
@@ -153,5 +177,15 @@ public class MesEnfants implements android.os.Parcelable {
     @Override
     public String toString() {
         return getCompareKey();
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        MesEnfants enfants=(MesEnfants) obj;
+        if(this.id==enfants.getId()
+        && this.idEleve==enfants.getIdEleve())
+            return true;
+        else
+            return false;
     }
 }

@@ -318,16 +318,16 @@ public class DatabaseContract {
         public static final String COLUMN_JOUR ="jour";
         public static final String COLUMN_HEURE_DEBUT ="heure_debut";
         public static final String COLUMN_HEURE_FIN ="heureFin";
-        public static final String ANNEE_SCOLAIRE ="anneeScolaire";
+        public static final String COLUMN_ANNEE_SCOLAIRE ="anneeScolaire";
 
         public static final String SQL_CREATE_TABLE="CREATE TABLE "+
                 TABLE_NAME+" ( "+_ID+" INTEGER PRIMARY KEY, "+
-                COLUMN_ID_ECOLE + " TEXT UNIQUE NOT NULL, "+
-                COLUMN_ID_CLASSE + " TEXT, "+
-                COLUMN_ID_MATIERE + " TEXT, "+
-                ANNEE_SCOLAIRE + " INTEGER, "+
+                COLUMN_ID_ECOLE + " TEXT NOT NULL, "+
+                COLUMN_ID_CLASSE + " TEXT NOT NULL, "+
+                COLUMN_ID_MATIERE + " TEXT NOT NULL, "+
+                COLUMN_ANNEE_SCOLAIRE + " INTEGER, "+
                 COLUMN_JOUR + " TEXT NOT NULL, "+
-                COLUMN_HEURE_DEBUT + " TEXT NOT NULL, "+
-                COLUMN_HEURE_FIN + " TEXT NOT NULL )";
+                COLUMN_HEURE_DEBUT + " INTEGER NOT NULL, "+
+                COLUMN_HEURE_FIN + " INTEGER NOT NULL )";
     }
 }

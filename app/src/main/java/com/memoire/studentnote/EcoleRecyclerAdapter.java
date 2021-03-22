@@ -42,7 +42,7 @@ class EcoleRecyclerAdapter extends  RecyclerView.Adapter <EcoleRecyclerAdapter.V
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         MesEnfants mesEnfants =mMesEnfants.get(position);
         holder.mNomEcole.setText(mesEnfants.getNomEcole());
-       // holder.mLocationEcole.setText(mesEnfants.get+" "+mesEnfants.getQuartier());
+        holder.mLocationEcole.setText(mesEnfants.getQuartierEcole()+" "+mesEnfants.getVilleEcole());
         holder.mClasse.setText(mesEnfants.getClasse());
         holder.mCurrentPosition = position;
 

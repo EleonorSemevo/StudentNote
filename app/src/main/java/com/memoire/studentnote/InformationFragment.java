@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.memoire.studentnote.classes.Ecole;
 import com.memoire.studentnote.classes.Information;
 import com.memoire.studentnote.database.DataManager;
 
@@ -61,6 +62,16 @@ public class InformationFragment extends Fragment {
 
         mInformation=new ArrayList<>();
         mInformation = dataManager.getInformation();
+        //Completions des infos de classe
+        List<Ecole> ecoles = dataManager.getEcoles();
+        for(int ac=0;ac<mInformation.size();ac++)
+        {
+            for(int ad = 0;ad<ecoles.size();ad++)
+            {
+                if(mInformation.get(ac).getIdEcole()==ecoles.get(ad).getId())
+                    mInformation.get(ac).setEcole(ecoles.get(ad).getNom());
+            }
+        }
 
 
         mInformationRecyclerAdapter = new InformationRecyclerAdapter(view.getContext(),mInformation);

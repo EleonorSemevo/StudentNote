@@ -1,7 +1,6 @@
 package com.memoire.studentnote;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +38,8 @@ public class InformationRecyclerAdapter extends RecyclerView.Adapter<Information
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         //String texte = mInformation.get(position);
         holder.mTextDate.setText(mInformation.get(position).getDatePublication());
-        holder.mTextMassage.setText(mInformation.get(position).getDescription());
+        holder.mTextMessage.setText(mInformation.get(position).getDescription());
+       // holder.mTextMessage.setEnabled(false);
         holder.mTextAuteur.setText(mInformation.get(position).getAuteur());
         holder.mTextEcole.setText(mInformation.get(position).getEcole());
         holder.mCurrentPosition = position;
@@ -57,7 +57,7 @@ public class InformationRecyclerAdapter extends RecyclerView.Adapter<Information
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public final TextView mTextDate;
-        public final TextView mTextMassage;
+        public final TextView mTextMessage;
         public final TextView mTextAuteur;
         public final TextView mTextEcole;
         public int mCurrentPosition;
@@ -66,7 +66,7 @@ public class InformationRecyclerAdapter extends RecyclerView.Adapter<Information
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             mTextDate = itemView.findViewById(R.id.date_view);
-            mTextMassage = itemView.findViewById(R.id.message_view);
+            mTextMessage = itemView.findViewById(R.id.message_view);
             mTextAuteur = itemView.findViewById(R.id.auteur_view);
             mTextEcole = itemView.findViewById(R.id.ecole_view);
 

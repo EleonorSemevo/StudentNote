@@ -10,7 +10,7 @@ public class Information {
     private String ecole;
     private String auteur;
 
-    public Information(int id, String description, String chemin, String datePublication, int idEcole, int idAuteur) {
+    public Information(int id, String description, String datePublication, int idEcole, int idAuteur) {
         this.id = id;
         this.description = description;
         this.chemin = chemin;

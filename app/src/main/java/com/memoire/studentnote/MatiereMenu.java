@@ -38,12 +38,12 @@ public class MatiereMenu extends AppCompatActivity {
         //matieres = dm.getMtiereOfClasseFromEcole();
         //matieres = dm.getMatieresFClasseFEcole();
         //matieres = dm.getMtiereOfClasseFromEcole();
-        matieres.add(0,new Matiere(10,"Mathématiques"));
-        matieres.add(1,new Matiere(11,"SPCT"));
-        matieres.add(2,new Matiere(12,"Anglais"));
-        matieres.add(3,new Matiere(13,"EPS"));
-        matieres.add(4,new Matiere(14,"Histoire géographie"));
-        matieres.add(5,new Matiere(15,"SVT"));
+        matieres.add(0,new Matiere(1,"Mathématiques"));
+        matieres.add(1,new Matiere(2,"SPCT"));
+        matieres.add(2,new Matiere(3,"Anglais"));
+        matieres.add(3,new Matiere(4,"EPS"));
+        matieres.add(4,new Matiere(5,"Histoire géographie"));
+        matieres.add(5,new Matiere(5,"SVT"));
 
 
         mMatiereRecyclerAdapter = new MatiereRecyclerAdapter(this, matieres);

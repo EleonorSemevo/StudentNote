@@ -3,6 +3,8 @@ package com.memoire.studentnote.database;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.memoire.studentnote.classes.Information;
+
 import static com.memoire.studentnote.database.DatabaseUtil.mdb;
 
 
@@ -246,7 +248,7 @@ public class DatabaseDataWorker {
 
     }
 
-    public void insertInformations(int idAuteur, int idEcole, String description, String datePublication, String chemin)
+    public void insertInformations(int idAuteur, int idEcole, String description, String datePublication)
     {
         ContentValues values = new ContentValues();
         //values.put(DatabaseContract.EnseignerEntry.COLUMN_ID,dm.sizeEnseignant()+"Enseignant");
@@ -255,7 +257,7 @@ public class DatabaseDataWorker {
         values.put(DatabaseContract.InformationEntry.COLUMN_ID_ECOLE, idEcole);
         values.put(DatabaseContract.InformationEntry.COLUMN_DESCRIPTION, description);
         values.put(DatabaseContract.InformationEntry.COLUMN_DATE_PUBLICATION, datePublication);
-        values.put(DatabaseContract.InformationEntry.COLUMN_CHEMIN, chemin);
+        //values.put(DatabaseContract.InformationEntry.COLUMN_CHEMIN, chemin);
 
 
         long newRowId = mdb.insert(DatabaseContract.InformationEntry.TABLE_NAME, null, values);
@@ -275,7 +277,7 @@ public class DatabaseDataWorker {
         long newRowId = mdb.insert(DatabaseContract.ListUserEntry.TABLE_NAME, null, values);
     }
 
-    public void insertEmplois(int idEcole, int idClasse, int idMatiere, String jour, String heur_debut, String heure_fin, int anneeScolaire)
+    public void insertEmplois(int idEcole, int idClasse, int idMatiere, String jour, int heur_debut, int heure_fin, int anneeScolaire)
     {
         ContentValues values = new ContentValues();
         //values.put(DatabaseContract.ParentEntry._ID,id);
@@ -284,8 +286,8 @@ public class DatabaseDataWorker {
         values.put(DatabaseContract.EmploisEntry.COLUMN_ID_MATIERE, idMatiere);
         values.put(DatabaseContract.EmploisEntry.COLUMN_JOUR,jour);
         values.put(DatabaseContract.EmploisEntry.COLUMN_HEURE_DEBUT, heur_debut);
-        values.put(DatabaseContract.EmploisEntry.COLUMN_HEURE_FIN,heure_fin);
-        values.put(DatabaseContract.EmploisEntry.ANNEE_SCOLAIRE, anneeScolaire);
+        values.put(DatabaseContract.EmploisEntry.COLUMN_HEURE_FIN, heure_fin);
+        values.put(DatabaseContract.EmploisEntry.COLUMN_ANNEE_SCOLAIRE, anneeScolaire);
 
 
         long newRowId = mdb.insert(DatabaseContract.EmploisEntry.TABLE_NAME, null, values);
@@ -297,9 +299,12 @@ public class DatabaseDataWorker {
     {
         insertUser("SEMEVO","Loren","eleonorsemevo@gmail.com","69874512","azerty","Enseignant");
         insertUser("TAMOU","Tarille","tarille@gmail.com","65879562","tatata","Parent");
+        insertUser("SOLA","Fleur","fleursemevo@gmail.com","65879562","aaaaaaa","Enseignant");
 
         insertUser("SEDA","Ramine","lor@gmail.com","89563214","aaaaaa","Enseignant");
         insertUser("SOSSA","Marine","marine@gmail.com","77896521","aaaaaa","Enseignant");
+
+
 
         insertEleve("SOTA","Tarisse","08:04:06","F");
         insertEleve("FASSA","Saminta","08:04:06","M");
@@ -311,7 +316,7 @@ public class DatabaseDataWorker {
         insertEcole("LES RACINESI","COTONOU","TOKPA","PRIMAIRE","065");
         insertEcole("LES RAMES","COTONOU","VOSSA","PRIMAIRE","067");
 
-        insertMatiere("Mathématique");
+        insertMatiere("Mathématiques");
         insertMatiere("SPCT");
         insertMatiere("Français");
         insertMatiere("EPS");
@@ -342,26 +347,39 @@ public class DatabaseDataWorker {
         insertMesEnfants(1,1,3,"GAMOUDOU","Thomas",1,"LES RAMES","5eme");
         insertMesEnfants(1,1,4,"FATOU","Doriane",1,"LES RAMES","4eme");
 
-        insertInformations(1,1,"Loren ipsum Loren ipsum Loren ipsum Loren ipsum Loren ipsum","08/04/1999","ici");
+        insertInformations(1,1,"Loren ipsum Loren ipsum Loren ipsum Loren ipsum Loren ipsum","08/04/1999");
 
 
-        insertListeUser("00","Semevo","Loren","lorensemevo@gmail.com");
+      //  insertListeUser("00","Semevo","Loren","lorensemevo@gmail.com");
         insertListeUser("010","Savi","Nel","eleonorsemevo@gmail.com");
         insertListeUser("020","Somakou","Dora","fleursemevo@gmail.com");
         insertListeUser("030","Sossa","Sorelle","sorellesemevo@gmail.com");
         insertListeUser("040","Gatibou","Garelle","garellesemevo@gmail.com");
 
-        insertEnseigner(1,0,1,1);
-        insertEnseigner(1,1,2,2);
-        insertEnseigner(1,2,3,1);
+    //    insertEnseigner(1,0,1,1);
+        insertEnseigner(1,2,2,2);
+        insertEnseigner(1,3,3,1);
+        insertEnseigner(1,3,1,1);
+        insertEnseigner(1,1,2,1);
+        insertEnseigner(2,1,2,3);
 
-        insertEnseignant("Sem","Lor","eleonorsemevo@gmail.com","azerty","65707651");
+      //
         insertEnseignant("Larou","Sami","fleursemevo@gmail.com","azerty","98745621");
         insertEnseignant("Lora","Solam","dora@gmail.com","azerty","66758954");
+        insertEnseignant("Sem","Odette","odettesemevo@gmail.com","azerty","65707651");
 
         insertListeUser("10000","Sem","Lor","eleonorsemevo@gmail.com");
         insertListeUser("2000","Larou","Sami","fleursemevo@gmail.com");
         insertListeUser("0125","Lora","Solam","dora@gmail.com");
+        insertListeUser("fleur","Larou","Sami","fleursemevo@gmail.com");
+
+
+        insertEmplois(1,1,1,"Lundi",10,12,2021);
+        insertEmplois(1,1,2,"Lundi",8,10,2021);
+        insertEmplois(1,1,3,"Mardi",8,10,2021);
+        insertEmplois(1,1,1,"Mercredi",11,13,2021);
+        insertEmplois(1,1,2,"Jeudi",10,12,2021);
+        insertEmplois(1,1,3,"Vendredi",15,17,2021);
 
 
 
@@ -370,6 +388,46 @@ public class DatabaseDataWorker {
 
 
     }
+    //UPDATE
+
+    public int updateInformation(int id, String message)
+    {
+        ContentValues values = new ContentValues();
+        values.put(DatabaseContract.InformationEntry.COLUMN_DESCRIPTION, message);
+
+
+        String selection = DatabaseContract.InformationEntry._ID + "= ?";
+        String[] selectionArgs = {id+""};
+
+        int count =mdb.update(DatabaseContract.InformationEntry.TABLE_NAME, values, selection, selectionArgs);
+        return  count;
+    }
+
+    //DELETE
+
+    public int deleteInformation(int id)
+    {
+        String selection = DatabaseContract.InformationEntry._ID + " = ?";
+        String[] selectionArgs = {id +""};
+
+        int deleteRows = mdb.delete(DatabaseContract.InformationEntry.TABLE_NAME,selection,selectionArgs);
+        return deleteRows;
+    }
+
+    //SELECT LAST ROW
+
+//    public Information getLastInformation()
+//    {
+//        ContentValues values = new ContentValues();
+//        values.put(DatabaseContract.InformationEntry.COLUMN_DESCRIPTION, message);
+//
+//
+//        String selection = DatabaseContract.InformationEntry._ID + "= ?";
+//        String[] selectionArgs = {id+""};
+//
+//        int count =mdb.update(DatabaseContract.InformationEntry.TABLE_NAME, values, selection, selectionArgs);
+//        return  count;
+//    }
 
 
 }

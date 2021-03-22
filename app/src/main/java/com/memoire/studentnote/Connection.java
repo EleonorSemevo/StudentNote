@@ -1,8 +1,5 @@
 package com.memoire.studentnote;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,30 +8,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.memoire.studentnote.classes.Ecole;
-import com.memoire.studentnote.classes.Enseignant;
-import com.memoire.studentnote.classes.Enseigner;
-import com.memoire.studentnote.classes.User;
-import com.memoire.studentnote.database.DataManager;
 import com.memoire.studentnote.database.DatabaseDataWorker;
 import com.memoire.studentnote.database.DatabaseOpenHelper;
 import com.memoire.studentnote.database.DatabaseUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.memoire.studentnote.database.DatabaseUtil.mDataManager;
 import static com.memoire.studentnote.database.DatabaseUtil.mDataWorker;
 import static com.memoire.studentnote.database.DatabaseUtil.mDatabaseOpenHelper;
 import static com.memoire.studentnote.database.DatabaseUtil.mEnseignant;
-import static com.memoire.studentnote.database.DatabaseUtil.mListeClasses;
 import static com.memoire.studentnote.database.DatabaseUtil.mListeEcoles;
-import static com.memoire.studentnote.database.DatabaseUtil.mListeMatiere;
 import static com.memoire.studentnote.database.DatabaseUtil.mUtilisateurActuel;
 import static com.memoire.studentnote.database.DatabaseUtil.mdb;
 
@@ -66,7 +56,8 @@ public class Connection extends AppCompatActivity {
             mDataWorker = new DatabaseDataWorker(mdb);
         }
         //mDataWorker.insPar();//A enlever apres //insertion d'un parent au début de l'application
-        mDataWorker.ins();
+        if(FirebaseAuth.getInstance().getCurrentUser()==null)
+            mDataWorker.ins();
 
 
         mConnecter.setOnClickListener(new View.OnClickListener() {
@@ -154,23 +145,24 @@ public class Connection extends AppCompatActivity {
     {
         if(DatabaseUtil.isEnseignant)
         {
-            List<Enseigner> enseigners = mDataManager.getEnseigners();
-            List<Ecole> ecoles = mDataManager.getEcoles();
-            List<Integer> idEcoles =new ArrayList<>();
-            for(int j=0;j<enseigners.size();j++)
-            {
-                if(enseigners.get(j).getIdEnseignant()==mEnseignant.getId())
-                    idEcoles.add(enseigners.get(j).getIdEcole());
-            }
-
-            for(int k=0;k<idEcoles.size();k++)
-            {
-                for(int m=0;m<ecoles.size();m++)
-                {
-                    if(ecoles.get(m).getId()==idEcoles.get(k))
-                        mListeEcoles.add(ecoles.get(m));
-                }
-            }
+//            List<Enseigner> enseigners = mDataManager.getEnseigners();
+//            List<Ecole> ecoles = mDataManager.getEcoles();
+//            List<Integer> idEcoles =new ArrayList<>();
+//            for(int j=0;j<enseigners.size();j++)
+//            {
+//                if(enseigners.get(j).getIdEnseignant()==mEnseignant.getId())
+//                    idEcoles.add(enseigners.get(j).getIdEcole());
+//            }
+//
+//            for(int k=0;k<idEcoles.size();k++)
+//            {
+//                for(int m=0;m<ecoles.size();m++)
+//                {
+//                    if(ecoles.get(m).getId()==idEcoles.get(k))
+//                        mListeEcoles.add(ecoles.get(m));
+//                }
+//            }
+            mListeEcoles = mDataManager.getListeEcoleEnseignant(mEnseignant.getId());
         }
     }
 

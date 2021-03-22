@@ -22,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -33,7 +34,9 @@ import com.memoire.studentnote.database.DataManager;
 import com.memoire.studentnote.database.DatabaseDataWorker;
 import com.memoire.studentnote.database.DatabaseOpenHelper;
 import com.memoire.studentnote.database.DatabaseUtil;
+import com.memoire.studentnote.emplois.AjoutEmplois;
 import com.memoire.studentnote.enseignant.AjoutNote;
+import com.memoire.studentnote.infos.GestionsInformations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +48,7 @@ import static com.memoire.studentnote.database.DatabaseUtil.mDatabaseOpenHelper;
 
 import static com.memoire.studentnote.database.DatabaseUtil.mEnfantRecyclerAdapter;
 import static com.memoire.studentnote.database.DatabaseUtil.mFirebaseAuth;
+import static com.memoire.studentnote.database.DatabaseUtil.mListeClasses;
 import static com.memoire.studentnote.database.DatabaseUtil.mListeEcoles;
 import static com.memoire.studentnote.database.DatabaseUtil.mdb;
 import static com.memoire.studentnote.database.DatabaseUtil.mesEnfants;
@@ -416,9 +420,13 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
                 confirmerChoixEcoleEtDemarrerAjotNote();
                 break;
             case R.id.menu_information:
+                startActivity(new Intent(this, GestionsInformations.class));
                 break;
             case R.id.menu_emploi_temps:
+                startActivity(new Intent(this, AjoutEmplois.class));
                 break;
+            case R.id.se_deconnecter:
+                logout();
             default:
                 break;
         }
@@ -485,7 +493,12 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
     private void idEcoleActuelle()
     {
         int a= mSpinnerListeEcole.getSelectedItemPosition();
-        idEcoleActuelle_enseignant = mListeEcoles.get(a).getId();
+        mSpinnerListeEcole.getSelectedItemId();
+        if(mListeEcoles.size()!=0)
+        {
+            idEcoleActuelle_enseignant = mListeEcoles.get(a).getId();
+        }
+
     }
 
     private void confirmerChoixEcoleEtDemarrerAjotNote()
@@ -500,7 +513,6 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
     ArrayAdapter<String> spinerAdapter = new ArrayAdapter<String>(MenuTable.this, android.R.layout.simple_spinner_item, mNomEcoles);
         spinerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         conf.setAdapter(spinerAdapter);
-
         builder.setView(customLayout);
     // add a button
         builder.setPositiveButton("Confirmez", new DialogInterface.OnClickListener() {
@@ -520,4 +532,12 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
     });
     AlertDialog dialog = builder.create();
     dialog.show();}
+
+    private void logout()
+    {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(this,Connection.class));
+        finish();
+    }
+
 }

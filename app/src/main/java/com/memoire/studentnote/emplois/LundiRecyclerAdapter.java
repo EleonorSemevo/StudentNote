@@ -38,8 +38,8 @@ public class LundiRecyclerAdapter extends RecyclerView.Adapter<LundiRecyclerAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Emplois emplois = mEmplois.get(position);
-        holder.mHeureDebut.setText(emplois.getHeure_debut());
-        holder.mHeureFin.setText(emplois.getHeure_fin());
+        holder.mHeureDebut.setText(emplois.getHeure_debut()+"h");
+        holder.mHeureFin.setText(emplois.getHeure_fin()+"h");
         holder.mEnseignant.setText(emplois.getNomEnseignant());
         holder.mMatiere.setText(emplois.getNomMatiere());
         holder.mCurrentPosition=position;

@@ -59,7 +59,7 @@ public class TableEmplois extends AppCompatActivity {
 //        idEcoleActuelle();
 
 
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        viewPager = (ViewPager) findViewById(R.id.view_pager_emplois);
         setViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -90,10 +90,10 @@ public class TableEmplois extends AppCompatActivity {
     private void setViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new LundiFragment(), "Lundi");
-        adapter.addFragment(new LundiFragment(), "Mardi");
-        adapter.addFragment(new LundiFragment(),"Mercredi");
-        adapter.addFragment(new LundiFragment(),"Jeudi");
-        adapter.addFragment(new LundiFragment(),"Vendredi");
+        adapter.addFragment(new MardiFragment(), "Mardi");
+        adapter.addFragment(new MercrediFragment(),"Mercredi");
+        adapter.addFragment(new JeudiFragment(),"Jeudi");
+        adapter.addFragment(new VendrediFragment(),"Vendredi");
         //adapter.addFragment(new BookFragment(), "Book");
         viewPager.setAdapter(adapter);
 

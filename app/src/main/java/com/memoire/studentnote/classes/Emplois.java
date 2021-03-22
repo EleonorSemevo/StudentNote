@@ -1,9 +1,11 @@
 package com.memoire.studentnote.classes;
 
-public class Emplois {
+import android.os.Parcel;
+
+public class Emplois implements android.os.Parcelable {
     public Emplois(int id, int idEcole, int idClasse,
                    int idMatiere, String jour,
-                   String heure_debut, String heure_fin,
+                   int heure_debut, int heure_fin,
                    int anneScolaire, String nomMatiere,
                    int idEnseignant, String nomEnseignant,
                    String nomEcole, String nomClasse) {
@@ -22,6 +24,34 @@ public class Emplois {
         this.nomClasse = nomClasse;
     }
 
+    protected Emplois(Parcel in) {
+        id = in.readInt();
+        idEcole = in.readInt();
+        idClasse = in.readInt();
+        idMatiere = in.readInt();
+        jour = in.readString();
+        heure_debut = in.readInt();
+        heure_fin = in.readInt();
+        anneScolaire = in.readInt();
+        nomMatiere = in.readString();
+        idEnseignant = in.readInt();
+        nomEnseignant = in.readString();
+        nomEcole = in.readString();
+        nomClasse = in.readString();
+    }
+
+    public static final Creator<Emplois> CREATOR = new Creator<Emplois>() {
+        @Override
+        public Emplois createFromParcel(Parcel in) {
+            return new Emplois(in);
+        }
+
+        @Override
+        public Emplois[] newArray(int size) {
+            return new Emplois[size];
+        }
+    };
+
     public int getId() {
         return id;
     }
@@ -35,8 +65,8 @@ public class Emplois {
     private int idClasse;
     private int idMatiere;
     private String jour;
-    private String heure_debut;
-    private String heure_fin;
+    private int heure_debut;
+    private int heure_fin;
     private int anneScolaire;
 
     public String getNomMatiere() {
@@ -56,7 +86,7 @@ public class Emplois {
     private String nomEcole;
     private String nomClasse;
 
-    public Emplois(int id, int idEcole, int idClasse,  int idMatiere, String jour, String heure_debut, String heure_fin, int annee_scolaire) {
+    public Emplois(int id, int idEcole, int idClasse,  int idMatiere, String jour, int heure_debut, int heure_fin, int annee_scolaire) {
         this.idEcole = idEcole;
         this.idClasse = idClasse;
         this.idMatiere = idMatiere;
@@ -99,19 +129,19 @@ public class Emplois {
         this.jour = jour;
     }
 
-    public String getHeure_debut() {
+    public int getHeure_debut() {
         return heure_debut;
     }
 
-    public void setHeure_debut(String heure_debut) {
+    public void setHeure_debut(int heure_debut) {
         this.heure_debut = heure_debut;
     }
 
-    public String getHeure_fin() {
+    public int getHeure_fin() {
         return heure_fin;
     }
 
-    public void setHeure_fin(String heure_fin) {
+    public void setHeure_fin(int heure_fin) {
         this.heure_fin = heure_fin;
     }
 
@@ -154,4 +184,47 @@ public class Emplois {
     public void setNomClasse(String nomClasse) {
         this.nomClasse = nomClasse;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeInt(idEcole);
+        dest.writeInt(idClasse);
+        dest.writeInt(idMatiere);
+        dest.writeString(jour);
+        dest.writeInt(heure_debut);
+        dest.writeInt(heure_fin);
+        dest.writeInt(anneScolaire);
+        dest.writeString(nomMatiere);
+        dest.writeInt(idEnseignant);
+        dest.writeString(nomEnseignant);
+        dest.writeString(nomEcole);
+        dest.writeString(nomClasse);
+    }
+
+    @Override
+    public String toString() {
+        return "Emplois{" +
+                "id=" + id +
+                ", idEcole=" + idEcole +
+                ", idClasse=" + idClasse +
+                ", idMatiere=" + idMatiere +
+                ", jour='" + jour + '\'' +
+                ", heure_debut='" + heure_debut + '\'' +
+                ", heure_fin='" + heure_fin + '\'' +
+                ", anneScolaire=" + anneScolaire +
+                ", nomMatiere='" + nomMatiere + '\'' +
+                ", idEnseignant=" + idEnseignant +
+                ", nomEnseignant='" + nomEnseignant + '\'' +
+                ", nomEcole='" + nomEcole + '\'' +
+                ", nomClasse='" + nomClasse + '\'' +
+                '}';
+    }
+
+
 }
