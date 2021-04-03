@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.memoire.studentnote.classes.Enfant;
 import com.memoire.studentnote.classes.MesEnfants;
+import com.memoire.studentnote.classes.Note;
 
 import java.util.List;
 
@@ -42,6 +43,10 @@ public class EnfantRecyclerAdapter extends RecyclerView.Adapter<EnfantRecyclerAd
         holder.enfantEcole.setText(enfant.getNomEcole());
         String letter = enfant.getNom().charAt(0)+"";
         holder.lettre.setText(letter);
+
+        holder.mCurrentPosition = position;
+
+
     }
 
     @Override
@@ -63,10 +68,17 @@ public class EnfantRecyclerAdapter extends RecyclerView.Adapter<EnfantRecyclerAd
             enfantEcole = itemView.findViewById(R.id.ecole_enfant);
             lettre = itemView.findViewById(R.id.lettre);
 
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext,MatiereMenu.class);
+                    intent.putExtra(MatiereMenu.NOM, mEnfants.get(mCurrentPosition).getNom()+" "+mEnfants.get(mCurrentPosition).getPrenom());
+
+                    intent.putExtra(MatiereMenu.ID_ELEVE, mEnfants.get(mCurrentPosition).getIdEleve());
+                    intent.putExtra(MatiereMenu.ID_CLASSE, mEnfants.get(mCurrentPosition).getIdclasse());
+                    intent.putExtra(MatiereMenu.ID_ECOLE, mEnfants.get(mCurrentPosition).getIdEcole());
+
                     mContext.startActivity(intent);
 
                 }

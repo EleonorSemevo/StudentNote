@@ -27,6 +27,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.memoire.studentnote.admin.Dashbord;
 import com.memoire.studentnote.classes.Ecole;
 import com.memoire.studentnote.classes.Eleve;
 import com.memoire.studentnote.classes.Etudier;
@@ -113,11 +114,13 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
         //        setSupportActionBar(toolbar);
         boutton_ajouter = findViewById(R.id.ajouter);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
-        setViewPager(viewPager);
+
+            setViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-         setupTabIcons();
+
+             setupTabIcons();
 
 
    //     {
@@ -157,7 +160,42 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
         viewPager.setAdapter(adapter);
 
     }
+/////////////////
 
+
+
+    private void setupTabIconsEnseignant()
+    {
+//        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
+//        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+//        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
+        tabLayout.getTabAt(3).setIcon(tabIcons[3]);
+        tabLayout.getTabAt(4).setIcon(tabIcons[4]);
+    }
+
+    private void setViewPagerEnseignant(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+       // adapter.addFragment(new EnfantFragment(), "Elèves");
+        //adapter.addFragment(new EmploisFragment(), "Emplois");
+       // adapter.addFragment(new MessageFragment(),"Messages");
+        adapter.addFragment(new InformationFragment(),"Informations");
+        adapter.addFragment(new ProfilFragment(),"Profile");
+        //adapter.addFragment(new BookFragment(), "Book");
+        viewPager.setAdapter(adapter);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+    /////////////
 
     public void showAlertDialogButtonClicked() {
         // create an alert builder
@@ -208,6 +246,7 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
                 {
                     sendDialogDataToActivity("Matricule invalide");
                 }
+
                 if( mAnnee.getText().toString().trim().length()<=3)
                 {
                     sendDialogDataToActivity("Année mal saisie");
@@ -238,7 +277,7 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
                         
                         mesEnfants.clear();
                         mDataWorker.insertMesEnfants(idParent,idClasse,idEleve,nom,prenom,idEcole,nomEcole,classe);
-                        mesEnfants.addAll(dataManager.getMesEnfants());
+                        mesEnfants.addAll(dataManager.getMesEnfantsSelonId(idParent));
                         mEnfantRecyclerAdapter.notifyDataSetChanged();
                     }
                     else
@@ -377,8 +416,16 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
             case R.id.menu_emploi_temps:
                 startActivity(new Intent(this, AjoutEmplois.class));
                 break;
+
+//            case R.id.menu_profil_ecole:
+//                startActivity(new Intent(this, Dashbord.class));
+//                break;
             case R.id.se_deconnecter:
                 logout();
+               // finish();
+            case R.id.log_out:
+                logout();
+
             default:
                 break;
         }
@@ -423,7 +470,8 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
     private void configureNavigationView(){
 
             this.navigationView = (NavigationView) findViewById(R.id.activity_main_nav_view);
-           if(mUtilisateurActuel.getType().equals("Parent"))
+           
+           if(DataManager.getInstance().getUserSelonMail(FirebaseAuth.getInstance().getCurrentUser().getEmail()).getType().equals("Parent"))
            {
                navigationView.getMenu().clear();
                navigationView.inflateMenu(R.menu.menu_main);
@@ -496,12 +544,16 @@ public class MenuTable extends AppCompatActivity implements NavigationView.OnNav
 
     });
     AlertDialog dialog = builder.create();
-    dialog.show();}
+    dialog.show();
+    }
 
     private void logout()
     {
+
+
+
+        startActivity(new Intent(this, Connection.class));
         FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(this,Connection.class));
         finish();
     }
 

@@ -104,6 +104,7 @@ public class Connection extends AppCompatActivity {
 
                                 //Enrégistrement de quelques information
 
+
                                 DatabaseUtil.mUtilisateurActuel= mDataManager.getUserSelonMail(email);
                                 if(mUtilisateurActuel.getType().equals("Enseignant"))
                                 {
@@ -117,9 +118,19 @@ public class Connection extends AppCompatActivity {
                                 }
 
                                 //updateUI();
-                                Intent intent = new Intent(Connection.this, MenuTable.class);
-                                startActivity(intent);
-                                finish();
+                                if(mUtilisateurActuel.getType().equalsIgnoreCase("Parent"))
+                                {
+                                    Intent intent = new Intent(Connection.this, MenuTable.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else
+                                {
+                                    Intent intent = new Intent(Connection.this, MenuEnseignant.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+
 
 
                             } else {
@@ -145,23 +156,7 @@ public class Connection extends AppCompatActivity {
     {
         if(DatabaseUtil.isEnseignant)
         {
-//            List<Enseigner> enseigners = mDataManager.getEnseigners();
-//            List<Ecole> ecoles = mDataManager.getEcoles();
-//            List<Integer> idEcoles =new ArrayList<>();
-//            for(int j=0;j<enseigners.size();j++)
-//            {
-//                if(enseigners.get(j).getIdEnseignant()==mEnseignant.getId())
-//                    idEcoles.add(enseigners.get(j).getIdEcole());
-//            }
-//
-//            for(int k=0;k<idEcoles.size();k++)
-//            {
-//                for(int m=0;m<ecoles.size();m++)
-//                {
-//                    if(ecoles.get(m).getId()==idEcoles.get(k))
-//                        mListeEcoles.add(ecoles.get(m));
-//                }
-//            }
+
             mListeEcoles = mDataManager.getListeEcoleEnseignant(mEnseignant.getId());
         }
     }

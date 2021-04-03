@@ -12,11 +12,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.memoire.studentnote.classes.MesEnfants;
 import com.memoire.studentnote.database.DataManager;
 
 import java.util.ArrayList;
 
 import static com.memoire.studentnote.database.DatabaseUtil.mEnfantRecyclerAdapter;
+import static com.memoire.studentnote.database.DatabaseUtil.mUtilisateurActuel;
 import static com.memoire.studentnote.database.DatabaseUtil.mesEnfants;
 
 /**
@@ -58,8 +61,15 @@ public class EnfantFragment extends Fragment {
         mesEnfants=new ArrayList<>();
         //mesEnfants.add(0, new MesEnfants(1, 1,1,"SOTO TAMI","5eme",1,"CEG P",1,"5eme"));
         //mesEnfants.add(0, new MesEnfants(2, 1,2,"TAMI","4eme",1,"CEG P",1,"5eme"));
-        mesEnfants = dataManager.getMesEnfants();
+
+       // mesEnfants = dataManager.getMesEnfants();
+        int id=-1;
+        //if(mUtilisateurActuel.getType().equals("parent"))
+            id = dataManager.getParentFromMail(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        //mesEnfants.clear();
+        mesEnfants  = dataManager.getMesEnfantsSelonId(id);
         Log.d("Liste enfan*********t", mesEnfants.toString());
+
         mEnfantRecyclerAdapter = new EnfantRecyclerAdapter(view.getContext(),mesEnfants);
         recyclerView.setAdapter(mEnfantRecyclerAdapter);
 

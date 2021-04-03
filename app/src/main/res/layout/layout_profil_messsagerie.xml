@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAF6F6">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FAF6F6">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="@mipmap/gradient"
+            android:fitsSystemWindows="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ImageButton
+            android:id="@+id/lpm_user_profil"
+            android:layout_width="118dp"
+            android:layout_height="81dp"
+            android:layout_below="@+id/header_cover_image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="220dp"
+            android:background="@drawable/profile_circular_border_imageview"
+            android:elevation="5dp"
+            android:padding="20dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/person"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/appBarLayout" />
+
+        <TextView
+            android:id="@+id/lpm_user_nom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="TextView"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lpm_user_profil" />
+
+        <TextView
+            android:id="@+id/lpm_user_prenom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lpm_user_nom" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_lpm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lpm_user_prenom" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

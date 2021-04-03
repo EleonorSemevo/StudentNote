@@ -112,17 +112,6 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textview_nom_fichier" />
 
-                    <EditText
-                        android:id="@+id/output"
-                        android:layout_width="244dp"
-                        android:layout_height="22dp"
-                        android:ems="10"
-                        android:gravity="start|top"
-                        android:inputType="textMultiLine"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-
                     <Spinner
                         android:id="@+id/spinner_type"
                         android:layout_width="130dp"

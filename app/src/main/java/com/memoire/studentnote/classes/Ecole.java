@@ -8,6 +8,10 @@ public class Ecole implements android.os.Parcelable {
     private String type;
     private String code;
 
+    public Ecole(int id){
+        this.id = id;
+    }
+
     public Ecole(int id, String nom, String ville, String quartier, String type, String code) {
         this.id = id;
         this.nom = nom;
@@ -130,5 +134,7 @@ public class Ecole implements android.os.Parcelable {
         dest.writeString(type);
         dest.writeString(code);
     }
+
+
 
 }

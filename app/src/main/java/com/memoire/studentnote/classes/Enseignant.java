@@ -1,5 +1,8 @@
 package com.memoire.studentnote.classes;
 
+
+import androidx.annotation.Nullable;
+
 public class Enseignant {
     private int id;
     private String nom;
@@ -7,6 +10,11 @@ public class Enseignant {
     private String mail;
     private String mdp;
     private String telephone;
+
+    public Enseignant(int id)
+    {
+        this.id= id;
+    }
 
     public Enseignant(int id, String nom, String prenom, String mail, String mdp, String telephone) {
         this.id = id;
@@ -64,5 +72,22 @@ public class Enseignant {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(this == obj) return true;
+        if(obj == null || getClass()!=obj.getClass())
+            return false;
+        Enseignant that = (Enseignant) obj;
+        return getCompareKey().equals(that.getCompareKey());
+    }
+
+    private String getCompareKey()
+    {
+
+        return  "id: "+ id + " | nom: "+ nom + " | prenom: " + prenom
+                +" | mail: "+ mail + " mdp: " + mdp +
+                " telephone : "+ telephone;
     }
 }

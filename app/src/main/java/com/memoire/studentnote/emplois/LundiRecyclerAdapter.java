@@ -40,7 +40,11 @@ public class LundiRecyclerAdapter extends RecyclerView.Adapter<LundiRecyclerAdap
         Emplois emplois = mEmplois.get(position);
         holder.mHeureDebut.setText(emplois.getHeure_debut()+"h");
         holder.mHeureFin.setText(emplois.getHeure_fin()+"h");
-        holder.mEnseignant.setText(emplois.getNomEnseignant());
+        if(emplois.getNomEnseignant()==null)
+            holder.mEnseignant.setText("Prof: ");
+        else
+            holder.mEnseignant.setText("Prof: "+emplois.getNomEnseignant());
+
         holder.mMatiere.setText(emplois.getNomMatiere());
         holder.mCurrentPosition=position;
     }

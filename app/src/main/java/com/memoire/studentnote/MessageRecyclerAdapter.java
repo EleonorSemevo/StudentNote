@@ -1,5 +1,6 @@
 package com.memoire.studentnote;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -10,13 +11,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.memoire.studentnote.chat.ChatProfil;
 import com.memoire.studentnote.chat.Sender;
 import com.memoire.studentnote.chat.UserDetails;
+import com.memoire.studentnote.classes.EnseignerT;
 import com.memoire.studentnote.classes.ListeUser;
+import com.memoire.studentnote.database.DataManager;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import static androidx.core.content.ContextCompat.startActivity;
 
 public class MessageRecyclerAdapter extends RecyclerView.Adapter<MessageRecyclerAdapter.ViewHolder> {
     private RecyclerView.ViewHolder mHolder;
@@ -49,6 +52,7 @@ public class MessageRecyclerAdapter extends RecyclerView.Adapter<MessageRecycler
         String letter = listeUser.getNom().charAt(0)+"";
         holder.textViewLettre.setText(letter);
         holder.mCurrentPosition=position;
+        holder.textViewType.setText(listeUser.getType());
     }
 
     @Override
@@ -58,16 +62,18 @@ public class MessageRecyclerAdapter extends RecyclerView.Adapter<MessageRecycler
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView textViewNom;
-        public final TextView textViewMessage;
-        public final TextView textViewTime;
+        public final TextView textViewType;
+
         public final TextView textViewLettre;
+
         public int mCurrentPosition;
 
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             textViewNom = itemView.findViewById(R.id.nom_user);
-            textViewTime = itemView.findViewById(R.id.message_time);
-            textViewMessage = itemView.findViewById(R.id.last_msg);
+            textViewType = itemView.findViewById(R.id.type_user);
+
+
             textViewLettre = itemView.findViewById(R.id.profile_lettre);
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -80,10 +86,25 @@ public class MessageRecyclerAdapter extends RecyclerView.Adapter<MessageRecycler
                     Intent intent = new Intent(mContext,Sender.class);
                     mContext.startActivity(intent);
 
+                }
+            });
 
-
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    //profil utilisateur
+                    if(mListeUsers.get(mCurrentPosition).getType().equals("Enseignant"))
+                    {
+                        Intent intent = new Intent(mContext, ChatProfil.class);
+                        intent.putExtra(ChatProfil.CURRENT_MAIL_USER, mListeUsers.get(mCurrentPosition).getMail());
+                        mContext.startActivity(intent);
+                    }
+                    return false;
                 }
             });
         }
     }
+
+
+
 }

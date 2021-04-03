@@ -1,9 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".admin.Dashbord">
+    android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="@color/bleu"
+            android:fitsSystemWindows="true">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView_effectif"
+                    android:layout_width="122dp"
+                    android:layout_height="69dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    app:cardElevation="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/textView_effectif"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="TextView" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView_matiere"
+                    android:layout_width="122dp"
+                    android:layout_height="69dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    app:cardElevation="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/textView_dash_matiere"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="TextView" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="122dp"
+                    android:layout_height="69dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="20dp"
+                    app:cardElevation="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" >
+
+                    <TextView
+                        android:id="@+id/textView_dash_classes"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="TextView" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="122dp"
+                    android:layout_height="69dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="20dp"
+                    app:cardElevation="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" >
+
+                    <TextView
+                        android:id="@+id/textView_dash_Enseignants"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="TextView" />
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dash_nom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#fff"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:padding="20dp"
+                android:text="Modifier profil"
+                android:hint="Nom" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dash_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#fff"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:padding="20dp"
+                android:text="Modifier profil"
+                android:hint="Type"
+                android:enabled="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dash_ville"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#fff"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:padding="20dp"
+                android:text="Modifier profil"
+                android:hint="ville" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dash_queartier"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#fff"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:padding="20dp"
+                android:text="Modifier profil"
+                android:hint="Quartier" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:id="@+id/button_dash_profil"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="#fff"
+            android:clickable="true"
+            android:elevation="4dp"
+            android:padding="20dp"
+            android:text="Modifier profil" />
+
+
+
+    </LinearLayout>
+
+</ScrollView>
+
+

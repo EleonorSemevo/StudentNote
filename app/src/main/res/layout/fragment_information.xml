@@ -14,7 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:background="@color/bleu"
-            android:fitsSystemWindows="true">
+            android:fitsSystemWindows="true"
+            android:layout_marginTop="70dp">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -22,7 +23,8 @@
                 android:contentDescription="desc"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/prof_arriere" />
+                android:src="@mipmap/inf"
+                />
 
 
         </com.google.android.material.appbar.AppBarLayout>

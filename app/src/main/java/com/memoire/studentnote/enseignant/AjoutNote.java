@@ -72,7 +72,7 @@ public class AjoutNote extends AppCompatActivity {
     Button mButtonEnregistrer;
     ProgressDialog mProgressBar;
 
-    EditText output;;
+   // EditText output;;
 
     int PICKFILE_RESULT_CODE;
     Uri uri;
@@ -113,7 +113,7 @@ public class AjoutNote extends AppCompatActivity {
         mEditTextDate = findViewById(R.id.editText_datecomposition);
         mSpinnerMatiere = findViewById(R.id.spinner_matiere);
 
-        output = findViewById(R.id.output);
+        //output = findViewById(R.id.output);
         mButtonChoixFichier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,11 +134,24 @@ public class AjoutNote extends AppCompatActivity {
         mButtonEnregistrer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    validerFichierInsererNote();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                if(mEditTextNomFichier.getText().toString()==null || mEditTextNomFichier.getText().toString().length()<=0)
+                    Toast.makeText(AjoutNote.this,"Choisir un fichier", Toast.LENGTH_LONG).show();
+                else
+                {
+                    try {
+                        validerFichierInsererNote();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
+
+            }
+        });
+
+        mButtonAnnuler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AjoutNote.this.finish();
             }
         });
 
@@ -165,7 +178,7 @@ public class AjoutNote extends AppCompatActivity {
             mEditTextNomFichier.setText(uri.toString());
             mEditTextNomFichier.setTextColor(Color.parseColor("#008577"));
 
-            Log.d("code","uri: "+uri);
+           // Log.d("code","uri: "+uri);
 
         }
 
@@ -175,7 +188,7 @@ public class AjoutNote extends AppCompatActivity {
 
     public void onReadClick(View view) throws FileNotFoundException {
 
-        printlnToUser("reading XLSX file from resources");
+        //printlnToUser("reading XLSX file from resources");
         // InputStream stream = getResources().openRawResource(R.raw.test1);
         InputStream stream=getContentResolver().openInputStream(uri);
         try {
@@ -189,25 +202,25 @@ public class AjoutNote extends AppCompatActivity {
                 for (int c = 0; c<cellsCount; c++) {
                     String value = getCellAsString(row, c, formulaEvaluator);
                     String cellInfo = "r:"+r+"; c:"+c+"; v:"+value;
-                    printlnToUser(cellInfo);
+                   // printlnToUser(cellInfo);
                 }
             }
         } catch (Exception e) {
             /* proper exception handling to be here */
-            printlnToUser(e.toString());
+           // printlnToUser(e.toString());
         }
     }
 
-    private void printlnToUser(String str) {
-        final String string = str;
-        if (output.length()>8000) {
-            CharSequence fullOutput = output.getText();
-            fullOutput = fullOutput.subSequence(5000,fullOutput.length());
-            output.setText(fullOutput);
-            output.setSelection(fullOutput.length());
-        }
-        output.append(string+"\n");
-    }
+//    private void printlnToUser(String str) {
+//        final String string = str;
+//        if (output.length()>8000) {
+//            CharSequence fullOutput = output.getText();
+//            fullOutput = fullOutput.subSequence(5000,fullOutput.length());
+//            output.setText(fullOutput);
+//            output.setSelection(fullOutput.length());
+//        }
+//        output.append(string+"\n");
+//    }
 
     protected String getCellAsString(Row row, int c, FormulaEvaluator formulaEvaluator) {
         String value = "";
@@ -236,7 +249,7 @@ public class AjoutNote extends AppCompatActivity {
             }
         } catch (NullPointerException e) {
             /* proper error handling should be here */
-            printlnToUser(e.toString());
+            //printlnToUser(e.toString());
         }
         return value;
     }
@@ -269,7 +282,7 @@ public class AjoutNote extends AppCompatActivity {
             }
         } catch (NullPointerException e) {
             /* proper error handling should be here */
-            printlnToUser(e.toString());
+            //printlnToUser(e.toString());
         }
         return value;
     }
@@ -317,17 +330,17 @@ public class AjoutNote extends AppCompatActivity {
             }
         } catch (Exception e) {
             /* proper exception handling to be here */
-            printlnToUser(e.toString());
+            //printlnToUser(e.toString());
         }
 
         if(isMatricule && isNote)
         {
-            printlnToUser("Bonne entete");
+            //printlnToUser("Bonne entete");
             return true;
         }
         else
         {
-            printlnToUser("Mauvaise entete");
+            //printlnToUser("Mauvaise entete");
             return false;
         }
     }
@@ -356,7 +369,7 @@ public class AjoutNote extends AppCompatActivity {
             }
         } catch (Exception e) {
             /* proper exception handling to be here */
-            printlnToUser(e.toString());
+            //printlnToUser(e.toString());
         }
 
         return !fichierMauvais;
@@ -454,8 +467,8 @@ public class AjoutNote extends AppCompatActivity {
 
 
                 mDataWorker.insertNote(idmatiere,ideleve,idclasse,idEcoleActuelle_enseignant,type, dateComposition,description,mAnneeScolaire,note);
-                Log.d("**********","#############"+n);
-                Log.d("aaa","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+//                Log.d("**********","#############"+n);
+//                Log.d("aaa","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                 progressEvolution = progressEvolution+tour;
 
                 mHandler = new Handler(){
@@ -469,7 +482,7 @@ public class AjoutNote extends AppCompatActivity {
             }
         } catch (Exception e) {
             /* proper exception handling to be here */
-            printlnToUser(e.toString());
+            //printlnToUser(e.toString());
         }
 
 
@@ -536,9 +549,11 @@ public class AjoutNote extends AppCompatActivity {
             mDataManager = DataManager.getInstance();
         }
         mListeEcoles = mDataManager.getListeEcoleEnseignant(mEnseignant.getId());
-        Log.d("*************",mEnseignant.getId()+"");
-        Log.d("############","********************************************");
-        mListeMatiere = mDataManager.getListeMatieresEnseignant(mEnseignant.getId());
+//        Log.d("*************",mEnseignant.getId()+"");
+//        Log.d("############","********************************************");
+        mListeMatiere = new ArrayList<>();
+        mListeMatiere= mDataManager.getListeMatieresEnseignant(mEnseignant.getId());
+        mListeClasses = new ArrayList<>();
         mListeClasses = mDataManager.getListeClassesEnseignant(mEnseignant.getId());
 
 

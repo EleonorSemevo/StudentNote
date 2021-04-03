@@ -5,9 +5,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.TextureView;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -30,24 +33,42 @@ import static com.memoire.studentnote.database.DatabaseUtil.mdb;
 public class TableEmplois extends AppCompatActivity {
 
 
+    public static String ECOLE ="ECOLE";
+    public static String CLASSE ="CLASSE";
+    public static String ID_ECOLE= "ID_ECOLE";
+    public static String ID_CLASSE="ID_CLASSE";
+    public static int id_ecole;
+    public static int id_classe;
+
+
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+
+    private TextView mTextViewEcole;
+    private TextView mTextViewClasse;
+
 
     //   private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private final int[] tabIcons = {
-            R.mipmap.eleve,
-            R.mipmap.note,
-            R.mipmap.message,
-            R.mipmap.information,
-            R.mipmap.avatar};
+            R.mipmap.lundi,
+            R.mipmap.mardi,
+            R.mipmap.mercredi,
+            R.mipmap.jeudi,
+            R.mipmap.vendredi};
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_table_emplois);
+        mTextViewClasse = findViewById(R.id.emp_classe);
+        mTextViewEcole = findViewById(R.id.tv_ecole);
+        Intent intent = getIntent();
+        id_classe= intent.getIntExtra(ID_CLASSE,0);
+        id_ecole = intent.getIntExtra(ID_ECOLE,0);
+
 
         //- Configure all views
 //
@@ -62,9 +83,10 @@ public class TableEmplois extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.view_pager_emplois);
         setViewPager(viewPager);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.tabs_emplois);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
+        getEntete();
 
 
         //     {
@@ -98,6 +120,11 @@ public class TableEmplois extends AppCompatActivity {
         viewPager.setAdapter(adapter);
 
     }
-
-
+    public void getEntete()
+    {
+        Intent intent;
+        intent = getIntent();
+        mTextViewEcole.setText(intent.getStringExtra(ECOLE));
+        mTextViewClasse.setText(intent.getStringExtra(CLASSE));
+    }
 }

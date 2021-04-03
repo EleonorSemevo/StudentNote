@@ -69,9 +69,9 @@ public class MessageFragment extends Fragment {
         //initialisationList();
 
         usersList = view.findViewById(R.id.msg_recycler);
-        noUsersText = view.findViewById(R.id.noUsersText);
+   //     noUsersText = view.findViewById(R.id.noUsersText);
 
-        noUsersText.setVisibility(View.GONE);
+//        noUsersText.setVisibility(View.GONE);
         usersList.setVisibility(View.VISIBLE);
         initialiseDisplayContent(view);
 
@@ -99,15 +99,17 @@ public class MessageFragment extends Fragment {
     {
         final RecyclerView recyclerView= ((RecyclerView)view.findViewById(R.id.msg_recycler));
         final LinearLayoutManager msgLayoutManager = new LinearLayoutManager(view.getContext());
+        recyclerView.setElevation(new Float(8.0));
+
         recyclerView.setLayoutManager(msgLayoutManager);
 
 
         DataManager dataManager = DataManager.getInstance();
         listeUser.clear();
         listeUser = dataManager.getListeUsers();
-        listeUser.add(new ListeUser("1000","nom","prenom","lo@gmail.com"));
-        listeUser.add(new ListeUser("1100","sossa","sola","ro@gmail.com"));
-        listeUser.add(new ListeUser("1200","sossou","sos","mo@gmail.com"));
+//        listeUser.add(new ListeUser(1,"1000","nom","prenom","lo@gmail.com"));
+//        listeUser.add(new ListeUser(2,"1100","sossa","sola","ro@gmail.com"));
+//        listeUser.add(new ListeUser(3,"1200","sossou","sos","mo@gmail.com"));
 
 
 

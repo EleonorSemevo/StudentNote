@@ -71,13 +71,26 @@ public class MainActivity extends AppCompatActivity {
 
             Toast.makeText(this,"Bon retour "+mFirebaseAuth.getCurrentUser().getEmail().charAt(0),Toast.LENGTH_LONG).show();
             init();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent menuTableContent = new Intent(MainActivity.this, MenuTable.class);
-                    startActivityForResult(menuTableContent, SIGN_IN_REQUEST_CODE);
-                }
-            }, SPLASH_TIME_OUT);
+            if(mUtilisateurActuel.getType().equalsIgnoreCase("Enseignant"))
+            {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent menuTableContent = new Intent(MainActivity.this, MenuEnseignant.class);
+                        startActivityForResult(menuTableContent, SIGN_IN_REQUEST_CODE);
+                    }
+                }, SPLASH_TIME_OUT);
+            }
+            else
+            {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent menuTableContent = new Intent(MainActivity.this, MenuTable.class);
+                        startActivityForResult(menuTableContent, SIGN_IN_REQUEST_CODE);
+                    }
+                }, SPLASH_TIME_OUT);
+            }
         }
 
     }

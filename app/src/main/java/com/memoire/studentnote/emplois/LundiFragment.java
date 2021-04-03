@@ -76,7 +76,7 @@ public List<Emplois> updateEmplois()
     //Choix des lundi_emplois du lundi
     for(int vu=0;vu<emplois.size();vu++)
     {
-        if(emplois.get(vu).getJour().equals("Lundi"))
+        if(emplois.get(vu).getJour().equals("Lundi") && emplois.get(vu).getIdEcole()==TableEmplois.id_ecole && emplois.get(vu).getIdClasse()==TableEmplois.id_classe)
             lundi_emplois.add(emplois.get(vu));
     }
 
@@ -98,7 +98,7 @@ public List<Emplois> updateEmplois()
     List<Matiere> matieres = DataManager.getInstance().getMatiere();
   //  Log.d("matieres",matieres.toString()+ matieres.size());
 
-    Log.d("tag","###############################################################################################################################################");
+  //  Log.d("tag","###############################################################################################################################################");
 
     //Pour ecoles
     for(int i=0;i<lundi_emplois.size();i++)
@@ -152,8 +152,8 @@ public List<Emplois> updateEmplois()
 
     for(int g=0;g<lundi_emplois.size();g++)
     {
-        Log.d("tailles",enseignants.size()+"");
-        Log.d("t","*********************");
+//        Log.d("tailles",enseignants.size()+"");
+//        Log.d("t","*********************");
         for(int h=0;h<enseignants.size();h++)
         {
             if(lundi_emplois.get(g).getIdEnseignant()== enseignants.get(h).getId())
@@ -162,7 +162,7 @@ public List<Emplois> updateEmplois()
             }
         }
     }
-    Log.d("final",lundi_emplois.toString()+ lundi_emplois.size());
+  //  Log.d("final",lundi_emplois.toString()+ lundi_emplois.size());
     return lundi_emplois;
 
 }

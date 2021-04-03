@@ -77,6 +77,11 @@ class EcoleRecyclerAdapter extends  RecyclerView.Adapter <EcoleRecyclerAdapter.V
                     Current.carteEmplois = mMesEnfants.get(mCurrentPosition);
 //                    mContext.startActivity(intent);
                     Intent intent = new Intent(mContext, TableEmplois.class);
+                    intent.putExtra(TableEmplois.ECOLE, mMesEnfants.get(mCurrentPosition).getNomEcole());
+                    intent.putExtra(TableEmplois.CLASSE, mMesEnfants.get(mCurrentPosition).getClasse());
+                    intent.putExtra(TableEmplois.ID_CLASSE, mMesEnfants.get(mCurrentPosition).getIdclasse());
+                    intent.putExtra(TableEmplois.ID_ECOLE, mMesEnfants.get(mCurrentPosition).getClasse());
+
                     mContext.startActivity(intent);
 
                 }

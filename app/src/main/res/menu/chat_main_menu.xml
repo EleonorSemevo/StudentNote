@@ -6,7 +6,7 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/se_deconnecter"
-            android:icon="@drawable/ic_facebook"
+            android:icon="@mipmap/logout"
             android:title="Se déconnecter" />
     </group>
 
@@ -15,16 +15,21 @@
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/menu_note"
-                    android:icon="@drawable/ic_visibility_off_black_24dp"
+                    android:icon="@mipmap/note_emplois"
                     android:title="Notes" />
                 <item
                     android:id="@+id/menu_emploi_temps"
-                    android:icon="@drawable/img"
+                    android:icon="@mipmap/ic_emlolis_add"
                     android:title="Emplois du temps" />
                 <item
                     android:id="@+id/menu_information"
-                    android:icon="@drawable/ic_visibility_off_black_24dp"
+                    android:icon="@mipmap/inf"
                     android:title="Informations"/>
+<!--                <item-->
+<!--                    android:id="@+id/menu_profil_ecole"-->
+<!--                    android:icon="@mipmap/inf"-->
+<!--                    android:title="Profil Ecole"/>-->
+
             </group>
         </menu>
     </item>

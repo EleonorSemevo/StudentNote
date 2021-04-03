@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.memoire.studentnote">
 
+<!--    <uses-permission android:name="android.permission.WAKE_LOCK" />-->
+
+<!--    <uses-feature android:name="android.hardware.type.watch" />-->
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -10,13 +14,29 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/person"
+        android:label="ViTCHé"
+
+
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".admin.Dashbord"></activity>
+<!--        <uses-library-->
+<!--            android:name="com.google.android.wearable"-->
+<!--            android:required="true" />-->
+
+<!--        &lt;!&ndash;-->
+<!--               Set to true if your app is Standalone, that is, it does not require the handheld-->
+<!--               app to run.-->
+<!--        &ndash;&gt;-->
+<!--        <meta-data-->
+<!--            android:name="com.google.android.wearable.standalone"-->
+<!--            android:value="true" />-->
+
+        <activity
+            android:name=".chat.ChatProfil"
+            android:label="@string/title_activity_chat_profil"></activity>
+        <activity android:name=".admin.Dashbord" />
         <activity android:name=".infos.GestionsInformations" />
         <activity android:name=".emplois.AjoutEmplois" /> <!-- <activity android:name=".emplois.SamediFragment" /> -->
         <!-- <activity android:name=".emplois.VendrediFragment" /> -->
@@ -37,6 +57,7 @@
         <activity android:name=".MenuTable" />
         <activity android:name=".Connection" />
         <activity android:name=".chat.Sender" />
+        <activity android:name=".MenuEnseignant"/>
         <activity
             android:name=".Inscription"
             android:label="@string/title_activity_inscription"

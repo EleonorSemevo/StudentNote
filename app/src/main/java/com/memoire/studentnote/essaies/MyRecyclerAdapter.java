@@ -50,7 +50,10 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             HviewHolder hviewHolder =(HviewHolder) holder;
             hviewHolder.mDescription.setText(notes.getSection());
 
+
+
         }
+
     }
 
 

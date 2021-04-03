@@ -130,12 +130,21 @@ public class DatabaseContract {
         public static final String COLUMN_MATRICULE="matricule";
 
         public static final String SQL_CREATE_TABLE="CREATE TABLE "+
-                TABLE_NAME+ " ( "+ _ID+" INTEGER PRIMARY KEY, "+
+                TABLE_NAME+ " ( "+_ID+" INTEGER PRIMARY KEY, "+
                 COLUMN_ID_ELEVE+ " INTEGER NOT NULL, "+
-                COLUMN_MATRICULE+ "TEXT NOT NULL, "+
+                COLUMN_MATRICULE+ " TEXT NOT NULL, "+
                 COLUMN_ID_CLASSE+ " INTEGER NOT NULL, "+
                 COLUMN_ID_ECOLE+ " INTEGER NOT NULL, "+
                 COLUMN_ANNEE+ " INTEGER NOT NULL )";
+
+
+//        public static final String SQL_CREATE_TABLE="CREATE TABLE "+
+//                TABLE_NAME+ " ( "+ _ID+" INTEGER PRIMARY KEY, "+
+//                COLUMN_ID_ELEVE+ " INTEGER NOT NULL, "+
+//                COLUMN_MATRICULE+ "TEXT NOT NULL, "+
+//                COLUMN_ID_CLASSE+ " INTEGER NOT NULL, "+
+//                COLUMN_ID_ECOLE+ " INTEGER NOT NULL, "+
+//                COLUMN_ANNEE+ " INTEGER NOT NULL )";
         }
 
 
@@ -260,7 +269,7 @@ public class DatabaseContract {
 
         public static final String SQL_CREATE_TABLE="CREATE TABLE "+
                 TABLE_NAME+" ( "+_ID+" INTEGER PRIMARY KEY, "+
-                COLUMN_ID_ELEVE+ " INTEGER UNIQUE NOT NULL, "+
+                COLUMN_ID_ELEVE+ " INTEGER NOT NULL, "+
                 COLUMN_NOM+ " TEXT NOT NULL, "+
                 COLUMN_PRENOM+ " TEXT NOT NULL, "+
                 COLUMN_ID_ECOLE + " INTEGER NOT NULL, "+

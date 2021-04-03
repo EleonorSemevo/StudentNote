@@ -112,42 +112,55 @@ public class AjoutEmplois extends AppCompatActivity {
             boolean f;
             @Override
             public void onClick(View v) {
-                try {
-                     f= verifierFormatFichier();
-                    fichierOkAvecMatiere();
-                    fichierOkAvecJour();
-                    fichierOkAvecHeurs();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-
-                if(f && mColumnHeureDebutValide && mColumnFinValide && mColumnMatiereValide && mColumnJourValide){
+                if(mTextViewResult.getText().toString()==null || mTextViewResult.getText().toString().length()<=0)
+                    Toast.makeText(AjoutEmplois.this, "Choisir un fichier",Toast.LENGTH_LONG).show();
+                else
+                {
                     try {
-                        enregistrerEmplois();
+                        f= verifierFormatFichier();
+                        fichierOkAvecMatiere();
+                        fichierOkAvecJour();
+                        fichierOkAvecHeurs();
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
+
+                    if(f && mColumnHeureDebutValide && mColumnFinValide && mColumnMatiereValide && mColumnJourValide){
+                        try {
+                            enregistrerEmplois();
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else{
+                        //verifier fichier
+                        if(!f)
+                            printlnToUser("Problèmes dans les entêtes");
+                            //verifier Matiere
+                        else if (!mColumnMatiereValide)
+                            printlnToUser("Il y a une matiere non inscrite");
+                            //verifier Jour
+                        else if(!mColumnJourValide)
+                            printlnToUser("Jour mal écrite");
+                            //verifier heure début
+                        else if(!mColumnHeureDebutValide)
+                            printlnToUser("Heure de dénut mal écrite");
+                            //verifier heure de fin
+                        else if(!mColumnFinValide)
+                            printlnToUser("Heure Fin mal écrite");
+
+                    }
                 }
-                else{
-                    //verifier fichier
-                    if(!f)
-                        printlnToUser("Problèmes dans les entêtes");
-                        //verifier Matiere
-                    else if (!mColumnMatiereValide)
-                        printlnToUser("Il y a une matiere non inscrite");
-                        //verifier Jour
-                    else if(!mColumnJourValide)
-                        printlnToUser("Jour mal écrite");
-                        //verifier heure début
-                    else if(!mColumnHeureDebutValide)
-                        printlnToUser("Heure de dénut mal écrite");
-                        //verifier heure de fin
-                    else if(!mColumnFinValide)
-                        printlnToUser("Heure Fin mal écrite");
-
-                }
 
 
+
+            }
+        });
+
+        mButtonAnnuler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AjoutEmplois.this.finish();
             }
         });
 

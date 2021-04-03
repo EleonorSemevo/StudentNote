@@ -11,18 +11,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.memoire.studentnote.classes.Information;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InformationRecyclerAdapter extends RecyclerView.Adapter<InformationRecyclerAdapter.ViewHolder> {
     private RecyclerView.ViewHolder mHolder;
     private final Context mContext;
     private final LayoutInflater mLayoutInflater;
-    private final List<Information> mInformation;
+    private final List<Information> mInformation= new ArrayList<>();
 
     public InformationRecyclerAdapter(Context context, List<Information> information)
     {
         mContext = context;
-        mInformation = information;
+        for(int i=0;i<information.size();i++)
+        {
+            mInformation.add(0,information.get(i));
+        }
+
         mLayoutInflater = LayoutInflater.from(mContext);
     }
 

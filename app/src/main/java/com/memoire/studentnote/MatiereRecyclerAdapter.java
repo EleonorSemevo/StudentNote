@@ -2,6 +2,7 @@ package com.memoire.studentnote;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +21,22 @@ public class MatiereRecyclerAdapter extends RecyclerView.Adapter<MatiereRecycler
     private final LayoutInflater mLayoutInflater;
     private final List<Matiere> mMatieres;
 
-    public MatiereRecyclerAdapter(Context context, List<Matiere> matieres)
+    private final String mNom;
+    private int midEcole;
+    private int midClasse;
+    private int midEleve;
+
+    public MatiereRecyclerAdapter(Context context, List<Matiere> matieres, String nom, int idEcole, int idEleve,int idClass)
     {
         mContext = context;
         mMatieres = matieres;
         mLayoutInflater = LayoutInflater.from(mContext);
+
+        mNom = nom;
+        midClasse=idClass;
+        midEcole=idEcole;
+        midEleve= idEleve;
+
     }
 
     @NonNull
@@ -65,6 +77,15 @@ public class MatiereRecyclerAdapter extends RecyclerView.Adapter<MatiereRecycler
 //                    Intent intent =new Intent(mContext, BulletinSlidePageAdapter.class);
 //                    mContext.startActivity(intent);
                       Intent intent = new Intent(mContext,NoteAfficher.class);
+                     intent.putExtra(NoteAfficher.MATIERE, mMatieres.get(mCurrentPosition).getNom());
+                     intent.putExtra(NoteAfficher.NOM, mNom);
+
+                    intent.putExtra(NoteAfficher.ID_ECOLE, midEcole);
+                    intent.putExtra(NoteAfficher.ID_CLASSE, midClasse);
+                    intent.putExtra(NoteAfficher.ID_ELEVE, midEleve);
+
+
+                    //Log.d("ddd",mNom+"ééé");
                       mContext.startActivity(intent);
 
 
